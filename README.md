@@ -198,12 +198,15 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- CONTACT -->
 ## Contact
-<p>Skyler Godfrey - sgodfrey@cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-skyler]
-<p>Nick Cline - ncline1@student.cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-nick]
-<p>David Granger - dgranger4@cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-david]
+<p>Skyler Godfrey - sgodfrey@cvtc.edu</p> 
 
+[![LinkedIn][linkedin-shield]][linkedin-url-skyler]
+<p>Nick Cline - ncline1@student.cvtc.edu</p>
 
+[![LinkedIn][linkedin-shield]][linkedin-url-nick]
+<p>David Granger - dgranger4@cvtc.edu</p>
 
+[![LinkedIn][linkedin-shield]][linkedin-url-david]
 
 
 
