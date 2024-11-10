@@ -83,10 +83,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://huebrush.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `linkedin_username`, `email_client`, `email`, `project_description`
-TODO
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -114,7 +112,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Install npm by running these commands in the VSCode terminal.
 * npm
   ```sh
   npm install npm@latest -g
@@ -213,8 +211,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Contact
+Skyler Godfrey - sgodfrey@cvtc.edu
+Nick Cline - ncline1@student.cvtc.edu
+David Granger - dgranger4@cvtc.edu
 
-Your Name - email@email_client.com
 
 Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it-sd-capstone/huebrush)
 
@@ -246,7 +246,6 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [license-shield]: https://img.shields.io/github/license/it-sd-capstone/huebrush.svg?style=for-the-badge
 [license-url]: https://github.com/it-sd-capstone/huebrush/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
 [Nodejs.org]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white
 [Nodejs-url]: https://nodejs.org/en
