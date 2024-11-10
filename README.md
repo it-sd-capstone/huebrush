@@ -22,9 +22,9 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![LinkedIn][linkedin-shield]]David[linkedin-url-david]
-[![LinkedIn][linkedin-shield]]Nick[linkedin-url-nick]
-[![LinkedIn][linkedin-shield]]Skyler[linkedin-url-skyler]
+[![LinkedIn][linkedin-shield]][linkedin-url-david]
+[![LinkedIn][linkedin-shield]][linkedin-url-nick]
+[![LinkedIn][linkedin-shield]][linkedin-url-skyler]
 
 
 
@@ -198,9 +198,13 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- CONTACT -->
 ## Contact
-<p>Skyler Godfrey - sgodfrey@cvtc.edu</p>
-<p>Nick Cline - ncline1@student.cvtc.edu</p>
-<p>David Granger - dgranger4@cvtc.edu</p>
+<p>Skyler Godfrey - sgodfrey@cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-skyler]
+<p>Nick Cline - ncline1@student.cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-nick]
+<p>David Granger - dgranger4@cvtc.edu</p> [![LinkedIn][linkedin-shield]][linkedin-url-david]
+
+
+
+
 
 
 Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it-sd-capstone/huebrush)
