@@ -24,7 +24,7 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-[![LinkedIn][linkedin-shield]][[linkedin-url](https://www.linkedin.com/in/david-d-granger/)]
+[![David's LinkedIn][linkedin-shield]][(https://www.linkedin.com/in/david-d-granger/)]
 
 
 <!-- PROJECT LOGO -->
