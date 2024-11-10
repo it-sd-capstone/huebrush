@@ -22,8 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![Contact][issues-shield]][issues-url]
-<li><a href="#contact">Contact</a></li>
+[![Contact][contact-shield]][contact-url]
 
 
 
