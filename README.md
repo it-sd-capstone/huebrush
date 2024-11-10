@@ -247,4 +247,4 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [Nodejs.org]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white
 [Nodejs-url]: https://nodejs.org/en
 [HTML.org]: https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white
-[Nodejs-url]: https://html.spec.whatwg.org/
+[html-url]: https://html.spec.whatwg.org/
