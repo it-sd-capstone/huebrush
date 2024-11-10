@@ -22,9 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![LinkedIn][linkedin-shield]][linkedin-url-david]
-[![LinkedIn][linkedin-shield]][linkedin-url-nick]
-[![LinkedIn][linkedin-shield]][linkedin-url-skyler]
+<li><a href="#contact">Contact</a></li>
 
 
 
