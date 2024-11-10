@@ -93,14 +93,10 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Html][Html.com]][Html-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![Html][html.spec.whatwg.org/]][Html-url]
+* [![NodeJS][Nodejs.org]][Nodejs-url]
+Need More of these buttons for other dependancies. 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -119,6 +115,8 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 
+* Node.js: https://nodejs.org/
+
 * Vitest
   ```sh
   npm i -D vitest
@@ -134,6 +132,8 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install npm@latest -g
    ```
+3. Install Node.js: https://nodejs.org/
+  - ensure you check the box to install chocolaty.
 3. Install Vitest
    ```sh
    npm i -D vitest
