@@ -63,7 +63,7 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#project-setup">Project Setup</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
@@ -93,7 +93,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
+* [![Html][Html.com]][Html-url]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
@@ -106,10 +106,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 
-<!-- GETTING STARTED -->
-## Getting Started
+<!-- Project Setup -->
+## Project Setup
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
@@ -120,26 +119,30 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 
+* Vitest
+  ```sh
+  npm i -D vitest
+  ```
+
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/it-sd-capstone/huebrush.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
-   npm install
+   npm install npm@latest -g
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
+3. Install Vitest
    ```sh
-   git remote set-url origin it-sd-capstone/huebrush
-   git remote -v # confirm the changes
+   npm i -D vitest
    ```
+4. Confirm tests run (We should see both www.huebrush.com and huebrush.com resolve.):
+   ```sh
+   npm t
+   ```
+5. Confirm you can manually get to huebrush.com through a web browser. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
