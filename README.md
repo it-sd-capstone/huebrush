@@ -37,7 +37,7 @@
 <h3 align="center">HueBrush</h3>
 
   <p align="center">
-    project_description
+    HueBrush is a browser-based color-combining puzzle game. Players navigate through different levels using their arrow keys, collecting different color keys until their RGB combination matches the level's RGB target value. The game saves player progress on their local machine. 
     <br />
     <a href="https://github.com/it-sd-capstone/huebrush"><strong>Explore the docs »</strong></a>
     <br />
