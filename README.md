@@ -22,6 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Contact][issues-shield]][issues-url]
 <li><a href="#contact">Contact</a></li>
 
 
@@ -73,7 +74,6 @@
     <li><a href="#usage">Usage</a></li>
     
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -150,19 +150,6 @@ Install npm by running these commands in the VSCode terminal.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- ROADMAP -->
 ## Roadmap
 
@@ -213,18 +200,6 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/it-sd-capstone/huebrush.svg?style=for-the-badge
@@ -235,8 +210,8 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [stars-url]: https://github.com/it-sd-capstone/huebrush/stargazers
 [issues-shield]: https://img.shields.io/github/issues/it-sd-capstone/huebrush.svg?style=for-the-badge
 [issues-url]: https://github.com/it-sd-capstone/huebrush/issues
-[license-shield]: https://img.shields.io/github/license/it-sd-capstone/huebrush.svg?style=for-the-badge
-[license-url]: https://github.com/it-sd-capstone/huebrush/blob/master/LICENSE.txt
+[contact-shield]: https://img.shields.io/badge/Contact-Open%20for%20Inquiries-blue.svg?style=for-the-badge
+[contact-url]: #contact
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url-david]: https://www.linkedin.com/in/david-d-granger/
 [linkedin-url-nick]: https://www.linkedin.com/in/nicholas-c-32a08313b/
