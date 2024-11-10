@@ -22,9 +22,9 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][[linkedin-url](https://www.linkedin.com/in/david-d-granger/)]
 
 
 <!-- PROJECT LOGO -->
@@ -70,7 +70,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -83,7 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://huebrush.com)
+[![HueBrush][product-screenshot]](https://huebrush.com)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -165,11 +165,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
 See the [open issues](https://github.com/it-sd-capstone/huebrush/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -198,22 +193,11 @@ Don't forget to give the project a star! Thanks again!
   <img src="https://contrib.rocks/image?repo=it-sd-capstone/huebrush" alt="contrib.rocks image" />
 </a>
 
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
-Skyler Godfrey - sgodfrey@cvtc.edu
-Nick Cline - ncline1@student.cvtc.edu
-David Granger - dgranger4@cvtc.edu
+<p>Skyler Godfrey - sgodfrey@cvtc.edu</p>
+<p>Nick Cline - ncline1@student.cvtc.edu</p>
+<p>David Granger - dgranger4@cvtc.edu</p>
 
 
 Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it-sd-capstone/huebrush)
