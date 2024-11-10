@@ -96,7 +96,11 @@ TODO
 
 * [![Html][HTML.org]][Html-url]
 * [![NodeJS][Nodejs.org]][Nodejs-url]
-TODO Need More of these buttons for other dependancies. 
+* [![CSS][CSS.org]][CSS-url]
+* [![JavaScript][JavaScript.org]][JavaScript-url]
+* [![Three.js][Threejs.org]][Threejs-url]
+* [![Vite][Vitejs.org]][Vite-url]
+* [![Vitest][Vitest.dev]][Vitest-url]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -248,3 +252,13 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [Nodejs-url]: https://nodejs.org/en
 [HTML.org]: https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [html-url]: https://html.spec.whatwg.org/
+[CSS.org]: https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white
+[CSS-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[JavaScript.org]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+[JavaScript-url]: https://www.javascript.com/
+[Threejs.org]: https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white
+[Threejs-url]: https://threejs.org/
+[Vitejs.org]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vitejs.dev/
+[Vitest.dev]: https://img.shields.io/badge/Vitest-4FC08D?style=for-the-badge&logo=vitest&logoColor=white
+[Vitest-url]: https://vitest.dev/
