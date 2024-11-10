@@ -94,7 +94,7 @@ TODO
 
 ### Built With
 
-* [![Html][html.spec.whatwg.org/]][Html-url]
+* [![Html][HTML.org]][Html-url]
 * [![NodeJS][Nodejs.org]][Nodejs-url]
 TODO Need More of these buttons for other dependancies. 
 
@@ -246,3 +246,5 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [product-screenshot]: images/screenshot.png
 [Nodejs.org]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white
 [Nodejs-url]: https://nodejs.org/en
+[HTML.org]: https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white
+[Nodejs-url]: https://html.spec.whatwg.org/
