@@ -22,9 +22,12 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[![David's LinkedIn][linkedin-shield]][(https://www.linkedin.com/in/david-d-granger/)]
+[![LinkedIn][linkedin-shield]]David[linkedin-url-david]
+[![LinkedIn][linkedin-shield]]Nick[linkedin-url-nick]
+[![LinkedIn][linkedin-shield]]Skyler[linkedin-url-skyler]
+
+
+
 
 
 <!-- PROJECT LOGO -->
@@ -230,6 +233,9 @@ Project Link: [https://github.com/it-sd-capstone/huebrush](https://github.com/it
 [license-shield]: https://img.shields.io/github/license/it-sd-capstone/huebrush.svg?style=for-the-badge
 [license-url]: https://github.com/it-sd-capstone/huebrush/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url-david]: https://www.linkedin.com/in/david-d-granger/
+[linkedin-url-nick]: https://www.linkedin.com/in/nicholas-c-32a08313b/
+[linkedin-url-skyler]: https://www.linkedin.com/in/skyler-godfrey-4861682a0/
 [product-screenshot]: images/screenshot.png
 [Nodejs.org]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white
 [Nodejs-url]: https://nodejs.org/en
