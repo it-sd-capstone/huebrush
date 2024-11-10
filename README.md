@@ -141,6 +141,11 @@ Install npm by running these commands in the VSCode terminal.
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Create a game engine allowing players to move through space and collect objects to solve color-based puzzles. At least three levels/scenes/etc. will be built manually.
+- [ ] Automatically save and restore the game state using local storage.
+- [ ] Alter the game world based on a player interaction with an object (such as a switch that moves a boulder) and incorporate this into at least two levels (pre-existing or new).
+
+
 See the [open issues](https://github.com/it-sd-capstone/huebrush/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
