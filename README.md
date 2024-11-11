@@ -85,8 +85,6 @@
 * [![NodeJS][Nodejs.org]][Nodejs-url]
 * [![CSS][CSS.org]][CSS-url]
 * [![JavaScript][JavaScript.org]][JavaScript-url]
-* [![Three.js][Threejs.org]][Threejs-url]
-* [![Vite][Vitejs.org]][Vite-url]
 * [![Vitest][Vitest.dev]][Vitest-url]
 
 
