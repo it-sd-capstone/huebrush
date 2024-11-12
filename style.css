@@ -1,0 +1,28 @@
+#container {
+  position: relative;
+  background: green;
+  width: 420px;
+  height: 420px;
+  z-index: -1;
+}
+
+#myBox {
+  position: absolute;
+  background: red;
+  width: 30px;
+  height: 30px;
+}
+
+#gate {
+  position: absolute;
+  background: purple;
+  width: 30px;
+  height: 30px;
+}
+
+#key {
+  position: absolute;
+  background: blue;
+  width: 30px;
+  height: 30px;
+}
