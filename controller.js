@@ -1,6 +1,4 @@
-let box = document.getElementById("box");
-let key = document.getElementById("key");
-let gate = document.getElementById("gate");
+let box = document.getElementById("#myBox");
 let moveBy = 10;
 let opacity = 1;
 
@@ -12,11 +10,19 @@ window.addEventListener('load', () => {
 
 
 // function drainColor() {
+//   let boxColorGrabber = window.getComputedStyle(box);
+//   let boxColor = boxColorGrabber.backgroundColor;
+
 //   if (opacity > 0) {
-//     opacity -= 0.1;
-//     box.style.backgroundColor = `rgba(0, 128, 0, ${opacity})`;
+//     opacity -= 0.0;
+
+//     let rgbValues = boxColor.match(/\d+/g); 
+//     if (rgbValues) {
+//       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
+//     }
+
 //   } else if (opacity <= 0) {
-//     console.log("Game Over")
+//     console.log("Game Over");
 //   }
 // }
 
@@ -57,11 +63,5 @@ function checkKey() {
     if (box.style.top == key.style.top && box.style.left == key.style.left) {
         box.style.background = "green";
         key.remove();
-    }
-}
-
-function checkGate() {
-    if (box.style.background = gate.style.background) {
-        gate.remove();
     }
 }

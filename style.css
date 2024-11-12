@@ -1,24 +1,28 @@
-#level {
-    height: 420px;
-    width: 420px;
-    background-color: black;
+#container {
+  position: relative;
+  background: green;
+  width: 420px;
+  height: 420px;
+  z-index: -1;
 }
-#box {
-  height: 30px;
+
+#myBox {
+  position: absolute;
+  background: red;
   width: 30px;
-  background-color: yellow;
+  height: 30px;
 }
 
 #gate {
-    position: absolute;
-    background: green;
-    width: 30px;
-    height: 30px;
+  position: absolute;
+  background: purple;
+  width: 30px;
+  height: 30px;
 }
-  
+
 #key {
-    position: absolute;
-    background: blue;
-    width: 30px;
-    height: 30px;
+  position: absolute;
+  background: blue;
+  width: 30px;
+  height: 30px;
 }
