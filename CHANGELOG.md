@@ -4,7 +4,7 @@
 ## [Unreleased]
  
 ### Added
-- Create four canvas 3-4 covered by fog of war. This is likely to be changed to a different approach to the level design. @SkylerGodfrey
+- Description of feature (Issue #ifApplicable) @SkylerGodfrey
  
 ### Changed
  
