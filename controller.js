@@ -26,30 +26,44 @@ function drainColor() {
 }
 
 document.addEventListener('keydown', (e) => {
+
+  let container = document.querySelector('#container');
+  let boxRect = box.getBoundingClientRect();
+  let containerRect = container.getBoundingClientRect();
+
+
   switch (e.key) {
     case 'ArrowUp':
     case 'w':
-      box.style.top = parseInt(box.style.top) - moveBy + 'px';
-      drainColor();
-      checkKey()
+      if (boxRect.top - moveBy >= containerRect.top) {
+        box.style.top = parseInt(box.style.top) - moveBy + 'px';
+        drainColor();
+        checkKey();
+      }
       break;
     case 'ArrowDown':
     case 's':
-      box.style.top = parseInt(box.style.top) + moveBy + 'px';
-      drainColor();
-      checkKey()
+      if (boxRect.bottom + moveBy <= containerRect.bottom) {
+        box.style.top = parseInt(box.style.top) + moveBy + 'px';
+        drainColor();
+        checkKey();
+      }
       break;
     case 'ArrowLeft':
     case 'a':
-      box.style.left = parseInt(box.style.left) - moveBy + 'px';
-      drainColor();
-      checkKey()
+      if (boxRect.left - moveBy >= containerRect.left) {
+        box.style.left = parseInt(box.style.left) - moveBy + 'px';
+        drainColor();
+        checkKey();
+      }
       break;
     case 'ArrowRight':
     case 'd':
-      box.style.left = parseInt(box.style.left) + moveBy + 'px';
-      drainColor();
-      checkKey()
+      if (boxRect.right + moveBy <= containerRect.right) {
+        box.style.left = parseInt(box.style.left) + moveBy + 'px';
+        drainColor();
+        checkKey();
+      }
       break;
   }
 });
