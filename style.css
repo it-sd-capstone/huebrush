@@ -1,37 +1,18 @@
 #game_canvas {
   display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 100%;
 }
 
-#container {
-  position: relative;
-  background: green;
-  width: 1000px;
-  height: 600px;
-  z-index: -1;
-}
-
-#myBox {
-  position: absolute;
-  background: red;
-  width: 30px;
-  height: 30px;
-}
-
-#gate {
-  position: absolute;
-  background: purple;
-  width: 30px;
-  height: 30px;
-}
-
-#key {
-  position: absolute;
-  background: blue;
-  width: 30px;
-  height: 30px;
+.box {
+  flex: 1 1 50%; 
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #000;
+  padding: 20px;
 }
 
 body {
@@ -40,7 +21,8 @@ body {
   background-color: #1a1919;
   color: #333;
 }
-.container {
+
+#container {
   width: 80%;
   margin: 0 auto;
   max-width: 1200px;
