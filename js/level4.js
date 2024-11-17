@@ -6,6 +6,8 @@ function createLevel4() {
   level4.style.background = 'purple';
   level4.style.width = '0px';
   level4.style.height = '0px';
+  level4.style.padding = '0';
+  level4.style.border = '0';
   level4.style.zIndex = '2';
   level4.style.margin = 0;
   level4.style.transition = 'left 1.5s ease';

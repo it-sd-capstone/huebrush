@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { pingDomain } from './pingService';
+import { pingDomain } from './js/pingService';
 
 const url = "huebrush.com";
 
