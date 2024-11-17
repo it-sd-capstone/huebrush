@@ -15,7 +15,7 @@
 
 #gate {
   position: absolute;
-  background: purple;
+  background: rgba(255, 0, 255, 1);
   width: 30px;
   height: 30px;
 }
@@ -26,3 +26,10 @@
   width: 30px;
   height: 30px;
 }
+
+#ammo {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+

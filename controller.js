@@ -1,6 +1,9 @@
 let box = document.querySelector('#myBox');
+let ammo = document.querySelector('#ammo');
+
 let moveBy = 10;
 let opacity = 1;
+let keyCount = 0;
 
 window.addEventListener('load', () => {
   box.style.position = 'absolute';
@@ -8,12 +11,13 @@ window.addEventListener('load', () => {
   box.style.top = 0;
 });
 
+
 function drainColor() {
   let boxColorGrabber = window.getComputedStyle(box);
   let boxColor = boxColorGrabber.backgroundColor;
 
   if (opacity > 0) {
-    opacity -= 0.0;
+    opacity -= 0.00;
 
     let rgbValues = boxColor.match(/\d+/g); 
     if (rgbValues) {
@@ -30,33 +34,34 @@ document.addEventListener('keydown', (e) => {
     case 'ArrowUp':
     case 'w':
       box.style.top = parseInt(box.style.top) - moveBy + 'px';
+      ammo.style.top = 6 - moveBy + 'px';
       drainColor();
-      checkKey()
       break;
     case 'ArrowDown':
     case 's':
       box.style.top = parseInt(box.style.top) + moveBy + 'px';
+      ammo.style.top = 6 - moveBy + 'px';
+
       drainColor();
-      checkKey()
       break;
     case 'ArrowLeft':
     case 'a':
       box.style.left = parseInt(box.style.left) - moveBy + 'px';
+      ammo.style.left = 6 - moveBy + 'px';
+
       drainColor();
-      checkKey()
       break;
     case 'ArrowRight':
     case 'd':
       box.style.left = parseInt(box.style.left) + moveBy + 'px';
+      ammo.style.left = 6 - moveBy + 'px';
+
       drainColor();
-      checkKey()
       break;
   }
 });
 
-function checkKey() {
-  if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
-    box.style.background = "purple";
-    key.remove();
-  }
-}
+
+
+
+
