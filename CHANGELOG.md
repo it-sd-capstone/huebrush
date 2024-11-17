@@ -4,7 +4,11 @@
 ## [Unreleased]
  
 ### Added
-- Description of feature (Issue #ifApplicable) @SkylerGodfrey
+- Update website to dark mode. @SkylerGodfrey
+- Created canvas bounds so player can not leave canvas when moving MyBox. @SkylerGodfrey
+- Created level transition feature, including proper scaling of objects. @SkylerGodfrey
+- Created level 1 objects and finished level 1 design. @SkylerGodfrey
+- Created collision system for objects with 'wallSolid' class. @SkylerGodfrey
  
 ### Changed
  
