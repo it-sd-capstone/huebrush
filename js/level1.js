@@ -746,6 +746,7 @@ function createLevel1() {
 
   const myBox = document.createElement('div');
   myBox.id = 'myBox';
+  myBox.classList.add("myBox"); //change in the future ngc
   myBox.style.position = 'absolute';
   myBox.style.background = 'grey';
   myBox.style.width = '20px';
@@ -753,6 +754,21 @@ function createLevel1() {
   myBox.style.top = '300px';
   myBox.style.left = '300px';
   myBox.style.zIndex = '3';
+
+  const enemy = document.createElement('div');
+  enemy.id = 'enemy';
+  enemy.classList.add("enemy");
+  enemy.style.position = 'absolute';
+  enemy.style.background = 'orange';
+  enemy.style.width = '30px';
+  enemy.style.height = '30px';
+  enemy.style.borderRadius = '50px';
+  enemy.style.left = '1000px'; 
+  enemy.style.top = '0px';
+  enemy.style.zIndex = '3';
+  enemy.style.position = 'absolute';
+  enemy.style.left = '1000px'; 
+  enemy.style.top = '0px';
 
   const gate1 = document.createElement('div');
   gate1.id = 'gate1';
@@ -809,6 +825,7 @@ function createLevel1() {
   level1.appendChild(wallSolid1);
   level1.appendChild(wallSolid2);
   level1.appendChild(levelEnd);
+  level1.appendChild(enemy);
 
   document.querySelector('#game_canvas').appendChild(level1);
 }
