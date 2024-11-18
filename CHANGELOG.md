@@ -9,6 +9,8 @@
 - Created level transition feature, including proper scaling of objects. @SkylerGodfrey
 - Created level 1 objects and finished level 1 design. @SkylerGodfrey
 - Created collision system for objects with 'wallSolid' class. @SkylerGodfrey
+- Created inventory system @ph4zers
+- Created ammo system @ph4zers
  
 ### Changed
  
@@ -22,10 +24,5 @@ Created skeleton of project.
   - Add files for tech stack.
   - Add ReadMe
 
-### Added
-  - Add invetory methods
-  - Add global array for inventory
-  - Add global counter for inventory array
-  - Add basic method for color change
-  - Add placeholder inventory divs
-  - Add method to randomly place a new key within the level
+
+ 
