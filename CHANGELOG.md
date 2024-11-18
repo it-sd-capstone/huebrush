@@ -11,7 +11,9 @@
 - Created collision system for objects with 'wallSolid' class. @SkylerGodfrey
 - Created inventory system @ph4zers
 - Created ammo system @ph4zers
- 
+- Created enemy movement system and box targetting @Yams650
+- Created enemy design @Yams650
+
 ### Changed
  
 ### Fixed
