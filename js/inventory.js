@@ -1,27 +1,28 @@
+document.addEventListener('DOMContentLoaded', () => {
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var everyLake = document.querySelectorAll('.lake');
 var container = document.querySelector("#container");
-
-for (i = 0; i < everyKey.length; i++) {
-    console.log("key" + i + ": " + everyLake[i]);
-}
+const box = document.querySelector("#myBox");
 
 document.addEventListener('keydown',  (e) => {
-    console.log('Key pressed:', e.key);
+    
     if (e.key == 'f') {
-        checkProximity();
+        var nearbyLake = Array.from(document.querySelectorAll('.lake'));
+        console.log(nearbyLake);
+        nearbyLake = document.querySelectorAll(".lake");
+        checkProximity(nearbyLake);
     }
 });
 
-function checkProximity() {
-    for (i = 0; i < everyLake.length; i++) {
-        var keyTop = parseFloat(everyLake[i].style.top);
-        var keyLeft = parseFloat(everyLake[i].style.left);
+
+function checkProximity(object) {
+    for (i = 0; i < object.length; i++) {
+        var lakeTop = parseFloat(object[i].style.top);
+        var lakeLeft = parseFloat(object[i].style.left);
         var boxTop = parseFloat(box.style.top);
         var boxLeft = parseFloat(box.style.left);
 
-        if (Math.abs(keyTop - boxTop) <= 10 && Math.abs(keyLeft - boxLeft) <= 10) {
-            addToInventory(everyLake[i]);
+        if (Math.abs(lakeTop - boxTop) <= 10 && Math.abs(lakeLeft - boxLeft) <= 10) {
+            addToInventory(object[i]);
         }
     }
 }
@@ -73,9 +74,7 @@ function spawnNewKey(key) {
 function displayItem(slotIndex, color) {
     var idNum = slotIndex + 1;
     var id = "inv" + idNum;
-    console.log(id);
     const item = document.getElementById(`${id}`);
-    console.log(item);
     item.style.background = `${color}`;
-    console.log(item);
 }
+});
