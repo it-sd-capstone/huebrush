@@ -2,19 +2,64 @@
 <html>
  
 <head>
-    <title>
-        Move that box!
-    </title>
-    <link href="style.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> HueBrush! </title>
+  <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 
-<div id="container">
-  <div id="myBox" style="top: 0px; left: 0px;"></div>
-  <div id="gate" style="top: 0px; left: 390px;"></div>
-  <div id="key" style="top: 390px; left: 390px;"></div>
+  <!-- Header Section -->
+  <header>
+    <div class="container">
+        <nav>
+            <h1> HUEBRUSH LOGO HERE </h1>
+        </nav>
+    </div>
+  </header>
+
+  
+
+  <section id="game_canvas">
+    <!--<div id="enemy">>:(</div>-->
+  </section>
+  <div id="inventory" style="position: relative; display: inline-block;">
+    <img id="inventoryDisplay" src="images/inventory.png" alt="Picture of a square inventory box with 16 spaces" style="display: block; height: 300px; position: absolute;">
+    <div id="inv1" style="width: 36px; height: 36px; position: absolute; top: 55px; left: 66px;"></div>
+    <div id="inv2" style="width: 36px; height: 36px; position: absolute; top: 55px; left: 110px;"></div>
+    <div id="inv3" style="width: 36px; height: 36px; position: absolute; top: 55px; left: 154px;"></div>
+    <div id="inv4" style="width: 36px; height: 36px; position: absolute; top: 55px; left: 198px;"></div>
+    <div id="inv5" style="width: 36px; height: 36px; position: absolute; top: 98px; left: 66px;"></div>
+    <div id="inv6" style="width: 36px; height: 36px; position: absolute; top: 98px; left: 110px;"></div>
+    <div id="inv7" style="width: 36px; height: 36px; position: absolute; top: 98px; left: 154px;"></div>
+    <div id="inv8" style="width: 36px; height: 36px; position: absolute; top: 98px; left: 198px;"></div>
+    <div id="inv9" style="width: 36px; height: 36px; position: absolute; top: 141px; left: 66px;"></div>
+    <div id="inv10" style="width: 36px; height: 36px; position: absolute; top: 141px; left: 110px;"></div>
+    <div id="inv11" style="width: 36px; height: 36px; position: absolute; top: 141px; left: 154px;"></div>
+    <div id="inv12" style="width: 36px; height: 36px; position: absolute; top: 141px; left: 198px;"></div>
+    <div id="inv13" style="width: 36px; height: 36px; position: absolute; top: 184px; left: 66px;"></div>
+    <div id="inv14" style="width: 36px; height: 36px; position: absolute; top: 184px; left: 110px;"></div>
+    <div id="inv15" style="width: 36px; height: 36px; position: absolute; top: 184px; left: 154px;"></div>
+    <div id="inv16" style="width: 36px; height: 36px; position: absolute; top: 184px; left: 198px;"></div>
+
 </div>
 </body>
 
-<script src="controller.js" type ="text/javascript"></script>
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Huebrush. All rights reserved.</p>
+    <div class="social-links">
+        <a href="https://github.com/#" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+<script src="/js/level1.js" type="text/javascript"></script>
+<script src="/js/level2.js" type="text/javascript"></script>
+<script src="/js/level3.js" type="text/javascript"></script>
+<script src="/js/level4.js" type="text/javascript"></script>
+<script src="/js/controller.js" type ="text/javascript"></script>
+<script src="/js/inventory.js" type="text/javascript"></script>
+
+
+
 </html>
