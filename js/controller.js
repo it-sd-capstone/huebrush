@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const moveBy = 10;
 
   //Move Enemy Variables
-let enemy = document.querySelector('#enemy');
+let enemy = document.querySelector('#game_canvas #enemy');
 let moveSpeed = 50; //px per sec
 let lastTime = 0;
 
@@ -23,6 +23,12 @@ window.addEventListener('load', () => {
   enemy.style.top = '0px';
   requestAnimationFrame(chaseBox);
 });
+
+window.addEventListener("keydown", function(e) {
+  if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+      e.preventDefault();
+  }
+}, false);
 
 // ##### TODO rework where color drain occurs ######
 // function drainColor() {
@@ -147,16 +153,16 @@ function getObjectsRelativeToContainer(container, object) {
 
 function chaseBox(time) {
   let player = getObjectsRelativeToContainer(container, box);
-  console.log("player is " + player);
+
   if (!lastTime) lastTime = time; 
 
   // Calculate time since last frame
   let delta = (time - lastTime) / 1000;
   lastTime = time;
-  console.log(player.left)
+  
   // Get the current position of the box 
-  let boxX = parseFloat(player.object.left);
-  let boxY = parseFloat(player.object.top);
+  let boxX = parseFloat(player[0].left);
+  let boxY = parseFloat(player[0].top);
   
   // Get the current position of the enemy element
   let enemyX = parseFloat(enemy.style.left);
@@ -165,8 +171,6 @@ function chaseBox(time) {
   // Calculate the difference in position
   let dx = boxX - enemyX;
   let dy = boxY - enemyY;
-  console.log(boxX)
-  console.log(boxY)
 
   // Vector Math
   let distance = Math.sqrt((dx * dx) + (dy * dy));
@@ -185,10 +189,10 @@ function chaseBox(time) {
   } 
 
   // Catch the box
-  // if (Math.abs(enemyX - boxX) < 30 && Math.abs(enemyY - boxY) < 30) {
-  //   alert('You have been caught!');
-  //   return; 
-  // }
+  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+    alert('You have been caught!');
+    return; 
+  }
 
   // Continue the chase
   requestAnimationFrame(chaseBox);
