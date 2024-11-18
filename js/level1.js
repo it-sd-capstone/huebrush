@@ -746,6 +746,7 @@ function createLevel1() {
 
   const myBox = document.createElement('div');
   myBox.id = 'myBox';
+  myBox.classList.add("myBox"); //change in the future ngc
   myBox.style.position = 'absolute';
   myBox.style.background = 'grey';
   myBox.style.width = '20px';

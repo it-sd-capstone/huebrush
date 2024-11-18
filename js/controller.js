@@ -5,14 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
   //createLevel4();
   const box = document.querySelector('#myBox');
   const container = document.querySelector('#game_canvas');
-  console.log(container)
   const moveBy = 10;
+
+  //Move Enemy Variables
+let enemy = document.querySelector('#enemy');
+let moveSpeed = 50; //px per sec
+let lastTime = 0;
 
 window.addEventListener('load', () => {
   let level1Objects = getLevel1Objects();
   //levelTransition(['#level1'],level1Objects, true, false, '#level2', '500px','600px');
   //levelTransition(['#level1', '#level2'],level1Objects, false, true, '#level3','1000px','300px');
   //levelTransition(['#level3'],level1Objects, true, false, '#level4', '500px', '300px');
+
+  enemy.style.position = 'absolute';
+  enemy.style.left = '1000px'; 
+  enemy.style.top = '0px';
+  requestAnimationFrame(chaseBox);
 });
 
 // ##### TODO rework where color drain occurs ######
@@ -115,6 +124,74 @@ function isColliding(rect1, rect2) {
       rect1.right <= rect2.left ||
       rect1.left >= rect2.right
   );
+}
+
+function getObjectsRelativeToContainer(container, object) {
+  console.log(object)
+  const containerRect = container.getBoundingClientRect();
+  return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
+      const wallRect = wall.getBoundingClientRect();
+      return {
+          top: wallRect.top - containerRect.top,
+          bottom: wallRect.bottom - containerRect.top,
+          left: wallRect.left - containerRect.left,
+          right: wallRect.right - containerRect.left,
+          width: wallRect.width,
+          height: wallRect.height,
+      };
+  });
+}
+
+
+//Move Enemy Program
+
+function chaseBox(time) {
+  let player = getObjectsRelativeToContainer(container, box);
+  console.log("player is " + player);
+  if (!lastTime) lastTime = time; 
+
+  // Calculate time since last frame
+  let delta = (time - lastTime) / 1000;
+  lastTime = time;
+  console.log(player.left)
+  // Get the current position of the box 
+  let boxX = parseFloat(player.object.left);
+  let boxY = parseFloat(player.object.top);
+  
+  // Get the current position of the enemy element
+  let enemyX = parseFloat(enemy.style.left);
+  let enemyY = parseFloat(enemy.style.top);
+
+  // Calculate the difference in position
+  let dx = boxX - enemyX;
+  let dy = boxY - enemyY;
+  console.log(boxX)
+  console.log(boxY)
+
+  // Vector Math
+  let distance = Math.sqrt((dx * dx) + (dy * dy));
+  
+   if (distance > 0) {
+    dx /= distance;
+    dy /= distance;
+
+    // Move the enemy
+    enemyX += dx * moveSpeed * delta;
+    enemyY += dy * moveSpeed * delta;
+    
+    enemy.style.left = `${enemyX}px`;
+    enemy.style.top = `${enemyY}px`;
+
+  } 
+
+  // Catch the box
+  // if (Math.abs(enemyX - boxX) < 30 && Math.abs(enemyY - boxY) < 30) {
+  //   alert('You have been caught!');
+  //   return; 
+  // }
+
+  // Continue the chase
+  requestAnimationFrame(chaseBox);
 }
 
 // TODO: Needs reworked.

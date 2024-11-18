@@ -63,3 +63,11 @@ footer .social-links a {
   margin: 0 10px;
   font-size: 1.2rem;
 }
+
+#enemy {
+  position: absolute;
+  background: orange;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+}
