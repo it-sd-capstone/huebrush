@@ -1,45 +1,43 @@
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var everyKey = document.querySelectorAll('#key');
+var everyLake = document.querySelectorAll('.lake');
 var container = document.querySelector("#container");
 
 for (i = 0; i < everyKey.length; i++) {
-    console.log("key" + i + ": " + everyKey[i]);
+    console.log("key" + i + ": " + everyLake[i]);
 }
 
 document.addEventListener('keydown',  (e) => {
     console.log('Key pressed:', e.key);
     if (e.key == 'f') {
-        console.log("Checking proximity!");
         checkProximity();
     }
 });
 
 function checkProximity() {
-    for (i = 0; i < everyKey.length; i++) {
-        var keyTop = parseFloat(everyKey[i].style.top);
-        var keyLeft = parseFloat(everyKey[i].style.left);
+    for (i = 0; i < everyLake.length; i++) {
+        var keyTop = parseFloat(everyLake[i].style.top);
+        var keyLeft = parseFloat(everyLake[i].style.left);
         var boxTop = parseFloat(box.style.top);
         var boxLeft = parseFloat(box.style.left);
 
         if (Math.abs(keyTop - boxTop) <= 10 && Math.abs(keyLeft - boxLeft) <= 10) {
-            addToInventory(everyKey[i]);
+            addToInventory(everyLake[i]);
         }
     }
 }
 
-function addToInventory(key) {
-    combineColors(key);
+function addToInventory(lake) {
+    //combineColors(key);
 
-    console.log(slot.length);
     for (i = 0; i < slot.length; i++) {
         if (slot[i] == "x") {
-            slot[i] = key.getAttribute("color");
+            slot[i] = lake.style.background;
 
-            spawnNewKey(key);
-            key.remove();
-            displayItem(i, key.getAttribute("color"));
+            //spawnNewKey(key);
+            //key.remove();
+            displayItem(i, lake.style.background);
 
-            everyKey = document.querySelectorAll('#key');
+            //everyLake = document.querySelectorAll('.lake');
             ammo.style.background = `${slot[0]}`;
             break;
         }
@@ -62,8 +60,8 @@ function spawnNewKey(key) {
     const newKey = document.createElement("div");
     
     newKey.id = "key";
-    newKey.style.background = key.getAttribute("color");
-    newKey.setAttribute("color", key.getAttribute("color"));
+    newKey.style.background = key.style.background;
+    newKey.setAttribute("color", key.style.background);
     newKey.setAttribute("count", `${keyCount}`);
     newKey.style.left = `${Math.floor(Math.random() * 361)}px`;
     newKey.style.top = `${Math.floor(Math.random() * 361)}px`;

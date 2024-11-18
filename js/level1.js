@@ -13,7 +13,7 @@ function createLevel1() {
 
   const lakeBlue = document.createElement('div');
   lakeBlue.id = 'lakeBlue';
-  lakeBlue.classList.add("lakeBlue");
+  lakeBlue.classList.add("lake");
     const lakeBlue1 = document.createElement('div');
     lakeBlue1.id = 'lakeBlue1';
     lakeBlue1.classList.add("lakeBlue");
@@ -79,7 +79,7 @@ function createLevel1() {
 
   const lakeRed = document.createElement('div');
   lakeRed.id = 'lakeRed';
-  lakeRed.classList.add("lakeRed");
+  lakeRed.classList.add("lake");
     const lakeRed1 = document.createElement('div');
     lakeRed1.id = 'lakeRed1';
     lakeRed1.classList.add("lakeRed");
@@ -168,11 +168,11 @@ function createLevel1() {
 
   const lakeGreen = document.createElement('div');
   lakeGreen.id = 'lakeGreen';
-  lakeGreen.classList.add("lakeGreen");
+  lakeGreen.classList.add("lake");
 
     const lakeGreen1 = document.createElement('div');
     lakeGreen1.id = 'lakeGreen1';
-    lakeGreen1.classList.add("lakeGreen");
+    lakeGreen1.classList.add("lake");
     lakeGreen1.style.position = 'absolute';
     lakeGreen1.style.background = 'green';
     lakeGreen1.style.width = '100px';
@@ -183,7 +183,7 @@ function createLevel1() {
 
     const lakeGreen2 = document.createElement('div');
     lakeGreen2.id = 'lakeGreen2';
-    lakeGreen2.classList.add("lakeGreen");
+    lakeGreen2.classList.add("lake");
     lakeGreen2.style.position = 'absolute';
     lakeGreen2.style.background = 'green';
     lakeGreen2.style.width = '80px';
@@ -194,7 +194,7 @@ function createLevel1() {
 
     const lakeGreen3 = document.createElement('div');
     lakeGreen3.id = 'lakeGreen3';
-    lakeGreen3.classList.add("lakeGreen");
+    lakeGreen3.classList.add("lake");
     lakeGreen3.style.position = 'absolute';
     lakeGreen3.style.background = 'green';
     lakeGreen3.style.width = '40px';
@@ -205,7 +205,7 @@ function createLevel1() {
 
     const lakeGreen4 = document.createElement('div');
     lakeGreen4.id = 'lakeGreen4';
-    lakeGreen4.classList.add("lakeGreen");
+    lakeGreen4.classList.add("lake");
     lakeGreen4.style.position = 'absolute';
     lakeGreen4.style.background = 'green';
     lakeGreen4.style.width = '20px';
@@ -216,7 +216,7 @@ function createLevel1() {
 
     const lakeGreen5 = document.createElement('div');
     lakeGreen5.id = 'lakeGreen5';
-    lakeGreen5.classList.add("lakeGreen");
+    lakeGreen5.classList.add("lake");
     lakeGreen5.style.position = 'absolute';
     lakeGreen5.style.background = 'green';
     lakeGreen5.style.width = '40px';
@@ -227,7 +227,7 @@ function createLevel1() {
 
     const lakeGreen6 = document.createElement('div');
     lakeGreen6.id = 'lakeGreen6';
-    lakeGreen6.classList.add("lakeGreen");
+    lakeGreen6.classList.add("lake");
     lakeGreen6.style.position = 'absolute';
     lakeGreen6.style.background = 'green';
     lakeGreen6.style.width = '40px';
