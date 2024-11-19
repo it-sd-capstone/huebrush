@@ -5,12 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
   //createLevel4();
   const box = document.querySelector('#myBox');
   const container = document.querySelector('#game_canvas');
+  const ammo = document.querySelector('#ammo');
   const moveBy = 10;
 
   //Move Enemy Variables
 let enemy = document.querySelector('#game_canvas #enemy');
 let moveSpeed = 50; //px per sec
 let lastTime = 0;
+
 
 window.addEventListener('load', () => {
   let level1Objects = getLevel1Objects();
@@ -53,6 +55,11 @@ document.addEventListener('keydown', (e) => {
       let containerRect = container.getBoundingClientRect();
       let newTop = parseInt(box.style.top);
       let newLeft = parseInt(box.style.left);
+      
+      //ammo
+      let ammoRect = ammo.getBoundingClientRect();
+      let newAmmoTop = parseInt(ammo.style.top);
+      let newAmmoLeft = parseInt(ammo.style.left);
 
       // Compute new position without applying it
       switch (e.key) {
@@ -60,24 +67,29 @@ document.addEventListener('keydown', (e) => {
           case 'w':
               if (boxRect.top - moveBy >= containerRect.top) {
                   newTop -= moveBy;
+                  newAmmoTop -= moveBy;
               }
               break;
           case 'ArrowDown':
           case 's':
               if (boxRect.bottom + moveBy <= containerRect.bottom) {
                   newTop += moveBy;
+                  newAmmoTop += moveBy;
+
               }
               break;
           case 'ArrowLeft':
           case 'a':
               if (boxRect.left - moveBy >= containerRect.left) {
                   newLeft -= moveBy;
+                  newAmmoLeft -= moveBy;
               }
               break;
           case 'ArrowRight':
           case 'd':
               if (boxRect.right + moveBy <= containerRect.right) {
                   newLeft += moveBy;
+                  newAmmoLeft += moveBy;
               }
               break;
           default:
@@ -90,6 +102,14 @@ document.addEventListener('keydown', (e) => {
           bottom: newTop + boxRect.height,
           left: newLeft,
           right: newLeft + boxRect.width,
+      };
+
+      //Simulate new ammo position
+      const simulatedAmmo = {
+          top: newAmmoTop,
+          bottom: newAmmoTop + ammoRect.height,
+          left: newAmmoLeft,
+          right: newAmmoLeft + ammoRect.width
       };
 
       // Get walls' positions relative to the container
@@ -106,6 +126,8 @@ document.addEventListener('keydown', (e) => {
       // No collisions; apply the new position
       box.style.top = `${newTop}px`;
       box.style.left = `${newLeft}px`;
+      ammo.style.top = `${newAmmoTop}px`;
+      ammo.style.left = `${newAmmoLeft}px`;
   });
 
 function getWallsRelativeToContainer(container) {
@@ -133,7 +155,6 @@ function isColliding(rect1, rect2) {
 }
 
 function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
   const containerRect = container.getBoundingClientRect();
   return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
       const wallRect = wall.getBoundingClientRect();
@@ -180,8 +201,8 @@ function chaseBox(time) {
     dy /= distance;
 
     // Move the enemy
-    enemyX += dx * moveSpeed * delta;
-    enemyY += dy * moveSpeed * delta;
+    //enemyX += dx * moveSpeed * delta;
+    //enemyY += dy * moveSpeed * delta;
     
     enemy.style.left = `${enemyX}px`;
     enemy.style.top = `${enemyY}px`;
@@ -215,7 +236,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
     let canvasHeight =canvasToTransition.getBoundingClientRect().height;
 
     canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
 
     if (xAxis == true) {
       canvasToTransition.style.width = (canvasWidth / 2) + 'px';
@@ -251,7 +271,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
 
 function updateTransform(object, key, value) {
   let current = window.getComputedStyle(object).transform;
-  console.log(current)
   let transform = current !== 'none' ? current : '';
   let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
 

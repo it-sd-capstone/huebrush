@@ -755,6 +755,17 @@ function createLevel1() {
   myBox.style.left = '300px';
   myBox.style.zIndex = '3';
 
+  //ammo creation
+  const ammo = document.createElement('div');
+  ammo.classList.add("ammo");
+  ammo.style.position = 'absolute';
+  ammo.style.width = '10px';
+  ammo.style.height = '10px';
+  ammo.style.top = '296px';
+  ammo.style.left = '296px';
+  ammo.style.zIndex = '4';
+  ammo.id = 'ammo';
+
   const enemy = document.createElement('div');
   enemy.id = 'enemy';
   enemy.classList.add("enemy");
@@ -826,6 +837,8 @@ function createLevel1() {
   level1.appendChild(wallSolid2);
   level1.appendChild(levelEnd);
   level1.appendChild(enemy);
+  level1.appendChild(ammo);
+
 
   document.querySelector('#game_canvas').appendChild(level1);
 }

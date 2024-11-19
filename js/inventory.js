@@ -1,45 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
-var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var container = document.querySelector("#container");
+let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
+let container = document.querySelector("#container");
+let colorCount = 0;
 const box = document.querySelector("#myBox");
 
 document.addEventListener('keydown',  (e) => {
     
     if (e.key == 'f') {
         var nearbyLake = Array.from(document.querySelectorAll('.lake'));
-        console.log(nearbyLake);
         nearbyLake = document.querySelectorAll(".lake");
         checkProximity(nearbyLake);
     }
 });
 
-
+//does not work if the box is perfectly in the middle of 2 lake segments
 function checkProximity(object) {
     for (i = 0; i < object.length; i++) {
-        var lakeTop = parseFloat(object[i].style.top);
-        var lakeLeft = parseFloat(object[i].style.left);
-        var boxTop = parseFloat(box.style.top);
-        var boxLeft = parseFloat(box.style.left);
+        const lakeTop = parseFloat(object[i].style.top);
+        const lakeLeft = parseFloat(object[i].style.left);
+        const lakeHeight = parseFloat(object[i].style.height);
+        const lakeWidth = parseFloat(object[i].style.width);
+        const boxTop = parseFloat(box.style.top);
+        const boxLeft = parseFloat(box.style.left);
+        const boxHeight = parseFloat(box.style.height);
+        const boxWidth = parseFloat(box.style.width);
 
-        if (Math.abs(lakeTop - boxTop) <= 10 && Math.abs(lakeLeft - boxLeft) <= 10) {
+        const lakeRight = lakeLeft + lakeWidth;
+        const lakeBottom = lakeTop + lakeHeight;
+        const boxRight = boxLeft + boxWidth;
+        const boxBottom = boxTop + boxHeight;
+
+        
+        const isCloseHorizontally = Math.abs(lakeLeft - boxRight) <= 11 || Math.abs(lakeRight - boxLeft) <= 11;
+        const isCloseVertically = Math.abs(lakeTop - boxBottom) <= 11 || Math.abs(lakeBottom - boxTop) <= 11;
+        const isContained = boxTop >= lakeTop && boxBottom <= lakeBottom && boxLeft >= lakeLeft && boxRight <= lakeRight;
+
+        if ((isCloseHorizontally && isCloseVertically) || isContained) {
             addToInventory(object[i]);
+            break;
         }
+        
     }
 }
 
 function addToInventory(lake) {
-    //combineColors(key);
 
     for (i = 0; i < slot.length; i++) {
         if (slot[i] == "x") {
             slot[i] = lake.style.background;
 
-            //spawnNewKey(key);
-            //key.remove();
             displayItem(i, lake.style.background);
 
-            //everyLake = document.querySelectorAll('.lake');
-            ammo.style.background = `${slot[0]}`;
+            ammo.style.background = `${slot[i]}`;
+            colorCount++;
             break;
         }
     }
@@ -74,7 +87,25 @@ function spawnNewKey(key) {
 function displayItem(slotIndex, color) {
     var idNum = slotIndex + 1;
     var id = "inv" + idNum;
+    console.log(id);
     const item = document.getElementById(`${id}`);
     item.style.background = `${color}`;
 }
+
+document.addEventListener('keydown',  (e) => {
+    if (e.key == 'q') {
+        swapAmmo('q');
+    } else if (e.key == 'e') {
+        swapAmmo('e');
+    }
+});
+
+function swapAmmo(direction) {
+    if (direction == 'q') {
+        ammo.style.background = `${slot[colorCount - 2]}`;
+    } else if (direction == 'e') {
+
+    }
+}
+
 });
