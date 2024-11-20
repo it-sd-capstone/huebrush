@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   createLevel1();
+  createInventory();
   //createLevel2();
   //createLevel3();
   //createLevel4();
@@ -24,6 +25,7 @@ window.addEventListener('load', () => {
   requestAnimationFrame(chaseBox);
 });
 
+// Prevent arrow keys from causing scroll action.
 window.addEventListener("keydown", function(e) {
   if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
       e.preventDefault();
@@ -103,7 +105,6 @@ document.addEventListener('keydown', (e) => {
           }
       }
 
-      // No collisions; apply the new position
       box.style.top = `${newTop}px`;
       box.style.left = `${newLeft}px`;
   });
@@ -133,7 +134,6 @@ function isColliding(rect1, rect2) {
 }
 
 function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
   const containerRect = container.getBoundingClientRect();
   return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
       const wallRect = wall.getBoundingClientRect();
@@ -189,10 +189,10 @@ function chaseBox(time) {
   } 
 
   // Catch the box
-  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
-    alert('You have been caught!');
-    return; 
-  }
+  // if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+  //   alert('You have been caught!');
+  //   return; 
+  // }
 
   // Continue the chase
   requestAnimationFrame(chaseBox);
@@ -215,7 +215,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
     let canvasHeight =canvasToTransition.getBoundingClientRect().height;
 
     canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
 
     if (xAxis == true) {
       canvasToTransition.style.width = (canvasWidth / 2) + 'px';
@@ -251,7 +250,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
 
 function updateTransform(object, key, value) {
   let current = window.getComputedStyle(object).transform;
-  console.log(current)
   let transform = current !== 'none' ? current : '';
   let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
 
