@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-let container = document.querySelector("#container");
-let colorCount = 0;
+let container = document.querySelector("#level1");
+let colorCount = -1;
+let lastItem = -1;
+let currentColor = 0;
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
 const box = document.querySelector("#myBox");
 
 document.addEventListener('keydown',  (e) => {
@@ -53,6 +57,8 @@ function addToInventory(lake) {
 
             ammo.style.background = `${slot[i]}`;
             colorCount++;
+            currentColor = i;
+            lastItem = i;
             break;
         }
     }
@@ -70,19 +76,19 @@ function combineColors(key) {
     box.style.background = `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
-function spawnNewKey(key) {
-    const newKey = document.createElement("div");
+// function spawnNewKey(key) {
+//     const newKey = document.createElement("div");
     
-    newKey.id = "key";
-    newKey.style.background = key.style.background;
-    newKey.setAttribute("color", key.style.background);
-    newKey.setAttribute("count", `${keyCount}`);
-    newKey.style.left = `${Math.floor(Math.random() * 361)}px`;
-    newKey.style.top = `${Math.floor(Math.random() * 361)}px`;
+//     newKey.id = "key";
+//     newKey.style.background = key.style.background;
+//     newKey.setAttribute("color", key.style.background);
+//     newKey.setAttribute("count", `${keyCount}`);
+//     newKey.style.left = `${Math.floor(Math.random() * 361)}px`;
+//     newKey.style.top = `${Math.floor(Math.random() * 361)}px`;
 
-    document.getElementById("container").appendChild(newKey);
-    keyCount++;
-}
+//     document.getElementById("container").appendChild(newKey);
+//     keyCount++;
+// }
 
 function displayItem(slotIndex, color) {
     var idNum = slotIndex + 1;
@@ -101,11 +107,103 @@ document.addEventListener('keydown',  (e) => {
 });
 
 function swapAmmo(direction) {
-    if (direction == 'q') {
-        ammo.style.background = `${slot[colorCount - 2]}`;
-    } else if (direction == 'e') {
+    for (i = 0; i < slot.length; i++) {
+        if (slot[i] != 'x') {
+            lastItem = i;
+        }
+    }
+
+    if (direction == 'q' && currentColor != 0) {
+        currentColor--;
+        ammo.style.background = `${slot[currentColor]}`;
+        console.log(currentColor);
+    } else if (direction == 'q' && currentColor == 0) {
+        currentColor = lastItem;
+        ammo.style.background = `${slot[lastItem]}`;
+        console.log(lastItem);
+    } else if (direction == 'e' && currentColor != lastItem) {
+        currentColor++;
+        ammo.style.background = `${slot[currentColor]}`;
+        console.log(currentColor);
+    } else if (direction == 'e' && currentColor == lastItem) {
+        currentColor = 0;
+        ammo.style.background = `${slot[0]}`;
+    }
+}
+
+document.addEventListener('keydown',  (e) => {
+    if (e.key == " ") {
+        fire();
+    }
+});
+
+// Select the target div
+const level1 = document.getElementById('level1');
+
+// Add event listeners to the div
+let isCursorInside = false;
+
+level1.addEventListener('mouseenter', () => {
+    isCursorInside = true;
+    console.log('Cursor entered the div');
+});
+
+level1.addEventListener('mouseleave', () => {
+    isCursorInside = false;
+    console.log('Cursor left the div');
+});
+
+level1.addEventListener('mousemove', (event) => {
+    if (isCursorInside) {
+        // Get the cursor coordinates relative to the div
+        const rect = level1.getBoundingClientRect();
+        const cursorX = event.clientX - rect.left; // X-coordinate within the div
+        const cursorY = event.clientY - rect.top;  // Y-coordinate within the div
 
     }
+});
+
+function fire() {
+    projectile.style.top = ammo.style.top;
+    projectile.style.left = ammo.style.left;
+    projectile.style.background = ammo.style.background;
+
+    //move all inventory items down one slot and fill in the last slot with an x.
+    for (let i = currentColor; i < slot.length; i++) {
+        
+        let id = i + 1
+        let inv = 'inv' + id;
+        let invItem = document.getElementById(`${inv}`);
+        console.log(inv);
+
+        if (i == slot.length - 1) {
+            slot[i] = 'x';
+        } else {
+            slot[i] = slot[i + 1];
+            invItem.style.background = slot[i];
+        }
+    }
+    
+    //reset ammo color
+    ammo.style.background == slot[currentColor];
+
+    const rect = projectile.getBoundingClientRect();
+    const currentX = rect.left + rect.width / 2;
+    const currentY = rect.top + rect.height / 2;
+    const speed = 0.9;
+
+    // Calculate the difference between current and target positions
+    console.log(`Cursor coordinates within div: X=${cursorX}, Y=${cursorY}`);
+    const dx = cursorX - currentX;
+    const dy = cursorY - currentY;
+
+    // Move the projectile a fraction of the distance to the cursor
+    projectile.style.left = `${currentX + dx * speed}px`;
+    projectile.style.top = `${currentY + dy * speed}px`;
+
+    // Continue the animation
+    requestAnimationFrame(fire);
+
 }
 
 });

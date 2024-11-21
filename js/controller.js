@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const box = document.querySelector('#myBox');
   const container = document.querySelector('#game_canvas');
   const ammo = document.querySelector('#ammo');
+  const projectile = document.querySelector('#projectile');
   const moveBy = 10;
 
   //Move Enemy Variables
@@ -75,7 +76,6 @@ document.addEventListener('keydown', (e) => {
               if (boxRect.bottom + moveBy <= containerRect.bottom) {
                   newTop += moveBy;
                   newAmmoTop += moveBy;
-
               }
               break;
           case 'ArrowLeft':
