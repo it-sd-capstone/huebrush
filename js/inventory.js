@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
+let container = document.querySelector("#level1");
+//should reflect the number of colors in the array. can probably be discarded to utilize
+//the other two counters.
+let colorCount = -1;
+//should represent the current slot[] index of the last non-x in the array
+let lastItem = -1;
+//should reflect the current slot[] index being represented by the ammo div
+let currentColor = 0;
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
+const box = document.querySelector("#myBox");
     let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
     let container = document.querySelector("#level1");
     
