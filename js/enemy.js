@@ -1,4 +1,6 @@
 function spawnEnemy() {
+  playArea = document.querySelector('.playArea');
+
   const enemy = document.createElement('div');
   enemy.id = 'enemy';
   enemy.classList.add("enemy");
@@ -14,7 +16,7 @@ function spawnEnemy() {
   enemy.style.left = '1000px'; 
   enemy.style.top = '0px';
 
-  level1.appendChild(enemy);
+  playArea.appendChild(enemy);
 }
 
 window.spawnEnemy = spawnEnemy;
