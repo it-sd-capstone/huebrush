@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   createLevel1();
+  createInventory();
   //createLevel2();
   //createLevel3();
   //createLevel4();
   const box = document.querySelector('#myBox');
   const container = document.querySelector('#game_canvas');
   const moveBy = 10;
+  let hasFadedOut = false;
 
   //Move Enemy Variables
 let enemy = document.querySelector('#game_canvas #enemy');
@@ -24,6 +26,7 @@ window.addEventListener('load', () => {
   requestAnimationFrame(chaseBox);
 });
 
+// Prevent arrow keys from causing scroll action.
 window.addEventListener("keydown", function(e) {
   if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
       e.preventDefault();
@@ -49,79 +52,79 @@ window.addEventListener("keydown", function(e) {
 // }
 
 document.addEventListener('keydown', (e) => {
-      let boxRect = box.getBoundingClientRect();
-      let containerRect = container.getBoundingClientRect();
-      let newTop = parseInt(box.style.top);
-      let newLeft = parseInt(box.style.left);
+  const keys = ['w', 'a', 's', 'd'];
+  if (keys.includes(e.key) && !hasFadedOut) {
+      hasFadedOut = true;
 
-      // Compute new position without applying it
-      switch (e.key) {
-          case 'ArrowUp':
-          case 'w':
-              if (boxRect.top - moveBy >= containerRect.top) {
-                  newTop -= moveBy;
-              }
-              break;
-          case 'ArrowDown':
-          case 's':
-              if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                  newTop += moveBy;
-              }
-              break;
-          case 'ArrowLeft':
-          case 'a':
-              if (boxRect.left - moveBy >= containerRect.left) {
-                  newLeft -= moveBy;
-              }
-              break;
-          case 'ArrowRight':
-          case 'd':
-              if (boxRect.right + moveBy <= containerRect.right) {
-                  newLeft += moveBy;
-              }
-              break;
-          default:
-              return;
-      }
+      let tutorialWASD = document.querySelector('#tutorialWASD');
 
-      // Simulate new box position
-      const simulatedBox = {
-          top: newTop,
-          bottom: newTop + boxRect.height,
-          left: newLeft,
-          right: newLeft + boxRect.width,
-      };
+      setTimeout(() => {
+        tutorialWASD.style.transition = 'opacity 1s ease';
+        tutorialWASD.style.opacity = '0';
+    }, 5000);
+  }
 
-      // Get walls' positions relative to the container
-      const walls = getWallsRelativeToContainer(container);
+  let boxRect = box.getBoundingClientRect();
+  let containerRect = container.getBoundingClientRect();
+  let newTop = parseInt(box.style.top);
+  let newLeft = parseInt(box.style.left);
 
-      // Check for collisions
-      for (let wall of walls) {
-          if (isColliding(simulatedBox, wall)) {
-              // Collision detected; stop movement
-              return;
+  // Compute new position without applying it
+  switch (e.key) {
+      case 'ArrowUp':
+      case 'w':
+      case 'W':
+          if (boxRect.top - moveBy >= containerRect.top) {
+              newTop -= moveBy;
           }
+          break;
+      case 'ArrowDown':
+      case 's':
+      case 'S':
+          if (boxRect.bottom + moveBy <= containerRect.bottom) {
+              newTop += moveBy;
+          }
+          break;
+      case 'ArrowLeft':
+      case 'a':
+      case 'A':
+          if (boxRect.left - moveBy >= containerRect.left) {
+              newLeft -= moveBy;
+          }
+          break;
+      case 'ArrowRight':
+      case 'd':
+      case 'D':
+          if (boxRect.right + moveBy <= containerRect.right) {
+              newLeft += moveBy;
+          }
+          break;
+      default:
+          return;
+  }
+
+  // Simulate new box position
+  const simulatedBox = {
+      top: newTop,
+      bottom: newTop + boxRect.height,
+      left: newLeft,
+      right: newLeft + boxRect.width,
+  };
+
+  // Get walls' positions relative to the container
+  const walls = getObjectsRelativeToContainer(container, '.wallSolid');
+
+  // Check for collisions
+  for (let wall of walls) {
+      if (isColliding(simulatedBox, wall)) {
+          // Collision detected; stop movement
+          return;
       }
+  }
 
-      // No collisions; apply the new position
-      box.style.top = `${newTop}px`;
-      box.style.left = `${newLeft}px`;
+  box.style.top = `${newTop}px`;
+  box.style.left = `${newLeft}px`;
   });
-
-function getWallsRelativeToContainer(container) {
-    const containerRect = container.getBoundingClientRect();
-    return Array.from(document.querySelectorAll('.wallSolid')).map((wall) => {
-        const wallRect = wall.getBoundingClientRect();
-        return {
-            top: wallRect.top - containerRect.top,
-            bottom: wallRect.bottom - containerRect.top,
-            left: wallRect.left - containerRect.left,
-            right: wallRect.right - containerRect.left,
-            width: wallRect.width,
-            height: wallRect.height,
-        };
-    });
-}
 
 function isColliding(rect1, rect2) {
   return !(
@@ -133,17 +136,16 @@ function isColliding(rect1, rect2) {
 }
 
 function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
   const containerRect = container.getBoundingClientRect();
-  return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
-      const wallRect = wall.getBoundingClientRect();
+  return Array.from(document.querySelectorAll(object)).map((obj) => {
+      const objectRect = obj.getBoundingClientRect();
       return {
-          top: wallRect.top - containerRect.top,
-          bottom: wallRect.bottom - containerRect.top,
-          left: wallRect.left - containerRect.left,
-          right: wallRect.right - containerRect.left,
-          width: wallRect.width,
-          height: wallRect.height,
+          top: objectRect.top - containerRect.top,
+          bottom: objectRect.bottom - containerRect.top,
+          left: objectRect.left - containerRect.left,
+          right: objectRect.right - containerRect.left,
+          width: objectRect.width,
+          height: objectRect.height,
       };
   });
 }
@@ -152,7 +154,7 @@ function getObjectsRelativeToContainer(container, object) {
 //Move Enemy Program
 
 function chaseBox(time) {
-  let player = getObjectsRelativeToContainer(container, box);
+  let player = getObjectsRelativeToContainer(container, '.myBox');
 
   if (!lastTime) lastTime = time; 
 
@@ -189,10 +191,10 @@ function chaseBox(time) {
   } 
 
   // Catch the box
-  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
-    alert('You have been caught!');
-    return; 
-  }
+  // if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+  //   alert('You have been caught!');
+  //   return; 
+  // }
 
   // Continue the chase
   requestAnimationFrame(chaseBox);
@@ -215,7 +217,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
     let canvasHeight =canvasToTransition.getBoundingClientRect().height;
 
     canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
 
     if (xAxis == true) {
       canvasToTransition.style.width = (canvasWidth / 2) + 'px';
@@ -251,7 +252,6 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
 
 function updateTransform(object, key, value) {
   let current = window.getComputedStyle(object).transform;
-  console.log(current)
   let transform = current !== 'none' ? current : '';
   let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
 
