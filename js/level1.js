@@ -803,18 +803,36 @@ function createLevel1() {
   wallSolid2.style.left = '800px';
   wallSolid2.style.zIndex = '2';
 
-  const levelEnd = document.createElement('div');
-  levelEnd.id = 'levelEnd';
-  levelEnd.classList.add("levelEnd");
-  levelEnd.style.position = 'absolute';
-  levelEnd.style.background = 'rgb(60, 199, 184)';
-  levelEnd.style.width = '30px';
-  levelEnd.style.height = '30px';
-  levelEnd.style.top = '260px';
-  levelEnd.style.left = '900px';
-  levelEnd.style.zIndex = '2';
+  const level1End = document.createElement('div');
+  level1End.id = 'level1End';
+  level1End.classList.add("levelEnd");
+  level1End.style.position = 'absolute';
+  level1End.style.background = 'rgb(60, 199, 184)';
+  level1End.style.width = '30px';
+  level1End.style.height = '30px';
+  level1End.style.top = '260px';
+  level1End.style.left = '900px';
+  level1End.style.zIndex = '2';
+
+  const tutorialWASD = document.createElement('div');
+  tutorialWASD.id = 'tutorialWASD';
+  tutorialWASD.classList.add("tutorialfade");
+  tutorialWASD.style.position = 'absolute';
+  tutorialWASD.style.top = '280px';
+  tutorialWASD.style.left = '350px';
+  tutorialWASD.style.opacity = '1';
+  tutorialWASD.style.zIndex = '2';
+
+  const svgObject = document.createElement('object');
+  svgObject.data = '/images/WASD.svg';
+  svgObject.type = 'image/svg+xml';
+  svgObject.alt = 'WASD Tutorial';
+  svgObject.classList.add("tutorialfade");
+  svgObject.style.height = "60px"
+  tutorialWASD.appendChild(svgObject);
 
   level1.appendChild(myBox);
+  level1.appendChild(tutorialWASD);
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
   level1.appendChild(lakeGreen);
@@ -824,7 +842,7 @@ function createLevel1() {
   level1.appendChild(wallMountainsA);
   level1.appendChild(wallSolid1);
   level1.appendChild(wallSolid2);
-  level1.appendChild(levelEnd);
+  level1.appendChild(level1End);
   level1.appendChild(enemy);
 
   document.querySelector('#game_canvas').appendChild(level1);
