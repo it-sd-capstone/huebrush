@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var container = document.querySelector("#container");
+var container = document.querySelector(".playArea");
 
 function createInventory() {
   const Inventory = document.createElement('div');
