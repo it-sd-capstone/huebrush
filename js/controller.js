@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(localStorage.getItem('Current Level'))
     switch (Number(localStorage.getItem('Current Level'))) {
       case 1:
-        createLevel1();
+        createLevel1(2,2);
+        createLevel1End();
         spawnPlayer('20px', '20px', '300px', '300px');
         break;
       case 2:
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createInventory();
   });
 
-  const moveBy = 10;
+  let moveBy = 5;
   let hasFadedOut = false;
 
   //Move Enemy Variables
@@ -132,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Get walls' positions relative to the container
     const walls = getObjectsRelativeToContainer(container, '.wallSolid');
-
     // Check for collisions
     for (let wall of walls) {
         if (isColliding(simulatedBox, wall)) {
@@ -147,13 +147,36 @@ document.addEventListener('DOMContentLoaded', () => {
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
     if (isColliding(simulatedBox, levelEnd[0])) {
-      let currentLevel = parseInt(localStorage.getItem('Current Level')) || 1;
-      currentLevel += 1;
-      
-      localStorage.setItem('Current Level', currentLevel);
+      let currentLevel = parseInt(localStorage.getItem('Current Level'));
 
       removeObject('levelEnd');
-    }
+  
+      // Get references to current and next levels
+      const currentLevelSelector = `#level${currentLevel}`;
+      const nextLevelSelector = `#level${currentLevel + 1}`;
+  
+      const currentLevelDiv = document.querySelector(currentLevelSelector);
+      const nextLevelDiv = document.querySelector(nextLevelSelector);
+  
+      // Ensure the next level is created but hidden
+      if (!nextLevelDiv) {
+          if (currentLevel + 1 === 2) {
+              createLevel2(); 
+              createLevel2End();
+              spawnEnemy();
+          }
+      }
+  
+      // Perform the level transition animation
+      levelXTransition(
+        [document.querySelector(currentLevelSelector)], // Convert selector to DOM element
+        Array.from(currentLevelDiv.querySelectorAll('*')), // All objects in the current level
+        document.querySelector(nextLevelSelector)       // Convert selector to DOM element
+    );
+  
+      // Update the current level
+      localStorage.setItem('Current Level', currentLevel + 1);
+  }
   });
 
   function isColliding(rect1, rect2) {

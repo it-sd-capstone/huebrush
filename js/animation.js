@@ -1,61 +1,39 @@
-function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false, newLevel, width, height) {
-  let speed = 1.75;
+function levelXTransition(levels = [], objects = [], newLevel) {
+  const speed = 1.75;
 
+  // Adjust Level 1
   levels.forEach((level) => {
-    let canvasToTransition = document.querySelector(level);
-    let canvasWidth = canvasToTransition.getBoundingClientRect().width;
-    let canvasHeight =canvasToTransition.getBoundingClientRect().height;
+      const canvasToTransition = level; // Use DOM element directly
+      const canvasWidth = canvasToTransition.getBoundingClientRect().width;
 
-    canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-
-    if (xAxis == true) {
-      canvasToTransition.style.width = (canvasWidth / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-    if (yAxis == true) {
-      canvasToTransition.style.height = (canvasHeight / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-  })
-
-  objects.forEach((object) => {
-    let objectWidth = object.getBoundingClientRect().width;
-    let objectHeight = object.getBoundingClientRect().height;
-    let currentTransform = window.getComputedStyle(object).transform;
-
-    object.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease, transform ' + speed + 's ease';
-
-    if (xAxis == true) {
-      object.style.width = (objectWidth / 2) + 'px';
-      let objectXPosition = object.offsetLeft;
-      let newxposition = -(objectXPosition / 2);
-      updateTransform(object, 'translateX', newxposition + 'px)');
-    }
-    if (yAxis == true) {
-      object.style.height = (objectHeight / 2) + 'px';
-      let objectYPosition = object.offsetTop;
-      let newyposition = -(objectYPosition / 2);
-      updateTransform(object, 'translateY', newyposition + 'px');
-    }
+      canvasToTransition.style.transition = `width ${speed}s ease, transform ${speed}s ease`;
+      canvasToTransition.style.width = `${canvasWidth / 2}px`; // Shrink width
+      canvasToTransition.style.zIndex = '2'; // Keep above new Level during transition
   });
-}
 
-function updateTransform(object, key, value) {
-  let current = window.getComputedStyle(object).transform;
-  let transform = current !== 'none' ? current : '';
-  let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
+  // Adjust Level 1 objects
+  objects.forEach((object) => {
+      const objectWidth = object.getBoundingClientRect().width;
+      const objectLeft = object.offsetLeft; // Current position
+      const newLeft = objectLeft / 2; // Move left by half
 
-  transform = transform.replace(regex, '').trim();
+      object.style.transition = `width ${speed}s ease, transform ${speed}s ease`;
+      object.style.width = `${objectWidth / 2}px`;
+      object.style.transform = `translateX(-${newLeft}px)`;
+  });
 
-  transform += ` ${key}(${value})`;
-  object.style.transform = transform.trim();
+  // Slide Level 2 in
+  levelIn(newLevel, 1000, 600); // Width/Height fixed for Play Area
 }
 
 function levelIn(level, width, height) {
-  let canvasToSlideIn = document.querySelector(level);
-  let speed = 1.75
-  canvasToSlideIn.style.transition = 'width ' + speed + 's ease';
+  const canvasToSlideIn = level; // Use the DOM element directly
+  const speed = 1.75;
 
-  canvasToSlideIn.style.width = width;
-  canvasToSlideIn.style.height = height;
+  // Slide in and expand the new level
+  canvasToSlideIn.style.transition = `left ${speed}s ease, width ${speed}s ease`;
+  canvasToSlideIn.style.position = 'absolute';
+  canvasToSlideIn.style.left = '50%'; // Move to the right half of the screen
+  canvasToSlideIn.style.width = `${width / 2}px`; // Half screen
+  canvasToSlideIn.style.height = `${height}px`;
 }
