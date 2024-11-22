@@ -1,7 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var container = document.querySelector("#container");
-const box = document.querySelector("#myBox");
+var container = document.querySelector(".playArea");
+
+function createInventory() {
+  const Inventory = document.createElement('div');
+  Inventory.id = 'Inventory';
+  Inventory.classList.add("Inventory");
+  Inventory.style.position = 'relative';
+  Inventory.style.zIndex = 1
+
+  leftCounter = 5
+
+  for (let i = 1; i < 17; i++) {
+    let invNumber = "inv" + i;
+    invslot = document.createElement('div');
+    invslot.id = invNumber;
+    invslot.classList.add("Inventory");
+    invslot.style.position = 'absolute';
+    invslot.style.background = 'grey';
+    invslot.style.width = '40px';
+    invslot.style.height = '40px';
+    invslot.style.top = '5px';
+    invslot.style.left = leftCounter + 'px';
+    invslot.style.padding = '0';
+    invslot.style.border = '0';
+    invslot.style.zIndex = 0
+
+    Inventory.appendChild(invslot);
+
+    leftCounter = leftCounter + 50
+  }
+
+  fetch('/images/inventory.svg')
+    .then(response => response.text())
+    .then(svgContent => {
+      // Append the SVG content without overwriting `inv1`
+      const svgContainer = document.createElement('div');
+      svgContainer.innerHTML = svgContent;
+      Inventory.appendChild(svgContainer);
+
+      // Append the `Inventory` element to the DOM
+      document.querySelector('#game_canvas').appendChild(Inventory);
+    })
+    .catch(error => console.error('Error loading SVG:', error));
+}
 
 document.addEventListener('keydown',  (e) => {
     
@@ -15,6 +57,7 @@ document.addEventListener('keydown',  (e) => {
 
 
 function checkProximity(object) {
+  let box = document.querySelector("#myBox");
     for (i = 0; i < object.length; i++) {
         var lakeTop = parseFloat(object[i].style.top);
         var lakeLeft = parseFloat(object[i].style.left);
@@ -77,4 +120,7 @@ function displayItem(slotIndex, color) {
     const item = document.getElementById(`${id}`);
     item.style.background = `${color}`;
 }
+
+window.createInventory = createInventory;
 });
+

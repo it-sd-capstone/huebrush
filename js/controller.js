@@ -1,273 +1,254 @@
 document.addEventListener('DOMContentLoaded', () => {
-  createLevel1();
   //createLevel2();
   //createLevel3();
   //createLevel4();
-  const box = document.querySelector('#myBox');
-  const container = document.querySelector('#game_canvas');
+
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('Current Level') == null) {
+      localStorage.setItem('Current Level',1);
+    } else if (localStorage.getItem('Current Level') > 4) {
+      localStorage.setItem('Current Level',4);
+    }
+
+    console.log(localStorage.getItem('Current Level'))
+    switch (Number(localStorage.getItem('Current Level'))) {
+      case 1:
+        createLevel1();
+        spawnPlayer('20px', '20px', '300px', '300px');
+        break;
+      case 2:
+        createLevel2();
+        spawnEnemy();
+        requestAnimationFrame(chaseBox);
+        break;
+      case 3:
+        createLevel3();
+        break;
+      case 4:
+        createLevel4();
+        break;
+      default:
+        console.log("Unknown level");
+    }
+
+    createInventory();
+  });
+
   const moveBy = 10;
+  let hasFadedOut = false;
 
   //Move Enemy Variables
-let enemy = document.querySelector('#game_canvas #enemy');
-let moveSpeed = 50; //px per sec
-let lastTime = 0;
+  let enemy = document.querySelector('#game_canvas #enemy');
+  let moveSpeed = 50; //px per sec
+  let lastTime = 0;
 
-window.addEventListener('load', () => {
-  let level1Objects = getLevel1Objects();
-  //levelTransition(['#level1'],level1Objects, true, false, '#level2', '500px','600px');
-  //levelTransition(['#level1', '#level2'],level1Objects, false, true, '#level3','1000px','300px');
-  //levelTransition(['#level3'],level1Objects, true, false, '#level4', '500px', '300px');
+  // Prevent arrow keys from causing scroll action.
+  window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+  }, false);
 
-  enemy.style.position = 'absolute';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-  requestAnimationFrame(chaseBox);
-});
+  // ##### TODO rework where color drain occurs ######
+  // function drainColor() {
+  //   let boxColorGrabber = window.getComputedStyle(box);
+  //   let boxColor = boxColorGrabber.backgroundColor;
 
-window.addEventListener("keydown", function(e) {
-  if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-      e.preventDefault();
-  }
-}, false);
+  //   if (opacity > 0) {
+  //     opacity -= 0.0;
 
-// ##### TODO rework where color drain occurs ######
-// function drainColor() {
-//   let boxColorGrabber = window.getComputedStyle(box);
-//   let boxColor = boxColorGrabber.backgroundColor;
+  //     let rgbValues = boxColor.match(/\d+/g); 
+  //     if (rgbValues) {
+  //       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
+  //     }
 
-//   if (opacity > 0) {
-//     opacity -= 0.0;
+  //   } else if (opacity <= 0) {
+  //     console.log("Game Over");
+  //   }
+  // }
 
-//     let rgbValues = boxColor.match(/\d+/g); 
-//     if (rgbValues) {
-//       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
-//     }
+  document.addEventListener('keydown', (e) => {
+    let box = document.querySelector('.myBox');
+    let container = document.querySelector('.playArea');
 
-//   } else if (opacity <= 0) {
-//     console.log("Game Over");
-//   }
-// }
+    const keys = ['w', 'a', 's', 'd'];
+    if (keys.includes(e.key) && !hasFadedOut) {
+        hasFadedOut = true;
 
-document.addEventListener('keydown', (e) => {
-      let boxRect = box.getBoundingClientRect();
-      let containerRect = container.getBoundingClientRect();
-      let newTop = parseInt(box.style.top);
-      let newLeft = parseInt(box.style.left);
+        let tutorialWASD = document.querySelector('#tutorialWASD');
 
-      // Compute new position without applying it
-      switch (e.key) {
-          case 'ArrowUp':
-          case 'w':
-              if (boxRect.top - moveBy >= containerRect.top) {
-                  newTop -= moveBy;
-              }
-              break;
-          case 'ArrowDown':
-          case 's':
-              if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                  newTop += moveBy;
-              }
-              break;
-          case 'ArrowLeft':
-          case 'a':
-              if (boxRect.left - moveBy >= containerRect.left) {
-                  newLeft -= moveBy;
-              }
-              break;
-          case 'ArrowRight':
-          case 'd':
-              if (boxRect.right + moveBy <= containerRect.right) {
-                  newLeft += moveBy;
-              }
-              break;
-          default:
-              return;
-      }
+        setTimeout(() => {
+          tutorialWASD.style.transition = 'opacity 1s ease';
+          tutorialWASD.style.opacity = '0';
+      }, 5000);
+    }
 
-      // Simulate new box position
-      const simulatedBox = {
-          top: newTop,
-          bottom: newTop + boxRect.height,
-          left: newLeft,
-          right: newLeft + boxRect.width,
-      };
+    let boxRect = box.getBoundingClientRect();
+    let containerRect = container.getBoundingClientRect();
+    let newTop = parseInt(box.style.top);
+    let newLeft = parseInt(box.style.left);
 
-      // Get walls' positions relative to the container
-      const walls = getWallsRelativeToContainer(container);
+    // Compute new position without applying it
+    switch (e.key) {
+        case 'ArrowUp':
+        case 'w':
+        case 'W':
+            if (boxRect.top - moveBy >= containerRect.top) {
+                newTop -= moveBy;
+            }
+            break;
+        case 'ArrowDown':
+        case 's':
+        case 'S':
+            if (boxRect.bottom + moveBy <= containerRect.bottom) {
+                newTop += moveBy;
+            }
+            break;
+        case 'ArrowLeft':
+        case 'a':
+        case 'A':
+            if (boxRect.left - moveBy >= containerRect.left) {
+                newLeft -= moveBy;
+            }
+            break;
+        case 'ArrowRight':
+        case 'd':
+        case 'D':
+            if (boxRect.right + moveBy <= containerRect.right) {
+                newLeft += moveBy;
+            }
+            break;
+        default:
+            return;
+    }
 
-      // Check for collisions
-      for (let wall of walls) {
-          if (isColliding(simulatedBox, wall)) {
-              // Collision detected; stop movement
-              return;
-          }
-      }
+    // Simulate new box position
+    const simulatedBox = {
+        top: newTop,
+        bottom: newTop + boxRect.height,
+        left: newLeft,
+        right: newLeft + boxRect.width,
+    };
 
-      // No collisions; apply the new position
-      box.style.top = `${newTop}px`;
-      box.style.left = `${newLeft}px`;
+    // Get walls' positions relative to the container
+    const walls = getObjectsRelativeToContainer(container, '.wallSolid');
+
+    // Check for collisions
+    for (let wall of walls) {
+        if (isColliding(simulatedBox, wall)) {
+            // Collision detected; stop movement
+            return;
+        }
+    }
+
+    box.style.top = `${newTop}px`;
+    box.style.left = `${newLeft}px`;
+
+    let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
+
+    if (isColliding(simulatedBox, levelEnd[0])) {
+      let currentLevel = parseInt(localStorage.getItem('Current Level')) || 1;
+      currentLevel += 1;
+      
+      localStorage.setItem('Current Level', currentLevel);
+
+      removeObject('levelEnd');
+    }
   });
 
-function getWallsRelativeToContainer(container) {
+  function isColliding(rect1, rect2) {
+    return !(
+        rect1.bottom <= rect2.top ||
+        rect1.top >= rect2.bottom ||
+        rect1.right <= rect2.left ||
+        rect1.left >= rect2.right
+    );
+  }
+
+  function getObjectsRelativeToContainer(container, object) {
     const containerRect = container.getBoundingClientRect();
-    return Array.from(document.querySelectorAll('.wallSolid')).map((wall) => {
-        const wallRect = wall.getBoundingClientRect();
+    return Array.from(document.querySelectorAll(object)).map((obj) => {
+        const objectRect = obj.getBoundingClientRect();
         return {
-            top: wallRect.top - containerRect.top,
-            bottom: wallRect.bottom - containerRect.top,
-            left: wallRect.left - containerRect.left,
-            right: wallRect.right - containerRect.left,
-            width: wallRect.width,
-            height: wallRect.height,
+            top: objectRect.top - containerRect.top,
+            bottom: objectRect.bottom - containerRect.top,
+            left: objectRect.left - containerRect.left,
+            right: objectRect.right - containerRect.left,
+            width: objectRect.width,
+            height: objectRect.height,
         };
     });
-}
-
-function isColliding(rect1, rect2) {
-  return !(
-      rect1.bottom <= rect2.top ||
-      rect1.top >= rect2.bottom ||
-      rect1.right <= rect2.left ||
-      rect1.left >= rect2.right
-  );
-}
-
-function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
-  const containerRect = container.getBoundingClientRect();
-  return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
-      const wallRect = wall.getBoundingClientRect();
-      return {
-          top: wallRect.top - containerRect.top,
-          bottom: wallRect.bottom - containerRect.top,
-          left: wallRect.left - containerRect.left,
-          right: wallRect.right - containerRect.left,
-          width: wallRect.width,
-          height: wallRect.height,
-      };
-  });
-}
-
-
-//Move Enemy Program
-
-function chaseBox(time) {
-  let player = getObjectsRelativeToContainer(container, box);
-
-  if (!lastTime) lastTime = time; 
-
-  // Calculate time since last frame
-  let delta = (time - lastTime) / 1000;
-  lastTime = time;
-  
-  // Get the current position of the box 
-  let boxX = parseFloat(player[0].left);
-  let boxY = parseFloat(player[0].top);
-  
-  // Get the current position of the enemy element
-  let enemyX = parseFloat(enemy.style.left);
-  let enemyY = parseFloat(enemy.style.top);
-
-  // Calculate the difference in position
-  let dx = boxX - enemyX;
-  let dy = boxY - enemyY;
-
-  // Vector Math
-  let distance = Math.sqrt((dx * dx) + (dy * dy));
-  
-   if (distance > 0) {
-    dx /= distance;
-    dy /= distance;
-
-    // Move the enemy
-    enemyX += dx * moveSpeed * delta;
-    enemyY += dy * moveSpeed * delta;
-    
-    enemy.style.left = `${enemyX}px`;
-    enemy.style.top = `${enemyY}px`;
-
-  } 
-
-  // Catch the box
-  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
-    alert('You have been caught!');
-    return; 
   }
 
-  // Continue the chase
-  requestAnimationFrame(chaseBox);
-}
 
-// TODO: Needs reworked.
-// function checkKey() {
-//   if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
-//     box.style.background = "purple";
-//     key.remove();
-//   }
-// }
+  //Move Enemy Program
 
-function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false, newLevel, width, height) {
-  let speed = 1.75;
+  function chaseBox(time) {
+    const container = document.querySelector('.playArea');
+    const enemy = document.querySelector('#game_canvas #enemy');
 
-  levels.forEach((level) => {
-    let canvasToTransition = document.querySelector(level);
-    let canvasWidth = canvasToTransition.getBoundingClientRect().width;
-    let canvasHeight =canvasToTransition.getBoundingClientRect().height;
+    let player = getObjectsRelativeToContainer(container, '.myBox');
 
-    canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
+    if (!lastTime) lastTime = time; 
 
-    if (xAxis == true) {
-      canvasToTransition.style.width = (canvasWidth / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-    if (yAxis == true) {
-      canvasToTransition.style.height = (canvasHeight / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-  })
+    // Calculate time since last frame
+    let delta = (time - lastTime) / 1000;
+    lastTime = time;
+    
+    // Get the current position of the box 
+    let boxX = parseFloat(player[0].left);
+    let boxY = parseFloat(player[0].top);
+    
+    // Get the current position of the enemy element
+    let enemyX = parseFloat(enemy.style.left);
+    let enemyY = parseFloat(enemy.style.top);
 
-  objects.forEach((object) => {
-    let objectWidth = object.getBoundingClientRect().width;
-    let objectHeight = object.getBoundingClientRect().height;
-    let currentTransform = window.getComputedStyle(object).transform;
+    // Calculate the difference in position
+    let dx = boxX - enemyX;
+    let dy = boxY - enemyY;
 
-    object.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease, transform ' + speed + 's ease';
+    // Vector Math
+    let distance = Math.sqrt((dx * dx) + (dy * dy));
+    
+    if (distance > 0) {
+      dx /= distance;
+      dy /= distance;
 
-    if (xAxis == true) {
-      object.style.width = (objectWidth / 2) + 'px';
-      let objectXPosition = object.offsetLeft;
-      let newxposition = -(objectXPosition / 2);
-      updateTransform(object, 'translateX', newxposition + 'px)');
-    }
-    if (yAxis == true) {
-      object.style.height = (objectHeight / 2) + 'px';
-      let objectYPosition = object.offsetTop;
-      let newyposition = -(objectYPosition / 2);
-      updateTransform(object, 'translateY', newyposition + 'px');
-    }
-  });
-}
+      // Move the enemy
+      enemyX += dx * moveSpeed * delta;
+      enemyY += dy * moveSpeed * delta;
+      
+      enemy.style.left = `${enemyX}px`;
+      enemy.style.top = `${enemyY}px`;
 
-function updateTransform(object, key, value) {
-  let current = window.getComputedStyle(object).transform;
-  console.log(current)
-  let transform = current !== 'none' ? current : '';
-  let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
+    } 
 
-  transform = transform.replace(regex, '').trim();
+    // Catch the box
+    // if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+    //   alert('You have been caught!');
+    //   return; 
+    // }
 
-  transform += ` ${key}(${value})`;
-  object.style.transform = transform.trim();
-}
+    // Continue the chase
+    requestAnimationFrame(chaseBox);
+  }
 
-function levelIn(level, width, height) {
-  let canvasToSlideIn = document.querySelector(level);
-  let speed = 1.75
-  canvasToSlideIn.style.transition = 'width ' + speed + 's ease';
+  // TODO: Needs reworked.
+  // function checkKey() {
+  //   if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
+  //     box.style.background = "purple";
+  //     key.remove();
+  //   }
+  // }
 
-  canvasToSlideIn.style.width = width;
-  canvasToSlideIn.style.height = height;
-}
+  function removeObject(className) {
+    const elements = document.getElementsByClassName(className);
+
+    // Convert HTMLCollection to Array to avoid issues during removal
+    const elementsArray = Array.from(elements);
+
+    elementsArray.forEach(element => {
+      element.remove(); 
+    });
+  }
 });
-

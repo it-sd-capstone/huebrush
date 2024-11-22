@@ -1,4 +1,8 @@
 function createLevel1() {
+  const playArea = document.createElement('div');
+  playArea.id = 'playArea';
+  playArea.classList.add("playArea");
+
   const level1 = document.createElement('div');
   level1.id = 'level1';
   level1.classList.add("box");
@@ -744,32 +748,6 @@ function createLevel1() {
   crates.appendChild(crate5);
   crates.appendChild(crate6);
 
-  const myBox = document.createElement('div');
-  myBox.id = 'myBox';
-  myBox.classList.add("myBox"); //change in the future ngc
-  myBox.style.position = 'absolute';
-  myBox.style.background = 'grey';
-  myBox.style.width = '20px';
-  myBox.style.height = '20px';
-  myBox.style.top = '300px';
-  myBox.style.left = '300px';
-  myBox.style.zIndex = '3';
-
-  const enemy = document.createElement('div');
-  enemy.id = 'enemy';
-  enemy.classList.add("enemy");
-  enemy.style.position = 'absolute';
-  enemy.style.background = 'orange';
-  enemy.style.width = '30px';
-  enemy.style.height = '30px';
-  enemy.style.borderRadius = '50px';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-  enemy.style.zIndex = '3';
-  enemy.style.position = 'absolute';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-
   const gate1 = document.createElement('div');
   gate1.id = 'gate1';
   gate1.classList.add("gate");
@@ -803,18 +781,36 @@ function createLevel1() {
   wallSolid2.style.left = '800px';
   wallSolid2.style.zIndex = '2';
 
-  const levelEnd = document.createElement('div');
-  levelEnd.id = 'levelEnd';
-  levelEnd.classList.add("levelEnd");
-  levelEnd.style.position = 'absolute';
-  levelEnd.style.background = 'rgb(60, 199, 184)';
-  levelEnd.style.width = '30px';
-  levelEnd.style.height = '30px';
-  levelEnd.style.top = '260px';
-  levelEnd.style.left = '900px';
-  levelEnd.style.zIndex = '2';
+  const level1End = document.createElement('div');
+  level1End.id = 'level1End';
+  level1End.classList.add("levelEnd");
+  level1End.style.position = 'absolute';
+  level1End.style.background = 'rgb(60, 199, 184)';
+  level1End.style.width = '30px';
+  level1End.style.height = '30px';
+  level1End.style.top = '260px';
+  level1End.style.left = '900px';
+  level1End.style.zIndex = '2';
 
-  level1.appendChild(myBox);
+  const tutorialWASD = document.createElement('div');
+  tutorialWASD.id = 'tutorialWASD';
+  tutorialWASD.classList.add("tutorialfade");
+  tutorialWASD.style.position = 'absolute';
+  tutorialWASD.style.top = '280px';
+  tutorialWASD.style.left = '350px';
+  tutorialWASD.style.opacity = '1';
+  tutorialWASD.style.zIndex = '2';
+
+  const svgObject = document.createElement('object');
+  svgObject.data = '/images/WASD.svg';
+  svgObject.type = 'image/svg+xml';
+  svgObject.alt = 'WASD Tutorial';
+  svgObject.classList.add("tutorialfade");
+  svgObject.style.height = "60px"
+  tutorialWASD.appendChild(svgObject);
+
+
+  level1.appendChild(tutorialWASD);
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
   level1.appendChild(lakeGreen);
@@ -824,10 +820,11 @@ function createLevel1() {
   level1.appendChild(wallMountainsA);
   level1.appendChild(wallSolid1);
   level1.appendChild(wallSolid2);
-  level1.appendChild(levelEnd);
-  level1.appendChild(enemy);
+  level1.appendChild(level1End);
 
-  document.querySelector('#game_canvas').appendChild(level1);
+
+  document.querySelector('#game_canvas').appendChild(playArea);
+  playArea.appendChild(level1);
 }
 
 function getLevel1Objects() {
