@@ -4,12 +4,16 @@
 ## [Unreleased]
  
 ### Added
+- Created Local Save Data to spawn in correct level. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 
 ### Changed
 - Updated Inventories look and location to sit under the gamecanvas as a single line. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Moved myBox to player.js and enemy to enemy.js. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Moved some animations out of controller to animation.js ([Issue #3](https://github.com/it-sd-capstone/huebrush/issues/3)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
  
 ### Fixed
 - Updated Inventories creation to a createInventory function rather than hard coding the HTML. ([Issue #9](https://github.com/it-sd-capstone/huebrush/issues/9)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Updated Level transition so new level and objects in existing levels properly scale horizontally. ([Issue #4](https://github.com/it-sd-capstone/huebrush/issues/4)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 
 ## [v0.1.0] - 2024-11-17
  
