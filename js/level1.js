@@ -1,4 +1,8 @@
 function createLevel1() {
+  const playArea = document.createElement('div');
+  playArea.id = 'playArea';
+  playArea.classList.add("playArea");
+
   const level1 = document.createElement('div');
   level1.id = 'level1';
   level1.classList.add("box");
@@ -744,32 +748,6 @@ function createLevel1() {
   crates.appendChild(crate5);
   crates.appendChild(crate6);
 
-  const myBox = document.createElement('div');
-  myBox.id = 'myBox';
-  myBox.classList.add("myBox"); //change in the future ngc
-  myBox.style.position = 'absolute';
-  myBox.style.background = 'grey';
-  myBox.style.width = '20px';
-  myBox.style.height = '20px';
-  myBox.style.top = '300px';
-  myBox.style.left = '300px';
-  myBox.style.zIndex = '3';
-
-  const enemy = document.createElement('div');
-  enemy.id = 'enemy';
-  enemy.classList.add("enemy");
-  enemy.style.position = 'absolute';
-  enemy.style.background = 'orange';
-  enemy.style.width = '30px';
-  enemy.style.height = '30px';
-  enemy.style.borderRadius = '50px';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-  enemy.style.zIndex = '3';
-  enemy.style.position = 'absolute';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-
   const gate1 = document.createElement('div');
   gate1.id = 'gate1';
   gate1.classList.add("gate");
@@ -831,7 +809,7 @@ function createLevel1() {
   svgObject.style.height = "60px"
   tutorialWASD.appendChild(svgObject);
 
-  level1.appendChild(myBox);
+
   level1.appendChild(tutorialWASD);
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
@@ -843,9 +821,10 @@ function createLevel1() {
   level1.appendChild(wallSolid1);
   level1.appendChild(wallSolid2);
   level1.appendChild(level1End);
-  level1.appendChild(enemy);
 
-  document.querySelector('#game_canvas').appendChild(level1);
+
+  document.querySelector('#game_canvas').appendChild(playArea);
+  playArea.appendChild(level1);
 }
 
 function getLevel1Objects() {
