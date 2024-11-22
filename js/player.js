@@ -1,4 +1,5 @@
 function spawnPlayer(width,height,top,left) {
+  playArea = document.querySelector('.playArea');
 
   const myBox = document.createElement('div');
   myBox.id = 'myBox';
@@ -11,5 +12,5 @@ function spawnPlayer(width,height,top,left) {
   myBox.style.left = left;
   myBox.style.zIndex = '3';
 
-  level1.appendChild(myBox);
+  playArea.appendChild(myBox);
 }
