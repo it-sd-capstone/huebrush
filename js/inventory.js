@@ -1,16 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-let container = document.querySelector("#level1");
-//should reflect the number of colors in the array. can probably be discarded to utilize
-//the other two counters.
-let colorCount = -1;
-//should represent the current slot[] index of the last non-x in the array
-let lastItem = -1;
-//should reflect the current slot[] index being represented by the ammo div
-let currentColor = 0;
-let cursorX = window.innerWidth / 2;
-let cursorY = window.innerHeight / 2;
-const box = document.querySelector("#myBox");
     let slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
     let container = document.querySelector("#level1");
     
@@ -24,9 +12,6 @@ const box = document.querySelector("#myBox");
     let cursorY;
     let lastTime = 0;
 
-    //for animation
-    let animation = false;
-
     //for inventory
     let invEmpty = false;
     let invFull = false;
@@ -35,49 +20,20 @@ const box = document.querySelector("#myBox");
     const projectile = document.querySelector('#projectile');
     const box = document.querySelector("#myBox");
 
-    var nearbyLake = Array.from(document.querySelectorAll('.lake'));
-    nearbyLake = document.querySelectorAll(".lake");
-   
-
-    var redLakes = [];
-    var greenLakes = [];
-    var blueLakes = [];
-
-    for (let i = 0; i < nearbyLake.length; i++) {
-        if (nearbyLake[i].style.background == 'red') {
-            redLakes.push(nearbyLake[i]);
-        } else if (nearbyLake[i].style.background == 'green') {
-            greenLakes.push(nearbyLake[i]);
-        } else if (nearbyLake[i].style.background == 'blue') {
-            blueLakes.push(nearbyLake[i]);
-        }
-    }
-
     document.addEventListener('keydown',  (e) => {
+        
         if (e.key == 'f' || e.key == 'F') {
-            console.log("scanning");
-            let boxTop = parseFloat(box.style.top);
-            let boxLeft = parseFloat(box.style.left);
-            if (boxTop <= 130) {
-                console.log("checking blue");
-                checkProximity(blueLakes);
-                return;
-            } else if ((boxTop <= 460 && boxLeft <= 60) || (boxTop <= 450 && boxLeft <= 70) || (boxTop <= 440 && boxLeft <= 80) || (boxTop <= 430 && boxLeft <= 90) || (boxTop <= 420 && boxLeft <= 130)) {
-                console.log("checking green");
-                checkProximity(greenLakes);
-                return;
-            } else if ((boxTop >= 470 && boxLeft >= 50) || (boxTop >= 450 && boxLeft >= 90) || (boxTop >= 440 && boxLeft >= 120)) {
-                console.log("checking red");
-                checkProximity(redLakes);
-                return;
-            }
+            console.log("Checking!");
+
+            var nearbyLake = Array.from(document.querySelectorAll('.lake'));
+            nearbyLake = document.querySelectorAll(".lake");
+            checkProximity(nearbyLake);
         }
     });
 
     //does not work if the box is perfectly in the middle of 2 lake segments
     function checkProximity(object) {
         for (i = 0; i < object.length; i++) {
-            console.log(object[i]);
             const lakeTop = parseFloat(object[i].style.top);
             const lakeLeft = parseFloat(object[i].style.left);
             const lakeHeight = parseFloat(object[i].style.height);
@@ -92,25 +48,12 @@ const box = document.querySelector("#myBox");
             const boxRight = boxLeft + boxWidth;
             const boxBottom = boxTop + boxHeight;
 
-            console.log(`LT:${lakeTop} LL:${lakeLeft} LH:${lakeHeight} LW:${lakeWidth} BT:${boxTop} BL:${boxLeft}`);
-            console.log(`LR:${lakeRight} LB:${lakeBottom} BR:${boxRight} BB:${boxBottom}`);
-
-            // Check if box and lake are overlapping
-            const isOverlapping = 
-            lakeLeft < boxRight &&
-            lakeRight > boxLeft &&
-            lakeTop < boxBottom &&
-            lakeBottom > boxTop;
-            console.log("isOverlapping:" + isOverlapping);
             
-            const isCloseHorizontally = Math.abs(lakeLeft - boxRight) <= 11 || Math.abs(lakeRight - boxLeft) <= 11;
+            const isCloseHorizontally = Math.abs(lakeLeft - boxRight) <= 10 || Math.abs(lakeRight - boxLeft) <= 10;
             const isCloseVertically = Math.abs(lakeTop - boxBottom) <= 10 || Math.abs(lakeBottom - boxTop) <= 10;
             const isContained = boxTop >= lakeTop && boxBottom <= lakeBottom && boxLeft >= lakeLeft && boxRight <= lakeRight;
-            console.log("isCloseHorizontally:" + isCloseHorizontally);
-            console.log("isCloseVertically:" + isCloseVertically);
-            console.log("isContained:" + isContained);
 
-            if (isCloseHorizontally || isCloseVertically || isContained || isOverlapping) {
+            if ((isCloseHorizontally && isCloseVertically) || isContained) {
                 addToInventory(object[i]);
                 break;
             }
@@ -216,19 +159,16 @@ const box = document.querySelector("#myBox");
         } else if (direction == 'e' && currentColor == lastItem) {
             currentColor = 0;
             ammo.style.background = `${slot[0]}`;
-            console.log(currentColor);
-
         }
     }
 
     document.addEventListener('keydown',  (e) => {
-        if (e.key == " " && isCursorInside && !invEmpty && animation == false) {
-            fire();
+        if (e.key == " " && isCursorInside && !invEmpty) {
             shiftInventory();
             displayInventory();
-            setLastItem();
-
-            
+            fire();
+            setBackground(ammo, currentColor);
+            resetProjectile();
         }
 
         if (invEmpty) {
@@ -264,8 +204,8 @@ const box = document.querySelector("#myBox");
 
     function setLastItem() {
         for (let i = 0; i < slot.length; i++) {
-            if (slot[i] !== 'x') {
-                lastItem = i;
+            if (slot[i] == 'x') {
+                lastItem = i - 1;
             }
         }
     }
@@ -274,9 +214,14 @@ const box = document.querySelector("#myBox");
         ele.style.background = color;
     }
 
+    function resetProjectile() {
+        projectile.style.top = "0px";
+        projectile.style.left = "0px";
+        projectile.style.background = "rgba(0,0,0,0)";
+    }
+
     function shiftInventory() {
         //move all inventory items down one slot and fill in the last slot with an x.
-        setLastItem();
         for (let i = currentColor; i < slot.length; i++) {
             if (i !== slot.length - 1) {
                 slot[i] = slot[i + 1];
@@ -284,12 +229,6 @@ const box = document.querySelector("#myBox");
                 slot[i] = 'x';
             }
         }
-        console.log("currentColor:"+currentColor);
-        console.log("lastItem:"+lastItem);
-        if (currentColor == lastItem) {
-            currentColor--;
-        }
-
         setLastItem();
         console.log("currentColor:"+currentColor);
 
@@ -297,7 +236,7 @@ const box = document.querySelector("#myBox");
         invEmpty = slot.every((item) => item === 'x');
 
         //reset ammo color
-        ammo.style.background = slot[currentColor];
+        setBackground(ammo, slot[currentColor]);
     }
     
 
@@ -306,16 +245,15 @@ const box = document.querySelector("#myBox");
         const projectileRect = projectile.getBoundingClientRect();
         const parentRect = level1.getBoundingClientRect();
         
-        projectile.style.top = `${ammo.offsetTop}px`;
-        projectile.style.left = `${ammo.offsetLeft}px`;
-        console.log(slot[currentColor]);
-        projectile.style.background = slot[currentColor];
+        projectileRect.top = `${ammo.offsetTop}px`;
+        projectileRect.left = `${ammo.offsetLeft}px`;
+        const ammoBackground = ammo.style.background; // Store the current ammo background color
+        setBackground(projectile, ammoBackground);
+
 
         let lastTime = performance.now(); // Initialize time
 
         function moveProjectile(currentTime) {
-            animation = true;
-            setBackground(ammo, slot[currentColor]);
             const deltaTime = (currentTime - lastTime) / 1000; // Time elapsed in seconds
             lastTime = currentTime;
 
@@ -323,19 +261,17 @@ const box = document.querySelector("#myBox");
             const currentX = rect.left + rect.width / 2 - parentRect.left;
             const currentY = rect.top + rect.height / 2 - parentRect.top;
 
-            const speed = 500; // Speed in pixels per second
+            const speed = 200; // Speed in pixels per second
 
             // Calculate the difference between current and target positions
             const dx = cursorX - currentX;
             const dy = cursorY - currentY;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
 
             // Stop animation if the projectile is close enough to the target
             if (distance < 1) {
                 console.log("Projectile reached the target!");
                 projectile.style.background = "rgba(0,0,0,0)";
-                animation = false;
                 return;
             }
 
