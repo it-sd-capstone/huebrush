@@ -18,9 +18,7 @@ window.addEventListener('load', () => {
   //levelTransition(['#level1', '#level2'],level1Objects, false, true, '#level3','1000px','300px');
   //levelTransition(['#level3'],level1Objects, true, false, '#level4', '500px', '300px');
 
-  enemy.style.position = 'absolute';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
+  
   requestAnimationFrame(chaseBox);
 });
 
@@ -133,7 +131,7 @@ function isColliding(rect1, rect2) {
 }
 
 function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
+  //console.log(object)
   const containerRect = container.getBoundingClientRect();
   return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
       const wallRect = wall.getBoundingClientRect();
@@ -151,7 +149,7 @@ function getObjectsRelativeToContainer(container, object) {
 
 //Move Enemy Program
 
-function chaseBox(time) {
+window.chaseBox = function chaseBox(time) {
   let player = getObjectsRelativeToContainer(container, box);
 
   if (!lastTime) lastTime = time; 
@@ -189,10 +187,10 @@ function chaseBox(time) {
   } 
 
   // Catch the box
-  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+  /*if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
     alert('You have been caught!');
     return; 
-  }
+  }*/
 
   // Continue the chase
   requestAnimationFrame(chaseBox);
@@ -215,7 +213,7 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
     let canvasHeight =canvasToTransition.getBoundingClientRect().height;
 
     canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
+    //console.log(canvasToTransition)
 
     if (xAxis == true) {
       canvasToTransition.style.width = (canvasWidth / 2) + 'px';
@@ -251,7 +249,7 @@ function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false
 
 function updateTransform(object, key, value) {
   let current = window.getComputedStyle(object).transform;
-  console.log(current)
+  //console.log(current)
   let transform = current !== 'none' ? current : '';
   let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
 

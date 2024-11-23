@@ -1,3 +1,5 @@
+import { spawnEnemy, updateHealth } from "./enemySpawn.js";
+
 function createLevel1() {
   const level1 = document.createElement('div');
   level1.id = 'level1';
@@ -754,7 +756,7 @@ function createLevel1() {
   myBox.style.top = '300px';
   myBox.style.left = '300px';
   myBox.style.zIndex = '3';
-
+/*
   const enemy = document.createElement('div');
   enemy.id = 'enemy';
   enemy.classList.add("enemy");
@@ -769,7 +771,7 @@ function createLevel1() {
   enemy.style.position = 'absolute';
   enemy.style.left = '1000px'; 
   enemy.style.top = '0px';
-
+*/
   const gate1 = document.createElement('div');
   gate1.id = 'gate1';
   gate1.classList.add("gate");
@@ -825,10 +827,15 @@ function createLevel1() {
   level1.appendChild(wallSolid1);
   level1.appendChild(wallSolid2);
   level1.appendChild(levelEnd);
-  level1.appendChild(enemy);
+  level1.appendChild(spawnEnemy());
+  
+
+  
 
   document.querySelector('#game_canvas').appendChild(level1);
 }
+
+
 
 function getLevel1Objects() {
   return document.getElementsByName('div');
@@ -836,3 +843,4 @@ function getLevel1Objects() {
 
 window.createLevel1 = createLevel1;
 window.getLevel1Objects = getLevel1Objects;
+//window.createLevel1(spawnEnemy);
