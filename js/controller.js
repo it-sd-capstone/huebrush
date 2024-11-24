@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('Current Level',4);
     }
 
+    if (localStorage.getItem('wasd') == null) {
+      localStorage.setItem('wasd', 1);
+    }
+    wasdFade = localStorage.getItem('wasd');
+
     console.log(localStorage.getItem('Current Level'))
     switch (Number(localStorage.getItem('Current Level'))) {
       case 1:
@@ -35,10 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     createInventory();
   });
 
-  let moveBy = 5;
+  let moveBy = 10;
   let hasFadedOut = false;
 
-  //Move Enemy Variables
   let enemy = document.querySelector('#game_canvas #enemy');
   let moveSpeed = 50; //px per sec
   let lastTime = 0;
@@ -73,15 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let container = document.querySelector('.playArea');
 
     const keys = ['w', 'a', 's', 'd'];
-    if (keys.includes(e.key) && !hasFadedOut) {
-        hasFadedOut = true;
+    if (keys.includes(e.key) && wasdFade == '1') {
+      localStorage.setItem('wasd', 0);
 
         let tutorialWASD = document.querySelector('#tutorialWASD');
 
-        setTimeout(() => {
-          tutorialWASD.style.transition = 'opacity 1s ease';
-          tutorialWASD.style.opacity = '0';
-      }, 5000);
+        fadeOut(tutorialWASD);
     }
 
     let boxRect = box.getBoundingClientRect();
@@ -89,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let newTop = parseInt(box.style.top);
     let newLeft = parseInt(box.style.left);
 
-    // Compute new position without applying it
     switch (e.key) {
         case 'ArrowUp':
         case 'w':
@@ -123,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
     }
 
-    // Simulate new box position
     const simulatedBox = {
         top: newTop,
         bottom: newTop + boxRect.height,
@@ -131,12 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         right: newLeft + boxRect.width,
     };
 
-    // Get walls' positions relative to the container
     const walls = getObjectsRelativeToContainer(container, '.wallSolid');
-    // Check for collisions
     for (let wall of walls) {
         if (isColliding(simulatedBox, wall)) {
-            // Collision detected; stop movement
             return;
         }
     }
@@ -151,31 +147,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       removeObject('levelEnd');
   
-      // Get references to current and next levels
       const currentLevelSelector = `#level${currentLevel}`;
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
       const currentLevelDiv = document.querySelector(currentLevelSelector);
       const nextLevelDiv = document.querySelector(nextLevelSelector);
   
-      // Ensure the next level is created but hidden
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
-            createLevel2(); 
+            createLevel2(1,2,100); 
             createLevel2End();
             spawnEnemy();
         }
     }
 
     const myBox = document.querySelector('.myBox');
+    newLevel = document.querySelector(nextLevelSelector);
+    let level1Objects = getLevel1Objects();
+    let level2Objects = getLevel2Objects();
   
-    // Perform the level transition animation
     levelXTransition(
-      [currentLevelDiv],
-      [myBox, ...Array.from(currentLevelDiv.querySelectorAll('*'))]
+      level1Objects,
+      newLevel,
+      level2Objects,
+      myBox
     );
   
-      // Update the current level
       localStorage.setItem('Current Level', currentLevel + 1);
   }
   });

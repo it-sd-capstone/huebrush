@@ -1,40 +1,45 @@
-function levelXTransition(levels = [], objects = [], newLevel) {
-  const speed = 1.75;
+function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox) {
 
-  levels.forEach((level) => {
-      const canvasToTransition = level;
-      const canvasWidth = canvasToTransition.getBoundingClientRect().width;
+  let speed = 1.75;
 
-      canvasToTransition.style.transition = `width ${speed}s ease, transform ${speed}s ease`;
-      canvasToTransition.style.width = `${canvasWidth / 2}px`;
-      canvasToTransition.style.zIndex = '2';
-  });
+  for (let object in objects) {
+    newWidth = (parseInt(objects[object].style.width, 10) / 2)
+    newLeft = (parseInt(objects[object].style.left, 10) / 2)
 
-  objects.forEach((object) => {
-    const objectWidth = object.getBoundingClientRect().width;
+    objects[object].style.transition = `left ${speed}s ease, width ${speed}s ease`;
+    objects[object].style.left = `${newLeft}px`;
+    objects[object].style.width = `${newWidth}px`;
+  }
 
-    if (object.classList.contains('myBox')) {
-      // Compute new position relative to the parent level
-      const levelRect = levels[0].getBoundingClientRect();
-      const boxRect = object.getBoundingClientRect();
+  newLevel.style.left = `50%`;
 
-      const relativeLeft = boxRect.left - levelRect.left;
+  console.log(myBox);
 
-      // Transition size and position to align with level shrinkage
-      object.style.transition = `width ${speed}s ease, transform ${speed}s ease`;
-      object.style.width = `${objectWidth / 2}px`;
+  // If we just device myBox's width by 2 myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
+  newLeft = (parseInt(myBox.style.left, 10) / 2);
+  newLeft = Math.round(newLeft / 10) * 10;
 
-      // Move left in proportion to the level's shrinkage
-      const moveLeft = relativeLeft / 2; 
+  myBox.style.transition = `left ${speed}s ease, width ${speed}s ease`;
+  myBox.style.left = `${newLeft}px`;
+  myBox.style.width = `${parseInt(myBox.style.width, 10) / 2}px`;
 
-      object.style.transform = `translate(-${moveLeft}px)`;
-  } else {
-        const objectLeft = object.offsetLeft;
-        const newLeft = objectLeft / 2;
+  // If we do not wipe out transition then movements to the left and right are effected by ease. 
+  setTimeout(() => {
+    myBox.style.transition = ``;
+  }, speed * 1000); 
 
-        object.style.transition = `width ${speed}s ease, transform ${speed}s ease`;
-        object.style.width = `${objectWidth / 2}px`;
-        object.style.transform = `translateX(-${newLeft}px)`;
-    }
-});
+}
+
+function fadeOut(object) {
+  setTimeout(() => {
+    object.style.transition = 'opacity 1s ease';
+    object.style.opacity = '0';
+}, 1000);
+}
+
+function fadeIn(object) {
+  setTimeout(() => {
+    object.style.transition = 'opacity 1s ease';
+    object.style.opacity = '1';
+}, 1000);
 }

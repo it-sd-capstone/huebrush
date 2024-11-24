@@ -523,23 +523,26 @@ function createLevel1(widthModifier,heightModifier) {
       wallBlack1.appendChild(wall);
     });
 
-  const tutorialWASD = createElement('div', 'tutorialWASD', ['tutorialfade'], {
-    position: 'absolute',
-    top: `${heightModifier * 140}px`,
-    left: `${widthModifier * 175}px`,
-    opacity: '1',
-  });
+    if (localStorage.getItem('wasd') == '1') {
+      const tutorialWASD = createElement('div', 'tutorialWASD', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 140}px`,
+        left: `${widthModifier * 175}px`,
+        opacity: '1',
+      });
 
-  const svgObject = document.createElement('object');
-  svgObject.data = '/images/WASD.svg';
-  svgObject.type = 'image/svg+xml';
-  svgObject.alt = 'WASD Tutorial';
-  svgObject.classList.add("tutorialfade");
-  svgObject.style.height = `${heightModifier * 30}px`;
-  tutorialWASD.appendChild(svgObject);
+      const svgObject = document.createElement('object');
+      svgObject.data = '/images/WASD.svg';
+      svgObject.type = 'image/svg+xml';
+      svgObject.alt = 'WASD Tutorial';
+      svgObject.classList.add("tutorialfade");
+      svgObject.style.height = `${heightModifier * 30}px`;
+      tutorialWASD.appendChild(svgObject);
+      
+      level1.appendChild(tutorialWASD);
+    }
 
 
-  level1.appendChild(tutorialWASD);
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
   level1.appendChild(lakeYellow);
@@ -580,22 +583,22 @@ function createLevel1End(){
 }
 
 function getLevel1Objects() {
-  let stack = Array.from(level1.children);
-  let childStack = [];
+  let stack1 = Array.from(level1.children);
+  let childStack1 = [];
 
-  while (stack.length > 0) {
-    let child = stack.pop();
+  while (stack1.length > 0) {
+    let child = stack1.pop();
     
     if (child.tagName === "DIV") {
       if (child.childElementCount > 0) {
-        stack.push(...child.children);
+        stack1.push(...child.children);
       } else {
-        childStack.push(child);
+        childStack1.push(child);
       }
     }
   }
 
-  return childStack;
+  return childStack1;
 }
 
 window.createLevel1 = createLevel1;

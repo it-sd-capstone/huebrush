@@ -11,11 +11,10 @@ function createLevel2(widthModifier,heightModifier,offscreen) {
     left: `${offscreen}%`,
     top: '0',
     zIndex: '1',
-    transition: 'left 1.75s ease'
+    transition: 'left 1.75s ease, width 1.75s ease'
   });
 
   const maze = createElement('div', 'maze', ['maze']);
-
     const mazeConfig = [
       { id: 'mazeWall1', 
         width: `${widthModifier * 50}px`, 
@@ -750,6 +749,7 @@ function createLevel2(widthModifier,heightModifier,offscreen) {
   for (let object in levelStack) {
     levelStack[object].style.zIndex = '2';
     levelStack[object].style.position = 'absolute';
+    levelStack[object].style.transition = `width ${1.75}s ease`;
   }
 }
 
