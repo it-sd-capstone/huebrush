@@ -201,8 +201,8 @@ function chaseBox(time) {
     dy /= distance;
 
     // Move the enemy
-    //enemyX += dx * moveSpeed * delta;
-    //enemyY += dy * moveSpeed * delta;
+    enemyX += dx * moveSpeed * delta;
+    enemyY += dy * moveSpeed * delta;
     
     enemy.style.left = `${enemyX}px`;
     enemy.style.top = `${enemyY}px`;
