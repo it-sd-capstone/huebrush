@@ -708,40 +708,40 @@ function createLevel2(widthModifier,heightModifier,offscreen) {
       lakeYellow.appendChild(lake);
     });
 
-    const shadows = createElement('div', 'shadow', ['shadow']);
+    // TODOconst shadows = createElement('div', 'shadow', ['shadow']);
 
-    const shadowsConfig = [
-      { id: 'shadow1', 
-        width: `${widthModifier * 400}px`, 
-        height: `${heightModifier * 280}px`, 
-        top: `${heightModifier * 10}px`, 
-        left: `${widthModifier * 90}px` 
-      },
-      { id: 'shadow2', 
-        width: `${widthModifier * 50}px`, 
-        height: `${heightModifier * 10}px`, 
-        top: `${heightModifier * 20}px`, 
-        left: `${widthModifier * 40}px` 
-      }
-    ];
+    // const shadowsConfig = [
+    //   { id: 'shadow1', 
+    //     width: `${widthModifier * 400}px`, 
+    //     height: `${heightModifier * 280}px`, 
+    //     top: `${heightModifier * 10}px`, 
+    //     left: `${widthModifier * 90}px` 
+    //   },
+    //   { id: 'shadow2', 
+    //     width: `${widthModifier * 50}px`, 
+    //     height: `${heightModifier * 10}px`, 
+    //     top: `${heightModifier * 20}px`, 
+    //     left: `${widthModifier * 40}px` 
+    //   }
+    // ];
 
-    shadowsConfig.forEach(({ id, width, height, top, left }) => {
-      const shadow = createElement('div', id, ['lake'], {
-        background: 'gray',
-        width,
-        height,
-        top,
-        left,
-        zIndex: '4',
-      });
-      shadows.appendChild(shadow);
-    });
+    // shadowsConfig.forEach(({ id, width, height, top, left }) => {
+    //   const shadow = createElement('div', id, ['lake'], {
+    //     background: 'gray',
+    //     width,
+    //     height,
+    //     top,
+    //     left,
+    //     zIndex: '4',
+    //   });
+    //   shadows.appendChild(shadow);
+    // });
 
   level2.appendChild(maze);
   level2.appendChild(columns);
   level2.appendChild(wallBlack2);
   level2.appendChild(lakeYellow);
-  level2.appendChild(shadows);
+  //TODO:level2.appendChild(shadows);
 
   playArea.appendChild(level2);
 
