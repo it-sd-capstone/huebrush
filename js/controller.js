@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const ammo = document.querySelector('#ammo');
+  const projectile = document.querySelector('#projectile');
 
   window.addEventListener('load', () => {
     if (localStorage.getItem('Current Level') == null) {
@@ -43,9 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let moveBy = 10;
   let hasFadedOut = false;
 
-  let enemy = document.querySelector('#game_canvas #enemy');
-  let moveSpeed = 50; //px per sec
-  let lastTime = 0;
+  //Move Enemy Variables
+let enemy = document.querySelector('#game_canvas #enemy');
+let moveSpeed = 50; //px per sec
+let lastTime = 0;
 
   // Prevent arrow keys from causing scroll action.
   window.addEventListener("keydown", function(e) {
@@ -72,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
 
-  document.addEventListener('keydown', (e) => {
-    let box = document.querySelector('.myBox');
+document.addEventListener('keydown', (e) => {
+  let box = document.querySelector('.myBox');
     let container = document.querySelector('.playArea');
 
     const keys = ['w', 'a', 's', 'd'];
@@ -85,43 +88,45 @@ document.addEventListener('DOMContentLoaded', () => {
         fadeOut(tutorialWASD);
     }
 
-    let boxRect = box.getBoundingClientRect();
-    let containerRect = container.getBoundingClientRect();
-    let newTop = parseInt(box.style.top);
-    let newLeft = parseInt(box.style.left);
+      let boxRect = box.getBoundingClientRect();
+      let containerRect = container.getBoundingClientRect();
+      let newTop = parseInt(box.style.top);
+      let newLeft = parseInt(box.style.left);
 
-    switch (e.key) {
-        case 'ArrowUp':
-        case 'w':
-        case 'W':
-            if (boxRect.top - moveBy >= containerRect.top) {
-                newTop -= moveBy;
-            }
-            break;
-        case 'ArrowDown':
-        case 's':
-        case 'S':
-            if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                newTop += moveBy;
-            }
-            break;
-        case 'ArrowLeft':
-        case 'a':
-        case 'A':
-            if (boxRect.left - moveBy >= containerRect.left) {
-                newLeft -= moveBy;
-            }
-            break;
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-            if (boxRect.right + moveBy <= containerRect.right) {
-                newLeft += moveBy;
-            }
-            break;
-        default:
-            return;
-    }
+            //ammo
+            let ammoRect = ammo.getBoundingClientRect();
+            let newAmmoTop = parseInt(ammo.style.top);
+            let newAmmoLeft = parseInt(ammo.style.left);
+
+      // Compute new position without applying it
+      switch (e.key) {
+          case 'ArrowUp':
+          case 'w':
+              if (boxRect.top - moveBy >= containerRect.top) {
+                  newTop -= moveBy;
+              }
+              break;
+          case 'ArrowDown':
+          case 's':
+              if (boxRect.bottom + moveBy <= containerRect.bottom) {
+                  newTop += moveBy;
+              }
+              break;
+          case 'ArrowLeft':
+          case 'a':
+              if (boxRect.left - moveBy >= containerRect.left) {
+                  newLeft -= moveBy;
+              }
+              break;
+          case 'ArrowRight':
+          case 'd':
+              if (boxRect.right + moveBy <= containerRect.right) {
+                  newLeft += moveBy;
+              }
+              break;
+          default:
+              return;
+      }
 
     const simulatedBox = {
         top: newTop,
@@ -129,6 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
         left: newLeft,
         right: newLeft + boxRect.width,
     };
+
+      //Simulate new ammo position
+      const simulatedAmmo = {
+          top: newAmmoTop,
+          bottom: newAmmoTop + ammoRect.height,
+          left: newAmmoLeft,
+          right: newAmmoLeft + ammoRect.width
+      };
 
     const walls = getObjectsRelativeToContainer(container, '.wallSolid');
     for (let wall of walls) {
@@ -139,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     box.style.top = `${newTop}px`;
     box.style.left = `${newLeft}px`;
+      ammo.style.top = `${newAmmoTop}px`;
+      ammo.style.left = `${newAmmoLeft}px`;
 
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
