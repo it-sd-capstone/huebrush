@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  //createLevel2();
-  //createLevel3();
-  //createLevel4();
 
   window.addEventListener('load', () => {
     if (localStorage.getItem('Current Level') == null) {
@@ -15,11 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
       case 1:
         createLevel1(2,2);
         createLevel1End();
-        spawnPlayer('20px', '20px', '300px', '300px');
+        spawnPlayer(2, 2, '300px', '300px');
         break;
       case 2:
-        createLevel2();
+        createLevel1(1,2);
+        createLevel2(1,2,50);
+        spawnPlayer(1 , 2 , '260px', '440px');
         spawnEnemy();
+        createLevel2End();
         requestAnimationFrame(chaseBox);
         break;
       case 3:
@@ -160,18 +160,19 @@ document.addEventListener('DOMContentLoaded', () => {
   
       // Ensure the next level is created but hidden
       if (!nextLevelDiv) {
-          if (currentLevel + 1 === 2) {
-              createLevel2(); 
-              createLevel2End();
-              spawnEnemy();
-          }
-      }
+        if (currentLevel + 1 === 2) {
+            createLevel2(); 
+            createLevel2End();
+            spawnEnemy();
+        }
+    }
+
+    const myBox = document.querySelector('.myBox');
   
-      // Perform the level transition animation
-      levelXTransition(
-        [document.querySelector(currentLevelSelector)], // Convert selector to DOM element
-        Array.from(currentLevelDiv.querySelectorAll('*')), // All objects in the current level
-        document.querySelector(nextLevelSelector)       // Convert selector to DOM element
+    // Perform the level transition animation
+    levelXTransition(
+      [currentLevelDiv],
+      [myBox, ...Array.from(currentLevelDiv.querySelectorAll('*'))]
     );
   
       // Update the current level
