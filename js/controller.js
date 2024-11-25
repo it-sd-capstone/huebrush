@@ -1,9 +1,8 @@
 import { createLevel1, createLevel1End } from './level1.js';
 import { createLevel2, createLevel2End } from './level2.js';
-import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
-import { createInventory } from './inventory.js';
 import { initializeGame } from './initializeController.js';
+import { addToInventory } from './inventory.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
@@ -25,28 +24,48 @@ document.addEventListener('DOMContentLoaded', () => {
   }, false);
 
   //Event listener to add items to inventory
-  document.addEventListener('keydown',  (e) => {
+  document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
-
-    if (e.key == 'f' || e.key == 'F') {
-        console.log("scanning");
-        let boxTop = parseFloat(box.style.top);
-        let boxLeft = parseFloat(box.style.left);
-        if (boxTop <= 130) {
-            console.log("checking blue");
-            checkProximity(blueLakes);
-            return;
-        } else if ((boxTop <= 460 && boxLeft <= 60) || (boxTop <= 450 && boxLeft <= 70) || (boxTop <= 440 && boxLeft <= 80) || (boxTop <= 430 && boxLeft <= 90) || (boxTop <= 420 && boxLeft <= 130)) {
-            console.log("checking yellow");
-            checkProximity(yellowLakes);
-            return;
-        } else if ((boxTop >= 470 && boxLeft >= 50) || (boxTop >= 450 && boxLeft >= 90) || (boxTop >= 440 && boxLeft >= 120)) {
-            console.log("checking red");
-            checkProximity(redLakes);
-            return;
-        }
+    if (e.key.toLowerCase() === 'f') {
+        checkProximityAroundBox(box, 10);
     }
+});
+
+function checkProximityAroundBox(box, radius) {
+  const container = document.querySelector('.playArea'); // Ensure the container is defined
+  const boxRect = getObjectsRelativeToContainer(container, '#myBox')[0];
+
+  // Expand the box's dimensions by the radius for proximity detection
+  const extendedBox = {
+      top: boxRect.top - radius,
+      bottom: boxRect.bottom + radius,
+      left: boxRect.left - radius,
+      right: boxRect.right + radius,
+  };
+
+  // Get all lakes relative to the container
+  const lakes = getObjectsRelativeToContainer(container, '.lake');
+  lakes.forEach(lake => {
+      const lakeRect = {
+          top: lake.top,
+          bottom: lake.top + lake.height,
+          left: lake.left,
+          right: lake.left + lake.width,
+      };
+
+      // Check if the lake's rectangular border intersects with the extended box
+      const isOverlapping = !(
+          lakeRect.right < extendedBox.left ||
+          lakeRect.left > extendedBox.right ||
+          lakeRect.bottom < extendedBox.top ||
+          lakeRect.top > extendedBox.bottom
+      );
+
+      if (isOverlapping) {
+          addToInventory(lake); // Existing function to add the lake to the inventory
+      }
   });
+}
 
   // ##### TODO rework where color drain occurs ######
   // function drainColor() {
@@ -183,8 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getObjectsRelativeToContainer(container, object) {
     const containerRect = container.getBoundingClientRect();
-    return Array.from(document.querySelectorAll(object)).map((obj) => {
+
+    return Array.from(document.querySelectorAll(object)).map(obj => {
         const objectRect = obj.getBoundingClientRect();
+
         return {
             top: objectRect.top - containerRect.top,
             bottom: objectRect.bottom - containerRect.top,
@@ -192,9 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
             right: objectRect.right - containerRect.left,
             width: objectRect.width,
             height: objectRect.height,
+            background: obj.style.background,
+            element: obj
         };
     });
-  }
+}
 
 
   //Move Enemy Program

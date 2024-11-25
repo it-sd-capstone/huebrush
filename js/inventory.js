@@ -62,75 +62,15 @@ const box = document.querySelector("#myBox");
 // Select the target div
 const level1 = document.getElementById('level1');
 
-var nearbyLake = Array.from(document.querySelectorAll('.lake'));
-nearbyLake = document.querySelectorAll(".lake");
-
-
-var redLakes = [];
-var yellowLakes = [];
-var blueLakes = [];
-
-for (let i = 0; i < nearbyLake.length; i++) {
-    if (nearbyLake[i].style.background == 'red') {
-        redLakes.push(nearbyLake[i]);
-    } else if (nearbyLake[i].style.background == 'yellow') {
-      yellowLakes.push(nearbyLake[i]);
-    } else if (nearbyLake[i].style.background == 'blue') {
-        blueLakes.push(nearbyLake[i]);
-    }
-}
-
-function checkProximity(object) {
-    for (i = 0; i < object.length; i++) {
-        console.log(object[i]);
-        const lakeTop = parseFloat(object[i].style.top);
-        const lakeLeft = parseFloat(object[i].style.left);
-        const lakeHeight = parseFloat(object[i].style.height);
-        const lakeWidth = parseFloat(object[i].style.width);
-        const boxTop = parseFloat(box.style.top);
-        const boxLeft = parseFloat(box.style.left);
-        const boxHeight = parseFloat(box.style.height);
-        const boxWidth = parseFloat(box.style.width);
-
-        const lakeRight = lakeLeft + lakeWidth;
-        const lakeBottom = lakeTop + lakeHeight;
-        const boxRight = boxLeft + boxWidth;
-        const boxBottom = boxTop + boxHeight;
-
-        console.log(`LT:${lakeTop} LL:${lakeLeft} LH:${lakeHeight} LW:${lakeWidth} BT:${boxTop} BL:${boxLeft}`);
-        console.log(`LR:${lakeRight} LB:${lakeBottom} BR:${boxRight} BB:${boxBottom}`);
-
-        // Check if box and lake are overlapping
-        const isOverlapping = 
-        lakeLeft < boxRight &&
-        lakeRight > boxLeft &&
-        lakeTop < boxBottom &&
-        lakeBottom > boxTop;
-        console.log("isOverlapping:" + isOverlapping);
-        
-        const isCloseHorizontally = Math.abs(lakeLeft - boxRight) <= 11 || Math.abs(lakeRight - boxLeft) <= 11;
-        const isCloseVertically = Math.abs(lakeTop - boxBottom) <= 10 || Math.abs(lakeBottom - boxTop) <= 10;
-        const isContained = boxTop >= lakeTop && boxBottom <= lakeBottom && boxLeft >= lakeLeft && boxRight <= lakeRight;
-        console.log("isCloseHorizontally:" + isCloseHorizontally);
-        console.log("isCloseVertically:" + isCloseVertically);
-        console.log("isContained:" + isContained);
-
-        if (isCloseHorizontally || isCloseVertically || isContained || isOverlapping) {
-            addToInventory(object[i]);
-            break;
-        }
-        
-    }
-}
-
-
-function addToInventory(lake) {
+export function addToInventory(lake) {
+  const ammo = document.querySelector('.ammo');
+  console.log(ammo);
     if (!invFull) {
-        for (i = 0; i < slot.length; i++) { 
+        for (let i = 0; i < slot.length; i++) { 
             if (slot[i] == 'x') {
-                slot[i] = lake.style.background;
+                slot[i] = lake.background;
 
-                displayItem(i, lake.style.background);
+                displayItem(i, lake.background);
                 setBackground(ammo, slot[i]);
                 currentColor = i;
                 setLastItem();
@@ -202,20 +142,15 @@ function swapAmmo(direction) {
     if (direction == 'q' && currentColor != 0) {
         currentColor--;
         ammo.style.background = `${slot[currentColor]}`;
-        console.log(currentColor);
     } else if (direction == 'q' && currentColor == 0) {
         currentColor = lastItem;
         ammo.style.background = `${slot[lastItem]}`;
-        console.log(lastItem);
     } else if (direction == 'e' && currentColor != lastItem) {
         currentColor++;
         ammo.style.background = `${slot[currentColor]}`;
-        console.log(currentColor);
     } else if (direction == 'e' && currentColor == lastItem) {
         currentColor = 0;
         ammo.style.background = `${slot[0]}`;
-        console.log(currentColor);
-
     }
 }
 
@@ -289,14 +224,12 @@ function shiftInventory() {
             slot[i] = 'x';
         }
     }
-    console.log("currentColor:"+currentColor);
-    console.log("lastItem:"+lastItem);
+
     if (currentColor == lastItem) {
         currentColor--;
     }
 
     setLastItem();
-    console.log("currentColor:"+currentColor);
 
     invFull = !slot.includes('x');
     invEmpty = slot.every((item) => item === 'x');
@@ -312,7 +245,6 @@ function fire() {
     
     projectile.style.top = `${ammo.offsetTop}px`;
     projectile.style.left = `${ammo.offsetLeft}px`;
-    console.log(slot[currentColor]);
     projectile.style.background = slot[currentColor];
 
     let lastTime = performance.now(); // Initialize time
@@ -337,7 +269,6 @@ function fire() {
 
         // Stop animation if the projectile is close enough to the target
         if (distance < 1) {
-            console.log("Projectile reached the target!");
             projectile.style.background = "rgba(0,0,0,0)";
             animation = false;
             return;
@@ -361,12 +292,10 @@ function fire() {
 function printInventory() {
     for (let i = 0; i < slot.length; i++) {
         slotNumber = i + 1;
-        console.log("Inventory slot " + slotNumber + ": " + slot[i]);
     }
 }
 
 window.createInventory = createInventory;
-window.checkProximity = checkProximity;
 window.fire = fire;
 window.shiftInventory = shiftInventory;
 window.setLastItem = setLastItem;
