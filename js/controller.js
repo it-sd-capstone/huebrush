@@ -3,56 +3,10 @@ import { createLevel2, createLevel2End } from './level2.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
 import { createInventory } from './inventory.js';
+import { initializeGame } from './initializeController.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  function initializeGame() {
-    // Ensure localStorage values are correctly initialized
-    if (!localStorage.getItem('Current Level')) {
-      localStorage.setItem('Current Level', 1);
-    } else if (localStorage.getItem('Current Level') > 4) {
-      localStorage.setItem('Current Level', 4);
-    }
-
-    if (!localStorage.getItem('wasd')) {
-      localStorage.setItem('wasd', 1);
-    }
-
-    console.log("Starting Level: ", localStorage.getItem('Current Level'));
-
-    // Initialize Inventory
-    createInventory();
-
-    // Load the current level
-    const currentLevel = Number(localStorage.getItem('Current Level'));
-    loadLevel(currentLevel);
-  }
-
-  function loadLevel(level) {
-    switch (level) {
-      case 1:
-        createLevel1(2, 2);
-        createLevel1End();
-        spawnPlayer(2, 2, '300px', '300px');
-        break;
-      case 2:
-        createLevel1(1, 2);
-        createLevel2(1, 2, 50);
-        spawnPlayer(1, 2, '260px', '440px');
-        spawnEnemy();
-        createLevel2End();
-        requestAnimationFrame(chaseBox);
-        break;
-      case 3:
-        console.log('Level 3 not implemented yet');
-        break;
-      case 4:
-        console.log('Level 4 not implemented yet');
-        break;
-      default:
-        console.log("Unknown level: ", level);
-    }
-  }
-
+  // Initialize the game when DOM content is loaded
   initializeGame();
 });
 
@@ -72,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Event listener to add items to inventory
   document.addEventListener('keydown',  (e) => {
+    let box = document.querySelector('#myBox');
+
     if (e.key == 'f' || e.key == 'F') {
         console.log("scanning");
         let boxTop = parseFloat(box.style.top);
@@ -81,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             checkProximity(blueLakes);
             return;
         } else if ((boxTop <= 460 && boxLeft <= 60) || (boxTop <= 450 && boxLeft <= 70) || (boxTop <= 440 && boxLeft <= 80) || (boxTop <= 430 && boxLeft <= 90) || (boxTop <= 420 && boxLeft <= 130)) {
-            console.log("checking green");
-            checkProximity(greenLakes);
+            console.log("checking yellow");
+            checkProximity(yellowLakes);
             return;
         } else if ((boxTop >= 470 && boxLeft >= 50) || (boxTop >= 450 && boxLeft >= 90) || (boxTop >= 440 && boxLeft >= 120)) {
             console.log("checking red");
@@ -113,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     let box = document.querySelector('.myBox');
     let container = document.querySelector('.playArea');
+    let wasdFade = localStorage.getItem('wasd');
 
     const keys = ['w', 'a', 's', 'd'];
     if (keys.includes(e.key) && wasdFade == '1') {

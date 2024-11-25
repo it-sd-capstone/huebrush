@@ -1,5 +1,7 @@
+import { createElement } from './level1.js';
+
 export function spawnPlayer(widthModifier,heightModifier,top,left) {
-  playArea = document.querySelector('.playArea');
+  let playArea = document.querySelector('.playArea');
 
   const myBox = createElement('div', 'myBox', ['myBox'], {
     position: 'absolute',

@@ -1,4 +1,4 @@
-function createElement(tag, id, classes = [], styles = {}) {
+export function createElement(tag, id, classes = [], styles = {}) {
   const element = document.createElement(tag);
   if (id) element.id = id;
   if (classes.length) element.classList.add(...classes);
@@ -557,7 +557,7 @@ export function createLevel1(widthModifier,heightModifier) {
   document.querySelector('#game_canvas').appendChild(playArea);
   playArea.appendChild(level1);
 
-  levelStack = getLevel1Objects();
+  let levelStack = getLevel1Objects();
 
   for (let object in levelStack) {
     levelStack[object].style.zIndex = '2';
@@ -567,7 +567,7 @@ export function createLevel1(widthModifier,heightModifier) {
 }
 
 export function createLevel1End(){
-  level1 = document.querySelector('#level1')
+  let level1 = document.querySelector('#level1')
 
   const level1End = createElement('div', 'level1End', ['levelEnd'], {
     position: 'absolute',

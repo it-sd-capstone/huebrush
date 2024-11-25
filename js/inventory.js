@@ -7,10 +7,10 @@ export function createInventory() {
   Inventory.classList.add("Inventory");
   Inventory.style.position = 'relative';
   Inventory.style.zIndex = 1
-  leftCounter = 5
+  let leftCounter = 5
   for (let i = 1; i < 17; i++) {
     let invNumber = "inv" + i;
-    invslot = document.createElement('div');
+    let invslot = document.createElement('div');
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
@@ -67,14 +67,14 @@ nearbyLake = document.querySelectorAll(".lake");
 
 
 var redLakes = [];
-var greenLakes = [];
+var yellowLakes = [];
 var blueLakes = [];
 
 for (let i = 0; i < nearbyLake.length; i++) {
     if (nearbyLake[i].style.background == 'red') {
         redLakes.push(nearbyLake[i]);
-    } else if (nearbyLake[i].style.background == 'green') {
-        greenLakes.push(nearbyLake[i]);
+    } else if (nearbyLake[i].style.background == 'yellow') {
+      yellowLakes.push(nearbyLake[i]);
     } else if (nearbyLake[i].style.background == 'blue') {
         blueLakes.push(nearbyLake[i]);
     }
@@ -238,26 +238,34 @@ document.addEventListener('keydown',  (e) => {
 
 
 
-// Add event listeners to the div
+const playArea = document.querySelector('.playArea');
 let isCursorInside = false;
 
-level1.addEventListener('mouseenter', () => {
-    isCursorInside = true;
-});
-
-level1.addEventListener('mouseleave', () => {
-    isCursorInside = false;
-});
-
-level1.addEventListener('mousemove', (e) => {
-    if (isCursorInside) {
-        // Get the cursor coordinates relative to the div
-        const rect = level1.getBoundingClientRect();
-        cursorX = e.clientX - rect.left; // X-coordinate within the div
-        cursorY = e.clientY - rect.top;  // Y-coordinate within the div
-
+// Add event listeners to playArea
+if (playArea) {
+  playArea.addEventListener('mouseenter', (e) => {
+    if (e.target.id === 'level1') {
+      isCursorInside = true;
     }
-});
+  });
+
+  playArea.addEventListener('mouseleave', (e) => {
+    if (e.target.id === 'level1') {
+      isCursorInside = false;
+    }
+  });
+
+  playArea.addEventListener('mousemove', (e) => {
+    if (isCursorInside) {
+      const rect = playArea.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left; // X-coordinate within playArea
+      const cursorY = e.clientY - rect.top;  // Y-coordinate within playArea
+      console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
+    }
+  });
+} else {
+  console.warn('playArea element not found. Event listeners were not added.');
+}
 
 function setLastItem() {
     for (let i = 0; i < slot.length; i++) {
