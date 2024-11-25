@@ -6,7 +6,7 @@ function createElement(tag, id, classes = [], styles = {}) {
   return element;
 }
 
-function createLevel1(widthModifier,heightModifier) {
+export function createLevel1(widthModifier,heightModifier) {
   const playArea = createElement('div', 'playArea', ['playArea'], {
     position: 'relative',
     width: `1000px`,
@@ -566,7 +566,7 @@ function createLevel1(widthModifier,heightModifier) {
   
 }
 
-function createLevel1End(){
+export function createLevel1End(){
   level1 = document.querySelector('#level1')
 
   const level1End = createElement('div', 'level1End', ['levelEnd'], {

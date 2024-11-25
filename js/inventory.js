@@ -1,6 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
 var container = document.querySelector(".playArea");
+
+export function createInventory() {
+  const Inventory = document.createElement('div');
+  Inventory.id = 'Inventory';
+  Inventory.classList.add("Inventory");
+  Inventory.style.position = 'relative';
+  Inventory.style.zIndex = 1
+  leftCounter = 5
+  for (let i = 1; i < 17; i++) {
+    let invNumber = "inv" + i;
+    invslot = document.createElement('div');
+    invslot.id = invNumber;
+    invslot.classList.add("Inventory");
+    invslot.style.position = 'absolute';
+    invslot.style.background = 'grey';
+    invslot.style.width = '40px';
+    invslot.style.height = '40px';
+    invslot.style.top = '5px';
+    invslot.style.left = leftCounter + 'px';
+    invslot.style.padding = '0';
+    invslot.style.border = '0';
+    invslot.style.zIndex = 0
+    Inventory.appendChild(invslot);
+    leftCounter = leftCounter + 50
+  }
+  fetch('/images/inventory.svg')
+    .then(response => response.text())
+    .then(svgContent => {
+      // Append the SVG content without overwriting `inv1`
+      const svgContainer = document.createElement('div');
+      svgContainer.innerHTML = svgContent;
+      Inventory.appendChild(svgContainer);
+      // Append the `Inventory` element to the DOM
+      document.querySelector('#game_canvas').appendChild(Inventory);
+    })
+    .catch(error => console.error('Error loading SVG:', error));
+}
 
 //should represent the current slot[] index of the last non-x in the array
 let lastItem = -1;
@@ -42,49 +78,6 @@ for (let i = 0; i < nearbyLake.length; i++) {
     } else if (nearbyLake[i].style.background == 'blue') {
         blueLakes.push(nearbyLake[i]);
     }
-}
-
-function createInventory() {
-  const Inventory = document.createElement('div');
-  Inventory.id = 'Inventory';
-  Inventory.classList.add("Inventory");
-  Inventory.style.position = 'relative';
-  Inventory.style.zIndex = 1
-
-  leftCounter = 5
-
-  for (let i = 1; i < 17; i++) {
-    let invNumber = "inv" + i;
-    invslot = document.createElement('div');
-    invslot.id = invNumber;
-    invslot.classList.add("Inventory");
-    invslot.style.position = 'absolute';
-    invslot.style.background = 'grey';
-    invslot.style.width = '40px';
-    invslot.style.height = '40px';
-    invslot.style.top = '5px';
-    invslot.style.left = leftCounter + 'px';
-    invslot.style.padding = '0';
-    invslot.style.border = '0';
-    invslot.style.zIndex = 0
-
-    Inventory.appendChild(invslot);
-
-    leftCounter = leftCounter + 50
-  }
-
-  fetch('/images/inventory.svg')
-    .then(response => response.text())
-    .then(svgContent => {
-      // Append the SVG content without overwriting `inv1`
-      const svgContainer = document.createElement('div');
-      svgContainer.innerHTML = svgContent;
-      Inventory.appendChild(svgContainer);
-
-      // Append the `Inventory` element to the DOM
-      document.querySelector('#game_canvas').appendChild(Inventory);
-    })
-    .catch(error => console.error('Error loading SVG:', error));
 }
 
 function checkProximity(object) {
@@ -371,5 +364,4 @@ window.shiftInventory = shiftInventory;
 window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
-});
 

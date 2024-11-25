@@ -1,4 +1,4 @@
-function spawnEnemy() {
+export function spawnEnemy() {
   playArea = document.querySelector('.playArea');
 
   const enemy = document.createElement('div');

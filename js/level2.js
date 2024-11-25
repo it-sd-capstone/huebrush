@@ -1,4 +1,4 @@
-function createLevel2(widthModifier,heightModifier,offscreen) {
+export function createLevel2(widthModifier,heightModifier,offscreen) {
   playArea = document.querySelector('.playArea');
 
   const level2 = createElement('div', 'level2', ['box'], {
@@ -753,7 +753,7 @@ function createLevel2(widthModifier,heightModifier,offscreen) {
   }
 }
 
-function createLevel2End(){
+export function createLevel2End(){
   level2 = document.querySelector('#level2')
 
   const level2End = createElement('div', 'level1End', ['levelEnd'], {

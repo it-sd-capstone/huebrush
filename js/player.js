@@ -1,4 +1,4 @@
-function spawnPlayer(widthModifier,heightModifier,top,left) {
+export function spawnPlayer(widthModifier,heightModifier,top,left) {
   playArea = document.querySelector('.playArea');
 
   const myBox = createElement('div', 'myBox', ['myBox'], {
