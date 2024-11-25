@@ -523,28 +523,6 @@ function createLevel1(widthModifier,heightModifier) {
       wallBlack1.appendChild(wall);
     });
 
-      //ammo creation
-    const ammo = document.createElement('div');
-    ammo.classList.add("ammo");
-    ammo.style.position = 'absolute';
-    ammo.style.width = '10px';
-    ammo.style.height = '10px';
-    ammo.style.top = '296px';
-    ammo.style.left = '296px';
-    ammo.style.zIndex = '4';
-    ammo.id = 'ammo';
-
-    //projectile creation
-    const projectile = document.createElement('div');
-    projectile.classList.add("ammo");
-    projectile.style.position = 'absolute';
-    projectile.style.width = '10px';
-    projectile.style.height = '10px';
-    projectile.style.top = '296px';
-    projectile.style.left = '296px';
-    projectile.style.zIndex = '100';
-    projectile.id = 'projectile';
-
     if (localStorage.getItem('wasd') == '1') {
       const tutorialWASD = createElement('div', 'tutorialWASD', ['tutorialfade'], {
         position: 'absolute',
@@ -572,14 +550,36 @@ function createLevel1(widthModifier,heightModifier) {
   level1.appendChild(crates);
   level1.appendChild(wallMountainsB);
   level1.appendChild(wallMountainsA);
-  level1.appendChild(wallSolid1);
-  level1.appendChild(wallSolid2);
-  level1.appendChild(levelEnd);
-  level1.appendChild(enemy);
-  level1.appendChild(ammo);
-  level1.appendChild(projectile);
+  level1.appendChild(wallBlack1);
 
-  document.querySelector('#game_canvas').appendChild(level1);
+
+
+  document.querySelector('#game_canvas').appendChild(playArea);
+  playArea.appendChild(level1);
+
+  levelStack = getLevel1Objects();
+
+  for (let object in levelStack) {
+    levelStack[object].style.zIndex = '2';
+    levelStack[object].style.position = 'absolute';
+  }
+  
+}
+
+function createLevel1End(){
+  level1 = document.querySelector('#level1')
+
+  const level1End = createElement('div', 'level1End', ['levelEnd'], {
+    position: 'absolute',
+    background: 'rgb(60, 199, 184)',
+    width: '30px',
+    height: '30px',
+    top: '260px',
+    left: '900px',
+    zIndex: '2'
+  });
+
+  level1.appendChild(level1End);
 }
 
 function getLevel1Objects() {
