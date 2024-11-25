@@ -54,6 +54,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, false);
 
+  //Event listener to add items to inventory
+  document.addEventListener('keydown',  (e) => {
+    if (e.key == 'f' || e.key == 'F') {
+        console.log("scanning");
+        let boxTop = parseFloat(box.style.top);
+        let boxLeft = parseFloat(box.style.left);
+        if (boxTop <= 130) {
+            console.log("checking blue");
+            checkProximity(blueLakes);
+            return;
+        } else if ((boxTop <= 460 && boxLeft <= 60) || (boxTop <= 450 && boxLeft <= 70) || (boxTop <= 440 && boxLeft <= 80) || (boxTop <= 430 && boxLeft <= 90) || (boxTop <= 420 && boxLeft <= 130)) {
+            console.log("checking green");
+            checkProximity(greenLakes);
+            return;
+        } else if ((boxTop >= 470 && boxLeft >= 50) || (boxTop >= 450 && boxLeft >= 90) || (boxTop >= 440 && boxLeft >= 120)) {
+            console.log("checking red");
+            checkProximity(redLakes);
+            return;
+        }
+    }
+  });
+
   // ##### TODO rework where color drain occurs ######
   // function drainColor() {
   //   let boxColorGrabber = window.getComputedStyle(box);
