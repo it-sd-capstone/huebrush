@@ -1,273 +1,307 @@
+import { createLevel1, createLevel1End } from './level1.js';
+import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
+import { spawnEnemy } from './enemy.js';
+import { initializeGame } from './initializeController.js';
+import { addToInventory } from './inventory.js';
+import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
+import { getAmmo } from './inventory.js';
+
+
 document.addEventListener('DOMContentLoaded', () => {
-  createLevel1();
-  //createLevel2();
-  //createLevel3();
-  //createLevel4();
-  const box = document.querySelector('#myBox');
-  const container = document.querySelector('#game_canvas');
-  const moveBy = 10;
-
-  //Move Enemy Variables
-let enemy = document.querySelector('#game_canvas #enemy');
-let moveSpeed = 50; //px per sec
-let lastTime = 0;
-
-window.addEventListener('load', () => {
-  let level1Objects = getLevel1Objects();
-  //levelTransition(['#level1'],level1Objects, true, false, '#level2', '500px','600px');
-  //levelTransition(['#level1', '#level2'],level1Objects, false, true, '#level3','1000px','300px');
-  //levelTransition(['#level3'],level1Objects, true, false, '#level4', '500px', '300px');
-
-  enemy.style.position = 'absolute';
-  enemy.style.left = '1000px'; 
-  enemy.style.top = '0px';
-  requestAnimationFrame(chaseBox);
+  // Initialize the game when DOM content is loaded
+  initializeGame();
 });
 
-window.addEventListener("keydown", function(e) {
-  if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-      e.preventDefault();
-  }
-}, false);
+  let moveBy = 10;
+  let hasFadedOut = false;
 
-// ##### TODO rework where color drain occurs ######
-// function drainColor() {
-//   let boxColorGrabber = window.getComputedStyle(box);
-//   let boxColor = boxColorGrabber.backgroundColor;
+  let enemy = document.querySelector('#game_canvas #enemy');
+  let moveSpeed = 50; //px per sec
+  let lastTime = 0;
 
-//   if (opacity > 0) {
-//     opacity -= 0.0;
+  // Prevent arrow keys from causing scroll action.
+  window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+  }, false);
 
-//     let rgbValues = boxColor.match(/\d+/g); 
-//     if (rgbValues) {
-//       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
-//     }
+  //Event listener to add items to inventory
+  document.addEventListener('keydown', (e) => {
+    let box = document.querySelector('#myBox');
+    if (e.key.toLowerCase() === 'f') {
+        checkProximityAroundBox(box, 10);
+    }
+});
 
-//   } else if (opacity <= 0) {
-//     console.log("Game Over");
-//   }
-// }
+function checkProximityAroundBox(box, radius) {
+  const container = document.querySelector('.playArea'); // Ensure the container is defined
+  const boxRect = getObjectsRelativeToContainer(container, '#myBox')[0];
 
-document.addEventListener('keydown', (e) => {
-      let boxRect = box.getBoundingClientRect();
-      let containerRect = container.getBoundingClientRect();
-      let newTop = parseInt(box.style.top);
-      let newLeft = parseInt(box.style.left);
+  // Expand the box's dimensions by the radius for proximity detection
+  const extendedBox = {
+      top: boxRect.top - radius,
+      bottom: boxRect.bottom + radius,
+      left: boxRect.left - radius,
+      right: boxRect.right + radius,
+  };
 
-      // Compute new position without applying it
-      switch (e.key) {
-          case 'ArrowUp':
-          case 'w':
-              if (boxRect.top - moveBy >= containerRect.top) {
-                  newTop -= moveBy;
-              }
-              break;
-          case 'ArrowDown':
-          case 's':
-              if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                  newTop += moveBy;
-              }
-              break;
-          case 'ArrowLeft':
-          case 'a':
-              if (boxRect.left - moveBy >= containerRect.left) {
-                  newLeft -= moveBy;
-              }
-              break;
-          case 'ArrowRight':
-          case 'd':
-              if (boxRect.right + moveBy <= containerRect.right) {
-                  newLeft += moveBy;
-              }
-              break;
-          default:
-              return;
-      }
-
-      // Simulate new box position
-      const simulatedBox = {
-          top: newTop,
-          bottom: newTop + boxRect.height,
-          left: newLeft,
-          right: newLeft + boxRect.width,
+  // Get all lakes relative to the container
+  const lakes = getObjectsRelativeToContainer(container, '.lake');
+  lakes.forEach(lake => {
+      const lakeRect = {
+          top: lake.top,
+          bottom: lake.top + lake.height,
+          left: lake.left,
+          right: lake.left + lake.width,
       };
 
-      // Get walls' positions relative to the container
-      const walls = getWallsRelativeToContainer(container);
+      // Check if the lake's rectangular border intersects with the extended box
+      const isOverlapping = !(
+          lakeRect.right < extendedBox.left ||
+          lakeRect.left > extendedBox.right ||
+          lakeRect.bottom < extendedBox.top ||
+          lakeRect.top > extendedBox.bottom
+      );
 
-      // Check for collisions
-      for (let wall of walls) {
-          if (isColliding(simulatedBox, wall)) {
-              // Collision detected; stop movement
-              return;
-          }
+      if (isOverlapping) {
+          addToInventory(lake); // Existing function to add the lake to the inventory
       }
+  });
+}
 
-      // No collisions; apply the new position
-      box.style.top = `${newTop}px`;
-      box.style.left = `${newLeft}px`;
+  // ##### TODO rework where color drain occurs ######
+  // function drainColor() {
+  //   let boxColorGrabber = window.getComputedStyle(box);
+  //   let boxColor = boxColorGrabber.backgroundColor;
+
+  //   if (opacity > 0) {
+  //     opacity -= 0.0;
+
+  //     let rgbValues = boxColor.match(/\d+/g); 
+  //     if (rgbValues) {
+  //       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
+  //     }
+
+  //   } else if (opacity <= 0) {
+  //     console.log("Game Over");
+  //   }
+  // }
+
+  document.addEventListener('keydown', (e) => {
+    let box = document.querySelector('.myBox');
+    let container = document.querySelector('.playArea');
+    let wasdFade = localStorage.getItem('wasd');
+    let ammo = document.querySelector('#ammo');
+
+    const keys = ['w', 'a', 's', 'd'];
+    if (keys.includes(e.key) && wasdFade == '1') {
+      localStorage.setItem('wasd', 0);
+
+        let tutorialWASD = document.querySelector('#tutorialWASD');
+
+        fadeOut(tutorialWASD);
+    }
+
+    let boxRect = box.getBoundingClientRect();
+    let containerRect = container.getBoundingClientRect();
+    let newTop = parseInt(box.style.top);
+    let newLeft = parseInt(box.style.left);
+    let newAmmoTop = parseInt(ammo.style.top);
+    let newAmmoLeft = parseInt(ammo.style.left);
+
+    switch (e.key) {
+        case 'ArrowUp':
+        case 'w':
+        case 'W':
+            if (boxRect.top - moveBy >= containerRect.top) {
+                newTop -= moveBy;
+                newAmmoTop -= moveBy;
+            }
+            break;
+        case 'ArrowDown':
+        case 's':
+        case 'S':
+            if (boxRect.bottom + moveBy <= containerRect.bottom) {
+                newTop += moveBy;
+                newAmmoTop += moveBy;
+            }
+            break;
+        case 'ArrowLeft':
+        case 'a':
+        case 'A':
+            if (boxRect.left - moveBy >= containerRect.left) {
+                newLeft -= moveBy;
+                newAmmoLeft -= moveBy;
+            }
+            break;
+        case 'ArrowRight':
+        case 'd':
+        case 'D':
+            if (boxRect.right + moveBy <= containerRect.right) {
+                newLeft += moveBy;
+                newAmmoLeft += moveBy;
+            }
+            break;
+        default:
+            return;
+    }
+
+    const simulatedBox = {
+        top: newTop,
+        bottom: newTop + boxRect.height,
+        left: newLeft,
+        right: newLeft + boxRect.width,
+    };
+
+    
+
+    const walls = getObjectsRelativeToContainer(container, '.wallSolid');
+    for (let wall of walls) {
+        if (isColliding(simulatedBox, wall)) {
+            return;
+        }
+    }
+
+    box.style.top = `${newTop}px`;
+    box.style.left = `${newLeft}px`;
+    ammo.style.top = `${newAmmoTop}px`;
+    ammo.style.left = `${newAmmoLeft}px`;
+
+    let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
+
+    if (isColliding(simulatedBox, levelEnd[0])) {
+      let currentLevel = parseInt(localStorage.getItem('Current Level'));
+
+      removeObject('levelEnd');
+  
+      const currentLevelSelector = `#level${currentLevel}`;
+      const nextLevelSelector = `#level${currentLevel + 1}`;
+  
+      const currentLevelDiv = document.querySelector(currentLevelSelector);
+      const nextLevelDiv = document.querySelector(nextLevelSelector);
+  
+      if (!nextLevelDiv) {
+        if (currentLevel + 1 === 2) {
+            createLevel2(1,2,100); 
+            createLevel2End();
+            spawnEnemy();
+            chaseBox();
+        }
+    }
+
+    const myBox = document.querySelector('.myBox');
+    let newLevel = document.querySelector(nextLevelSelector);
+    let level1Objects = getLevel1Objects();
+    let level2Objects = getLevel2Objects();
+  
+    levelXTransition(
+      level1Objects,
+      newLevel,
+      level2Objects,
+      myBox
+    );
+  
+      localStorage.setItem('Current Level', currentLevel + 1);
+  }
   });
 
-function getWallsRelativeToContainer(container) {
+  function isColliding(rect1, rect2) {
+    return !(
+        rect1.bottom <= rect2.top ||
+        rect1.top >= rect2.bottom ||
+        rect1.right <= rect2.left ||
+        rect1.left >= rect2.right
+    );
+  }
+
+  function getObjectsRelativeToContainer(container, object) {
     const containerRect = container.getBoundingClientRect();
-    return Array.from(document.querySelectorAll('.wallSolid')).map((wall) => {
-        const wallRect = wall.getBoundingClientRect();
+
+    return Array.from(document.querySelectorAll(object)).map(obj => {
+        const objectRect = obj.getBoundingClientRect();
+
         return {
-            top: wallRect.top - containerRect.top,
-            bottom: wallRect.bottom - containerRect.top,
-            left: wallRect.left - containerRect.left,
-            right: wallRect.right - containerRect.left,
-            width: wallRect.width,
-            height: wallRect.height,
+            top: objectRect.top - containerRect.top,
+            bottom: objectRect.bottom - containerRect.top,
+            left: objectRect.left - containerRect.left,
+            right: objectRect.right - containerRect.left,
+            width: objectRect.width,
+            height: objectRect.height,
+            background: obj.style.background,
+            element: obj
         };
     });
 }
 
-function isColliding(rect1, rect2) {
-  return !(
-      rect1.bottom <= rect2.top ||
-      rect1.top >= rect2.bottom ||
-      rect1.right <= rect2.left ||
-      rect1.left >= rect2.right
-  );
-}
 
-function getObjectsRelativeToContainer(container, object) {
-  console.log(object)
-  const containerRect = container.getBoundingClientRect();
-  return Array.from(document.querySelectorAll('.myBox')).map((wall) => {
-      const wallRect = wall.getBoundingClientRect();
-      return {
-          top: wallRect.top - containerRect.top,
-          bottom: wallRect.bottom - containerRect.top,
-          left: wallRect.left - containerRect.left,
-          right: wallRect.right - containerRect.left,
-          width: wallRect.width,
-          height: wallRect.height,
-      };
-  });
-}
+  //Move Enemy Program
 
+  export function chaseBox(time) {
+    const container = document.querySelector('.playArea');
+    const enemy = document.querySelector('#game_canvas #enemy');
 
-//Move Enemy Program
+    let player = getObjectsRelativeToContainer(container, '.myBox');
 
-function chaseBox(time) {
-  let player = getObjectsRelativeToContainer(container, box);
+    if (!lastTime) lastTime = time; 
 
-  if (!lastTime) lastTime = time; 
-
-  // Calculate time since last frame
-  let delta = (time - lastTime) / 1000;
-  lastTime = time;
-  
-  // Get the current position of the box 
-  let boxX = parseFloat(player[0].left);
-  let boxY = parseFloat(player[0].top);
-  
-  // Get the current position of the enemy element
-  let enemyX = parseFloat(enemy.style.left);
-  let enemyY = parseFloat(enemy.style.top);
-
-  // Calculate the difference in position
-  let dx = boxX - enemyX;
-  let dy = boxY - enemyY;
-
-  // Vector Math
-  let distance = Math.sqrt((dx * dx) + (dy * dy));
-  
-   if (distance > 0) {
-    dx /= distance;
-    dy /= distance;
-
-    // Move the enemy
-    enemyX += dx * moveSpeed * delta;
-    enemyY += dy * moveSpeed * delta;
+    // Calculate time since last frame
+    let delta = (time - lastTime) / 1000;
+    lastTime = time;
     
-    enemy.style.left = `${enemyX}px`;
-    enemy.style.top = `${enemyY}px`;
+    // Get the current position of the box 
+    let boxX = parseFloat(player[0].left);
+    let boxY = parseFloat(player[0].top);
+    
+    // Get the current position of the enemy element
+    let enemyX = parseFloat(enemy.style.left);
+    let enemyY = parseFloat(enemy.style.top);
 
-  } 
+    // Calculate the difference in position
+    let dx = boxX - enemyX;
+    let dy = boxY - enemyY;
 
-  // Catch the box
-  if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
-    alert('You have been caught!');
-    return; 
+    // Vector Math
+    let distance = Math.sqrt((dx * dx) + (dy * dy));
+    
+    if (distance > 0) {
+      dx /= distance;
+      dy /= distance;
+
+      // Move the enemy
+      enemyX += dx * moveSpeed * delta;
+      enemyY += dy * moveSpeed * delta;
+      
+      enemy.style.left = `${enemyX}px`;
+      enemy.style.top = `${enemyY}px`;
+
+    } 
+
+    // Catch the box
+    // if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+    //   alert('You have been caught!');
+    //   return; 
+    // }
+
+    // Continue the chase
+    requestAnimationFrame(chaseBox);
   }
 
-  // Continue the chase
-  requestAnimationFrame(chaseBox);
-}
+  // TODO: Needs reworked.
+  // function checkKey() {
+  //   if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
+  //     box.style.background = "purple";
+  //     key.remove();
+  //   }
+  // }
 
-// TODO: Needs reworked.
-// function checkKey() {
-//   if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
-//     box.style.background = "purple";
-//     key.remove();
-//   }
-// }
+  function removeObject(className) {
+    const elements = document.getElementsByClassName(className);
 
-function levelTransition(levels = [], objects = [], xAxis = false, yAxis = false, newLevel, width, height) {
-  let speed = 1.75;
+    // Convert HTMLCollection to Array to avoid issues during removal
+    const elementsArray = Array.from(elements);
 
-  levels.forEach((level) => {
-    let canvasToTransition = document.querySelector(level);
-    let canvasWidth = canvasToTransition.getBoundingClientRect().width;
-    let canvasHeight =canvasToTransition.getBoundingClientRect().height;
-
-    canvasToTransition.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease';
-    console.log(canvasToTransition)
-
-    if (xAxis == true) {
-      canvasToTransition.style.width = (canvasWidth / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-    if (yAxis == true) {
-      canvasToTransition.style.height = (canvasHeight / 2) + 'px';
-      levelIn(newLevel,width,height);
-    }
-  })
-
-  objects.forEach((object) => {
-    let objectWidth = object.getBoundingClientRect().width;
-    let objectHeight = object.getBoundingClientRect().height;
-    let currentTransform = window.getComputedStyle(object).transform;
-
-    object.style.transition = 'width ' + speed + 's ease, height ' + speed + 's ease, transform ' + speed + 's ease';
-
-    if (xAxis == true) {
-      object.style.width = (objectWidth / 2) + 'px';
-      let objectXPosition = object.offsetLeft;
-      let newxposition = -(objectXPosition / 2);
-      updateTransform(object, 'translateX', newxposition + 'px)');
-    }
-    if (yAxis == true) {
-      object.style.height = (objectHeight / 2) + 'px';
-      let objectYPosition = object.offsetTop;
-      let newyposition = -(objectYPosition / 2);
-      updateTransform(object, 'translateY', newyposition + 'px');
-    }
-  });
-}
-
-function updateTransform(object, key, value) {
-  let current = window.getComputedStyle(object).transform;
-  console.log(current)
-  let transform = current !== 'none' ? current : '';
-  let regex = new RegExp(`${key}\\([^)]+\\)`, 'g');
-
-  transform = transform.replace(regex, '').trim();
-
-  transform += ` ${key}(${value})`;
-  object.style.transform = transform.trim();
-}
-
-function levelIn(level, width, height) {
-  let canvasToSlideIn = document.querySelector(level);
-  let speed = 1.75
-  canvasToSlideIn.style.transition = 'width ' + speed + 's ease';
-
-  canvasToSlideIn.style.width = width;
-  canvasToSlideIn.style.height = height;
-}
-});
-
+    elementsArray.forEach(element => {
+      element.remove(); 
+    });
+  }
