@@ -55,6 +55,10 @@ export function createInventory() {
     .catch(error => console.error('Error loading SVG:', error));
 }
 
+function createPlayArea() {
+
+}
+
 function getAmmo() {
     return document.querySelector('#ammo');
 }
@@ -63,8 +67,8 @@ function getBox() {
     return document.querySelector('#myBox');
 }
 
-function getPlayArea() {
-    return document.querySelector('#level1');
+export function getPlayArea() {
+    return document.querySelector('#playArea');    
 }
 
 function getProjectile() {
@@ -139,6 +143,13 @@ function setAnimation(boolean) {
     animation = boolean;
 }
 
+function setIsCursorInside(boolean) {
+    isCursorInside = boolean;
+} 
+
+function getIsCursorInside() {
+    return isCursorInside;
+}
 
 
 
@@ -233,7 +244,7 @@ function swapAmmo(direction) {
 }
 
 document.addEventListener('keydown',  (e) => {
-    if (e.key == " " && !invEmpty && animation == false) {
+    if (e.key == " " && !invEmpty && isCursorInside && animation == false) {
         console.log("firing");
         fire();
         console.log("done firing");
@@ -284,6 +295,7 @@ function fire() {
         const speed = 500; // Speed in pixels per second
 
         // Calculate the difference between current and target positions
+        console.log("cursorx: "+getCursorX())
         const dx = getCursorX() - currentX;
         const dy = getCursorY() - currentY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -311,34 +323,6 @@ function fire() {
     moveProjectile(lastTime); // Start moving the projectile
 }
 
-console.log(getPlayArea());
-// Add event listeners to playArea
-if (getPlayArea()) {
-getPlayArea().addEventListener('mouseenter', (e) => {
-    if (e.target.id === 'level1') {
-    console.log("cursor enter");
-    setIsCursorInside(true);
-    }
-});
-
-playArea.addEventListener('mouseleave', (e) => {
-    if (e.target.id === 'level1') {
-    console.log("cursor leave");
-    setIsCursorInside(false);
-    }
-});
-
-playArea.addEventListener('mousemove', (e) => {
-    if (getIsCursorInside()) {
-    const rect = getPlayArea().getBoundingClientRect();
-    const cursorX = e.clientX - rect.left; // X-coordinate within playArea
-    const cursorY = e.clientY - rect.top;  // Y-coordinate within playArea
-    console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
-    }
-});
-} else {
-console.warn('playArea element not found. Event listeners were not added.');
-}
 
 
 
@@ -370,6 +354,36 @@ function shiftInventory() {
     getAmmo().style.background = slot[getCurrentColor()];
 }
 
+export function createMouseEnterDetection() {
+    // Add event listeners to playArea
+    if (getPlayArea()) {
+    getPlayArea().addEventListener('mouseenter', (e) => {
+        if (e.target.id === 'playArea') {
+        console.log("cursor enter");
+        setIsCursorInside(true);
+        }
+    });
+    
+    playArea.addEventListener('mouseleave', (e) => {
+        if (e.target.id === 'playArea') {
+        console.log("cursor leave");
+        setIsCursorInside(false);
+        }
+    });
+    
+    playArea.addEventListener('mousemove', (e) => {
+        if (getIsCursorInside()) {
+        const rect = getPlayArea().getBoundingClientRect();
+        setCursorX(e.clientX - rect.left); // X-coordinate within playArea
+        setCursorY(e.clientY - rect.top);  // Y-coordinate within playArea
+        console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
+        }
+    });
+    } else {
+    console.warn('playArea element not found. Event listeners were not added.');
+    }
+    
+}
 
 
 window.createInventory = createInventory;
@@ -378,4 +392,5 @@ window.shiftInventory = shiftInventory;
 window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
+//window.getPlayArea = getPlayArea;
 

@@ -6,6 +6,7 @@ import { createInventory } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
 import { chaseBox } from './controller.js';
+import { createMouseEnterDetection } from './inventory.js';
 
 export function initializeGame() {
   if (!localStorage.getItem('Current Level')) {
@@ -52,4 +53,6 @@ export function loadLevel(level) {
     default:
       console.log("Unknown level: ", level);
   }
+  createMouseEnterDetection();
 }
+
