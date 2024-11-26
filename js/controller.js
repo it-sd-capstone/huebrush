@@ -3,7 +3,7 @@ import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { spawnEnemy } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
-import { levelXTransition } from './animation.js';
+import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
 import { getAmmo } from './inventory.js';
 
 

@@ -772,6 +772,7 @@ export function createLevel2End(){
 }
 
 export function getLevel2Objects() {
+  let level2 = document.querySelector('#level2')
   let stack = Array.from(level2.children);
   let childStack = [];
 

@@ -83,7 +83,7 @@ function getCurrentColor() {
     return currentColor;
 }
 
-function setCurrentColor(index) {
+export function setCurrentColor(index) {
     currentColor = index;
 }
 
@@ -103,7 +103,7 @@ function getCursorY() {
     return cursorY;
 }
 
-function setLastItem() {
+export function setLastItem() {
     for (let i = 0; i < slot.length; i++) {
         if (slot[i] !== 'x') {
             lastItem = i;
@@ -115,7 +115,7 @@ function getLastItem() {
     return lastItem;
 }
 
-function setSlot(index, color) {
+export function setSlot(index, color) {
     slot[index] = color;
 }
 
@@ -202,7 +202,7 @@ function spawnNewKey(key) {
     keyCount++;
 }
 
-function displayItem(slotIndex, color) {
+export function displayItem(slotIndex, color) {
     var idNum = slotIndex + 1;
     var id = "inv" + idNum;
     const item = document.getElementById(`${id}`);
@@ -326,7 +326,7 @@ function fire() {
 
 
 
-function setBackground(ele, color) {
+export function setBackground(ele, color) {
     ele.style.background = color;
 }
 

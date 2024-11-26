@@ -9,7 +9,7 @@ import { chaseBox } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 
 export function initializeGame() {
-  alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\n")
+  alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\nLocal save states will trigger upon completing a level (touching the blue box on the right). \n")
   if (!localStorage.getItem('Current Level')) {
     localStorage.setItem('Current Level', 1);
   } else if (localStorage.getItem('Current Level') > 4) {
@@ -41,6 +41,8 @@ export function loadLevel(level) {
       createLevel1(1, 2);
       createLevel2(1, 2, 50);
       spawnPlayer(1, 2, '260px', '440px');
+      createAmmo('rgba(0,0,0,0)');
+      createProjectile('rgba(0,0,0,0)');
       spawnEnemy();
       createLevel2End();
       chaseBox();

@@ -30,14 +30,14 @@ export function levelXTransition(objects = [], newLevel, newLevelObjects = [], m
 
 }
 
-function fadeOut(object) {
+export function fadeOut(object) {
   setTimeout(() => {
     object.style.transition = 'opacity 1s ease';
     object.style.opacity = '0';
 }, 1000);
 }
 
-function fadeIn(object) {
+export function fadeIn(object) {
   setTimeout(() => {
     object.style.transition = 'opacity 1s ease';
     object.style.opacity = '1';
