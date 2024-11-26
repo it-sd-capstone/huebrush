@@ -1,3 +1,5 @@
+import { createElement } from './level1.js'
+
 export function createLevel2(widthModifier,heightModifier,offscreen) {
   let playArea = document.querySelector('.playArea');
 
@@ -744,7 +746,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
 
   playArea.appendChild(level2);
 
-  levelStack = getLevel2Objects();
+  let levelStack = getLevel2Objects();
 
   for (let object in levelStack) {
     levelStack[object].style.zIndex = '2';
@@ -754,7 +756,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
 }
 
 export function createLevel2End(){
-  level2 = document.querySelector('#level2')
+  let level2 = document.querySelector('#level2')
 
   const level2End = createElement('div', 'level1End', ['levelEnd'], {
     position: 'absolute',
@@ -769,7 +771,7 @@ export function createLevel2End(){
   level2.appendChild(level2End);
 }
 
-function getLevel2Objects() {
+export function getLevel2Objects() {
   let stack = Array.from(level2.children);
   let childStack = [];
 
