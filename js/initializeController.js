@@ -3,6 +3,7 @@ import { createLevel2, createLevel2End } from './level2.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
 import { createInventory } from './inventory.js';
+import { chaseBox } from './controller.js';
 
 export function initializeGame() {
   if (!localStorage.getItem('Current Level')) {
@@ -36,7 +37,7 @@ export function loadLevel(level) {
       spawnPlayer(1, 2, '260px', '440px');
       spawnEnemy();
       createLevel2End();
-      requestAnimationFrame(chaseBox);
+      chaseBox();
       break;
     case 3:
       console.log('Level 3 not implemented yet');

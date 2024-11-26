@@ -1,8 +1,10 @@
 import { createLevel1, createLevel1End } from './level1.js';
-import { createLevel2, createLevel2End } from './level2.js';
+import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { spawnEnemy } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
+import { levelXTransition } from './animation.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
@@ -176,7 +178,7 @@ function checkProximityAroundBox(box, radius) {
     }
 
     const myBox = document.querySelector('.myBox');
-    newLevel = document.querySelector(nextLevelSelector);
+    let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
   
@@ -222,7 +224,7 @@ function checkProximityAroundBox(box, radius) {
 
   //Move Enemy Program
 
-  function chaseBox(time) {
+  export function chaseBox(time) {
     const container = document.querySelector('.playArea');
     const enemy = document.querySelector('#game_canvas #enemy');
 

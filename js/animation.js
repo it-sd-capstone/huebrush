@@ -1,10 +1,10 @@
-function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox) {
+export function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox) {
 
   let speed = 1.75;
 
   for (let object in objects) {
-    newWidth = (parseInt(objects[object].style.width, 10) / 2)
-    newLeft = (parseInt(objects[object].style.left, 10) / 2)
+    let newWidth = (parseInt(objects[object].style.width, 10) / 2)
+    let newLeft = (parseInt(objects[object].style.left, 10) / 2)
 
     objects[object].style.transition = `left ${speed}s ease, width ${speed}s ease`;
     objects[object].style.left = `${newLeft}px`;
@@ -16,7 +16,7 @@ function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox) {
   console.log(myBox);
 
   // If we just device myBox's width by 2 myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
-  newLeft = (parseInt(myBox.style.left, 10) / 2);
+  let newLeft = (parseInt(myBox.style.left, 10) / 2);
   newLeft = Math.round(newLeft / 10) * 10;
 
   myBox.style.transition = `left ${speed}s ease, width ${speed}s ease`;
