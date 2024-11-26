@@ -89,6 +89,7 @@ function checkProximityAroundBox(box, radius) {
     let box = document.querySelector('.myBox');
     let container = document.querySelector('.playArea');
     let wasdFade = localStorage.getItem('wasd');
+    let ammo = document.querySelector('#ammo');
 
     const keys = ['w', 'a', 's', 'd'];
     if (keys.includes(e.key) && wasdFade == '1') {
@@ -103,6 +104,8 @@ function checkProximityAroundBox(box, radius) {
     let containerRect = container.getBoundingClientRect();
     let newTop = parseInt(box.style.top);
     let newLeft = parseInt(box.style.left);
+    let newAmmoTop = parseInt(ammo.style.top);
+    let newAmmoLeft = parseInt(ammo.style.left);
 
     switch (e.key) {
         case 'ArrowUp':
@@ -110,6 +113,7 @@ function checkProximityAroundBox(box, radius) {
         case 'W':
             if (boxRect.top - moveBy >= containerRect.top) {
                 newTop -= moveBy;
+                newAmmoTop -= moveBy;
             }
             break;
         case 'ArrowDown':
@@ -117,6 +121,7 @@ function checkProximityAroundBox(box, radius) {
         case 'S':
             if (boxRect.bottom + moveBy <= containerRect.bottom) {
                 newTop += moveBy;
+                newAmmoTop += moveBy;
             }
             break;
         case 'ArrowLeft':
@@ -124,6 +129,7 @@ function checkProximityAroundBox(box, radius) {
         case 'A':
             if (boxRect.left - moveBy >= containerRect.left) {
                 newLeft -= moveBy;
+                newAmmoLeft -= moveBy;
             }
             break;
         case 'ArrowRight':
@@ -131,6 +137,7 @@ function checkProximityAroundBox(box, radius) {
         case 'D':
             if (boxRect.right + moveBy <= containerRect.right) {
                 newLeft += moveBy;
+                newAmmoLeft += moveBy;
             }
             break;
         default:
@@ -144,6 +151,8 @@ function checkProximityAroundBox(box, radius) {
         right: newLeft + boxRect.width,
     };
 
+    
+
     const walls = getObjectsRelativeToContainer(container, '.wallSolid');
     for (let wall of walls) {
         if (isColliding(simulatedBox, wall)) {
@@ -153,6 +162,8 @@ function checkProximityAroundBox(box, radius) {
 
     box.style.top = `${newTop}px`;
     box.style.left = `${newLeft}px`;
+    ammo.style.top = `${newAmmoTop}px`;
+    ammo.style.left = `${newAmmoLeft}px`;
 
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
@@ -176,7 +187,7 @@ function checkProximityAroundBox(box, radius) {
     }
 
     const myBox = document.querySelector('.myBox');
-    newLevel = document.querySelector(nextLevelSelector);
+    let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
   

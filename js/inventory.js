@@ -1,5 +1,22 @@
 var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
-var container = document.querySelector(".playArea");
+let isCursorInside = false;
+
+//should represent the current slot[] index of the last non-x in the array
+let lastItem = -1;
+//should reflect the current slot[] index being represented by the ammo div
+let currentColor = 0;
+
+//for projectiles
+let cursorX;
+let cursorY;
+let lastTime = 0;
+
+//for animation
+let animation = false;
+
+//for inventory
+let invEmpty = false;
+let invFull = false;
 
 export function createInventory() {
   const Inventory = document.createElement('div');
@@ -38,41 +55,102 @@ export function createInventory() {
     .catch(error => console.error('Error loading SVG:', error));
 }
 
-//should represent the current slot[] index of the last non-x in the array
-let lastItem = -1;
-//should reflect the current slot[] index being represented by the ammo div
-let currentColor = 0;
+function getAmmo() {
+    return document.querySelector('#ammo');
+}
 
-//for projectiles
-let cursorX;
-let cursorY;
-let lastTime = 0;
+function getBox() {
+    return document.querySelector('#myBox');
+}
 
-//for animation
-let animation = false;
+function getPlayArea() {
+    return document.querySelector('#level1');
+}
 
-//for inventory
-let invEmpty = false;
-let invFull = false;
+function getProjectile() {
+    return document.querySelector('#projectile');
+}
 
-const ammo = document.querySelector('#ammo');
-const projectile = document.querySelector('#projectile');
-const box = document.querySelector("#myBox");
+function setCursorInside(boolean) {
+    isCursorInside = boolean;
+}
 
-// Select the target div
-const level1 = document.getElementById('level1');
+function getCurrentColor() {
+    return currentColor;
+}
+
+function setCurrentColor(index) {
+    currentColor = index;
+}
+
+function setCursorX(x) {
+    cursorX = x;
+}
+
+function setCursorY(y) {
+    cursorY = y;
+}
+
+function getCursorX() {
+    return cursorX;
+}
+
+function getCursorY() {
+    return cursorY;
+}
+
+function setLastItem() {
+    for (let i = 0; i < slot.length; i++) {
+        if (slot[i] !== 'x') {
+            lastItem = i;
+        }
+    }
+}
+
+function getLastItem() {
+    return lastItem;
+}
+
+function setSlot(index, color) {
+    slot[index] = color;
+}
+
+function getSlot(index) {
+    return slot[index];
+}
+
+function setInvEmpty(boolean) {
+    invEmpty = boolean;
+}
+
+function getInvEmpty() {
+    return invEmpty;
+}
+
+function setInvFull(boolean) {
+    invFull = boolean;
+}
+
+function getInvFull() {
+    return invFull;
+}
+
+function setAnimation(boolean) {
+    animation = boolean;
+}
+
+
+
 
 export function addToInventory(lake) {
-  const ammo = document.querySelector('.ammo');
-  console.log(ammo);
     if (!invFull) {
         for (let i = 0; i < slot.length; i++) { 
-            if (slot[i] == 'x') {
-                slot[i] = lake.background;
+            if (getSlot(i) == 'x') {
+                setSlot(i, lake.background);
 
                 displayItem(i, lake.background);
-                setBackground(ammo, slot[i]);
-                currentColor = i;
+                setBackground(getAmmo(), slot[i]);
+                setCurrentColor(i);
                 setLastItem();
                 break;
             }
@@ -81,8 +159,8 @@ export function addToInventory(lake) {
         //TODO display <p> saying the inventory is full
     }
     
-    invFull = !slot.includes('x');
-    invEmpty = slot.every((item) => item === 'x');
+    setInvFull(!slot.includes('x'));
+    setInvEmpty(slot.every((item) => item === 'x'));
     setBackground(ammo, slot[currentColor]);
 
 }
@@ -133,124 +211,68 @@ function displayInventory() {
 }
 
 function swapAmmo(direction) {
-    for (i = 0; i < slot.length; i++) {
+    for (let i = 0; i < slot.length; i++) {
         if (slot[i] != 'x') {
             lastItem = i;
         }
     }
 
     if (direction == 'q' && currentColor != 0) {
-        currentColor--;
-        ammo.style.background = `${slot[currentColor]}`;
-    } else if (direction == 'q' && currentColor == 0) {
-        currentColor = lastItem;
-        ammo.style.background = `${slot[lastItem]}`;
-    } else if (direction == 'e' && currentColor != lastItem) {
-        currentColor++;
-        ammo.style.background = `${slot[currentColor]}`;
-    } else if (direction == 'e' && currentColor == lastItem) {
-        currentColor = 0;
-        ammo.style.background = `${slot[0]}`;
+        setCurrentColor(currentColor - 1);
+        getAmmo().style.background = `${slot[getCurrentColor()]}`;
+    } else if (direction == 'q' && getCurrentColor() == 0) {
+        setCurrentColor(lastItem);
+        getAmmo().style.background = `${slot[getLastItem()]}`;
+    } else if (direction == 'e' && getCurrentColor() != lastItem) {
+        setCurrentColor(parseInt(currentColor + 1));
+        getAmmo().style.background = `${slot[getCurrentColor()]}`;
+    } else if (direction == 'e' && getCurrentColor() == lastItem) {
+        setCurrentColor(0);
+        getAmmo().style.background = `${slot[0]}`;
     }
 }
 
 document.addEventListener('keydown',  (e) => {
-    if (e.key == " " && isCursorInside && !invEmpty && animation == false) {
+    if (e.key == " " && !invEmpty && animation == false) {
+        console.log("firing");
         fire();
+        console.log("done firing");
         shiftInventory();
         displayInventory();
-        setLastItem();
-
-        
+        setLastItem(); 
     }
 
+    const ammo = document.querySelector('#ammo');
     if (invEmpty) {
-        ammo.style.background = "rgba(0,0,0,0)";
-        lastItem = -1;
+        getAmmo().style.background = "rgba(0,0,0,0)";
+        setLastItem(-1);
     }
     
 });
 
-
-
-const playArea = document.querySelector('.playArea');
-let isCursorInside = false;
-
-// Add event listeners to playArea
-if (playArea) {
-  playArea.addEventListener('mouseenter', (e) => {
-    if (e.target.id === 'level1') {
-      isCursorInside = true;
+document.addEventListener('keydown',  (e) => {
+    if (e.key.toLowerCase() == 'q') {
+        swapAmmo('q');
+    } else if (e.key.toLowerCase() == 'e') {
+        swapAmmo('e');
     }
-  });
-
-  playArea.addEventListener('mouseleave', (e) => {
-    if (e.target.id === 'level1') {
-      isCursorInside = false;
-    }
-  });
-
-  playArea.addEventListener('mousemove', (e) => {
-    if (isCursorInside) {
-      const rect = playArea.getBoundingClientRect();
-      const cursorX = e.clientX - rect.left; // X-coordinate within playArea
-      const cursorY = e.clientY - rect.top;  // Y-coordinate within playArea
-      console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
-    }
-  });
-} else {
-  console.warn('playArea element not found. Event listeners were not added.');
-}
-
-function setLastItem() {
-    for (let i = 0; i < slot.length; i++) {
-        if (slot[i] !== 'x') {
-            lastItem = i;
-        }
-    }
-}
-
-function setBackground(ele, color) {
-    ele.style.background = color;
-}
-
-function shiftInventory() {
-    //move all inventory items down one slot and fill in the last slot with an x.
-    setLastItem();
-    for (let i = currentColor; i < slot.length; i++) {
-        if (i !== slot.length - 1) {
-            slot[i] = slot[i + 1];
-        } else if (i == slot.length - 1) {
-            slot[i] = 'x';
-        }
-    }
-
-    if (currentColor == lastItem) {
-        currentColor--;
-    }
-
-    setLastItem();
-
-    invFull = !slot.includes('x');
-    invEmpty = slot.every((item) => item === 'x');
-
-    //reset ammo color
-    ammo.style.background = slot[currentColor];
-}
+});
 
 function fire() {
     // Initialize projectile position and color
-    const projectileRect = projectile.getBoundingClientRect();
+    const projectileRect = getProjectile().getBoundingClientRect();
     const parentRect = level1.getBoundingClientRect();
     
-    projectile.style.top = `${ammo.offsetTop}px`;
-    projectile.style.left = `${ammo.offsetLeft}px`;
-    projectile.style.background = slot[currentColor];
+    getProjectile().style.top = `${getAmmo().offsetTop}px`;
+    getProjectile().style.left = `${getAmmo().offsetLeft}px`;
+    getProjectile().style.background = slot[getCurrentColor()];
 
     let lastTime = performance.now(); // Initialize time
-
+    
     function moveProjectile(currentTime) {
-        animation = true;
+        
+        console.log('firing repeatedly');
+        setAnimation(true);
         setBackground(ammo, slot[currentColor]);
         const deltaTime = (currentTime - lastTime) / 1000; // Time elapsed in seconds
         lastTime = currentTime;
@@ -262,15 +284,15 @@ function fire() {
         const speed = 500; // Speed in pixels per second
 
         // Calculate the difference between current and target positions
-        const dx = cursorX - currentX;
-        const dy = cursorY - currentY;
+        const dx = getCursorX() - currentX;
+        const dy = getCursorY() - currentY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
 
         // Stop animation if the projectile is close enough to the target
         if (distance < 1) {
-            projectile.style.background = "rgba(0,0,0,0)";
-            animation = false;
+            getProjectile().style.background = "rgba(0,0,0,0)";
+            setAnimation(false);
             return;
         }
 
@@ -279,8 +301,8 @@ function fire() {
         const velocityY = (dy / distance) * speed * deltaTime;
 
         // Update projectile position
-        projectile.style.left = `${parseFloat(projectile.style.left) + velocityX}px`;
-        projectile.style.top = `${parseFloat(projectile.style.top) + velocityY}px`;
+        getProjectile().style.left = `${parseFloat(getProjectile().style.left) + velocityX}px`;
+        getProjectile().style.top = `${parseFloat(getProjectile().style.top) + velocityY}px`;
 
         // Continue the animation
         requestAnimationFrame(moveProjectile);
@@ -289,11 +311,66 @@ function fire() {
     moveProjectile(lastTime); // Start moving the projectile
 }
 
-function printInventory() {
-    for (let i = 0; i < slot.length; i++) {
-        slotNumber = i + 1;
+console.log(getPlayArea());
+// Add event listeners to playArea
+if (getPlayArea()) {
+getPlayArea().addEventListener('mouseenter', (e) => {
+    if (e.target.id === 'level1') {
+    console.log("cursor enter");
+    setIsCursorInside(true);
     }
+});
+
+playArea.addEventListener('mouseleave', (e) => {
+    if (e.target.id === 'level1') {
+    console.log("cursor leave");
+    setIsCursorInside(false);
+    }
+});
+
+playArea.addEventListener('mousemove', (e) => {
+    if (getIsCursorInside()) {
+    const rect = getPlayArea().getBoundingClientRect();
+    const cursorX = e.clientX - rect.left; // X-coordinate within playArea
+    const cursorY = e.clientY - rect.top;  // Y-coordinate within playArea
+    console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
+    }
+});
+} else {
+console.warn('playArea element not found. Event listeners were not added.');
 }
+
+
+
+function setBackground(ele, color) {
+    ele.style.background = color;
+}
+
+function shiftInventory() {
+    //move all inventory items down one slot and fill in the last slot with an x.
+    setLastItem();
+    for (let i = getCurrentColor(); i < slot.length; i++) {
+        if (i !== slot.length - 1) {
+            setSlot(i, getSlot(parseInt(i + 1)));
+        } else if (i == slot.length - 1) {
+            setSlot(i, 'x');
+        }
+    }
+
+    if (getCurrentColor() == getLastItem()) {
+        setCurrentColor(currentColor - 1);
+    }
+
+    setLastItem();
+
+    setInvFull(!slot.includes('x'));
+    setInvEmpty(slot.every((item) => item === 'x'));
+
+    //reset ammo color
+    getAmmo().style.background = slot[getCurrentColor()];
+}
+
+
 
 window.createInventory = createInventory;
 window.fire = fire;

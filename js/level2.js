@@ -1,5 +1,5 @@
 export function createLevel2(widthModifier,heightModifier,offscreen) {
-  playArea = document.querySelector('.playArea');
+  let playArea = document.querySelector('.playArea');
 
   const level2 = createElement('div', 'level2', ['box'], {
     position: 'absolute',

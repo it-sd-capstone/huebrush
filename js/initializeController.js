@@ -3,6 +3,8 @@ import { createLevel2, createLevel2End } from './level2.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
 import { createInventory } from './inventory.js';
+import { createAmmo } from './ammo.js';
+import { createProjectile } from './ammo.js';
 
 export function initializeGame() {
   if (!localStorage.getItem('Current Level')) {
@@ -29,6 +31,8 @@ export function loadLevel(level) {
       createLevel1(2, 2);
       createLevel1End();
       spawnPlayer(2, 2, '300px', '300px');
+      createAmmo('rgba(0,0,0,0)');
+      createProjectile('rgba(0,0,0,0)');
       break;
     case 2:
       createLevel1(1, 2);
