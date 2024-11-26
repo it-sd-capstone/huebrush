@@ -1,5 +1,5 @@
 export function createAmmo(color) {
-    const level1 = document.getElementById('level1');
+    const playArea = document.getElementById('playArea');
     let ammo = document.createElement('div');
     ammo.classList.add("ammo");
     ammo.id = 'ammo';
@@ -10,11 +10,11 @@ export function createAmmo(color) {
     ammo.style.left = '296px';
     ammo.style.zIndex = '4';
     ammo.style.background = color;
-    level1.appendChild(ammo);
+    playArea.appendChild(ammo);
 }
 
 export function createProjectile(color) {
-    const level1 = document.getElementById('level1');
+    const playArea = document.getElementById('playArea');
     let projectile = document.createElement('div');
     projectile.classList.add("ammo");
     projectile.id = 'projectile';
@@ -25,5 +25,5 @@ export function createProjectile(color) {
     projectile.style.left = '0px';
     projectile.style.zIndex = '100';
     projectile.style.background = color;
-    level1.appendChild(projectile);
+    playArea.appendChild(projectile);
 }

@@ -4,6 +4,7 @@ import { spawnEnemy } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition } from './animation.js';
+import { getAmmo } from './inventory.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -185,6 +186,7 @@ function checkProximityAroundBox(box, radius) {
             createLevel2(1,2,100); 
             createLevel2End();
             spawnEnemy();
+            chaseBox();
         }
     }
 

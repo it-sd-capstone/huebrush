@@ -59,7 +59,7 @@ function createPlayArea() {
 
 }
 
-function getAmmo() {
+export function getAmmo() {
     return document.querySelector('#ammo');
 }
 
@@ -359,14 +359,12 @@ export function createMouseEnterDetection() {
     if (getPlayArea()) {
     getPlayArea().addEventListener('mouseenter', (e) => {
         if (e.target.id === 'playArea') {
-        console.log("cursor enter");
         setIsCursorInside(true);
         }
     });
     
     playArea.addEventListener('mouseleave', (e) => {
         if (e.target.id === 'playArea') {
-        console.log("cursor leave");
         setIsCursorInside(false);
         }
     });
@@ -376,7 +374,6 @@ export function createMouseEnterDetection() {
         const rect = getPlayArea().getBoundingClientRect();
         setCursorX(e.clientX - rect.left); // X-coordinate within playArea
         setCursorY(e.clientY - rect.top);  // Y-coordinate within playArea
-        console.log(`Cursor position relative to playArea: (${cursorX}, ${cursorY})`);
         }
     });
     } else {
