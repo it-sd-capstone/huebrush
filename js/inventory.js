@@ -42,7 +42,7 @@ export function createInventory() {
     Inventory.appendChild(invslot);
     leftCounter = leftCounter + 50
   }
-  fetch('./images/inventory.svg')
+  fetch('./images/Inventory.svg')
     .then(response => response.text())
     .then(svgContent => {
       // Append the SVG content without overwriting `inv1`
