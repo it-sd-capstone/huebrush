@@ -9,6 +9,7 @@ import { chaseBox } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 
 export function initializeGame() {
+  alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\n")
   if (!localStorage.getItem('Current Level')) {
     localStorage.setItem('Current Level', 1);
   } else if (localStorage.getItem('Current Level') > 4) {
