@@ -532,7 +532,7 @@ export function createLevel1(widthModifier,heightModifier) {
       });
 
       const svgObject = document.createElement('object');
-      svgObject.data = '/images/WASD.svg';
+      svgObject.data = './images/WASD.svg';
       svgObject.type = 'image/svg+xml';
       svgObject.alt = 'WASD Tutorial';
       svgObject.classList.add("tutorialfade");
