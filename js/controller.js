@@ -1,6 +1,6 @@
 import { createLevel1, createLevel1End } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
-import { spawnEnemy } from './enemy.js';
+import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
@@ -12,12 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeGame();
 });
 
+//Watch for page activity
+document.addEventListener('visibilitychange', () => {
+  isPageVisible = !document.hidden;
+
+  if(!isPageVisible){
+    enemyPause = true;
+  }else{
+    enemyPause = false;
+    requestAnimationFrame(chaseBox);
+  }
+});
+
   let moveBy = 10;
   let hasFadedOut = false;
 
   let enemy = document.querySelector('#game_canvas #enemy');
   let moveSpeed = 50; //px per sec
   let lastTime = 0;
+
+  //Pause movement for the enemy if the page is not active variables
+  let isPageVisible = true;
+  let enemyPause = false;
+  let isEnemyChasing = false;
 
   // Prevent arrow keys from causing scroll action.
   window.addEventListener("keydown", function(e) {
@@ -237,9 +254,17 @@ function checkProximityAroundBox(box, radius) {
 
   //Move Enemy Program
 
+  //Move Enemy Program
+
   export function chaseBox(time) {
+    if (!isPageVisible || enemyPause) {
+      isEnemyChasing = false;
+      return;
+    }
     const container = document.querySelector('.playArea');
     const enemy = document.querySelector('#game_canvas #enemy');
+
+    if(!enemy) return;
 
     let player = getObjectsRelativeToContainer(container, '.myBox');
 
@@ -284,7 +309,9 @@ function checkProximityAroundBox(box, radius) {
     // }
 
     // Continue the chase
-    requestAnimationFrame(chaseBox);
+    if(isPageVisible && !enemyPause){
+      requestAnimationFrame(chaseBox);
+    }
   }
 
   // TODO: Needs reworked.
@@ -305,3 +332,61 @@ function checkProximityAroundBox(box, radius) {
       element.remove(); 
     });
   }
+
+export function enemyLife(enemy){
+  function createExplosion(enemy) {
+    const enemyElem = enemy.getBoundingClientRect();
+
+    const explosion = document.createElement('div');
+    explosion.style.position = 'absolute';
+    explosion.style.width = '50px'; 
+    explosion.style.height = '50px';
+    explosion.style.background = 'radial-gradient(circle, rgba(0, 0, 0, 0) 0%, orange 100%)';
+    explosion.style.borderRadius = '50%';
+    explosion.style.opacity = '1';
+    explosion.style.zIndex = '4'; 
+    explosion.style.left = enemyElem.left + 'px';
+    explosion.style.top = enemyElem.top + 'px';
+
+    const explosionSound = document.getElementById('explosion');
+    if (explosionSound) {
+      explosionSound.play();
+    } else {
+      console.log('Explosion sound element not found');
+    }
+
+    document.querySelector('#game_canvas').appendChild(explosion);
+    enemy.remove(); 
+
+    // Fade out the explosion 
+    setTimeout(() => {
+      explosion.style.transition = 'opacity 0.5s ease';
+      explosion.style.opacity = '0';
+  
+      // Remove the explosion 
+      setTimeout(() => explosion.remove(), 500);
+    }, 200); // Explosion duration
+  }
+
+  //Apply damage
+  const checkPosition = setInterval(() => {
+    // Convert string to number
+    let left = parseInt(enemy.style.left.replace('px', '')); 
+    let top = parseInt(enemy.style.top.replace('px', ''));
+
+    //Check for projectile to be in range for damage
+    //Will need to add the correct element name, for now just coordinates 
+    //To test to make sure it works
+    if (left >= 300 && top >= 300) {
+      console.log('Triggering enemy health reduction...');
+      enemy.enemyHealth -= 15; // Increment damage
+      updateHealth(enemy, enemy.enemyHealth); 
+
+      if (enemy.enemyHealth <= 0) {
+        createExplosion(enemy); 
+        clearInterval(checkPosition); // Stop checking position
+      }
+
+    }
+  }, 100);
+}

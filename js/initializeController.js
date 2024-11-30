@@ -5,7 +5,7 @@ import { spawnEnemy } from './enemy.js';
 import { createInventory } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
-import { chaseBox } from './controller.js';
+import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 
 export function initializeGame() {
@@ -44,6 +44,7 @@ export function loadLevel(level) {
       createAmmo('rgba(0,0,0,0)');
       createProjectile('rgba(0,0,0,0)');
       spawnEnemy();
+      enemyLife(enemy);
       createLevel2End();
       chaseBox();
       break;
