@@ -42,7 +42,7 @@ export function createInventory() {
     Inventory.appendChild(invslot);
     leftCounter = leftCounter + 50
   }
-  fetch('/images/inventory.svg')
+  fetch('./images/Inventory.svg')
     .then(response => response.text())
     .then(svgContent => {
       // Append the SVG content without overwriting `inv1`
@@ -163,7 +163,11 @@ export function addToInventory(lake) {
                 setBackground(getAmmo(), slot[i]);
                 setCurrentColor(i);
                 setLastItem();
-                break;
+                setInvFull(!slot.includes('x'));
+                setInvEmpty(slot.every((item) => item === 'x'));
+                setBackground(ammo, slot[currentColor]);
+                console.log("added" + i);
+                return;
             }
         }
     } else {
@@ -217,7 +221,7 @@ function displayInventory() {
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
             setBackground(invSlot, slot[i]);
-        } else setBackground(invSlot, "rgba(0,0,0,0)");
+        } else setBackground(invSlot, "grey");
     }
 }
 
@@ -230,14 +234,16 @@ function swapAmmo(direction) {
 
     if (direction == 'q' && currentColor != 0) {
         setCurrentColor(currentColor - 1);
+        console.log(currentColor);
         getAmmo().style.background = `${slot[getCurrentColor()]}`;
     } else if (direction == 'q' && getCurrentColor() == 0) {
         setCurrentColor(lastItem);
         getAmmo().style.background = `${slot[getLastItem()]}`;
-    } else if (direction == 'e' && getCurrentColor() != lastItem) {
+    } else if (direction == 'e' && getCurrentColor() != getLastItem()) {
         setCurrentColor(parseInt(currentColor + 1));
+        console.log(currentColor);
         getAmmo().style.background = `${slot[getCurrentColor()]}`;
-    } else if (direction == 'e' && getCurrentColor() == lastItem) {
+    } else if (direction == 'e' && getCurrentColor() == getLastItem()) {
         setCurrentColor(0);
         getAmmo().style.background = `${slot[0]}`;
     }
@@ -273,11 +279,13 @@ function fire() {
     // Initialize projectile position and color
     const projectileRect = getProjectile().getBoundingClientRect();
     const parentRect = level1.getBoundingClientRect();
-    
+    let cursX = getCursorX();
+    let cursY = getCursorY();
+
     getProjectile().style.top = `${getAmmo().offsetTop}px`;
     getProjectile().style.left = `${getAmmo().offsetLeft}px`;
     getProjectile().style.background = slot[getCurrentColor()];
-
+    
     let lastTime = performance.now(); // Initialize time
     
     function moveProjectile(currentTime) {
@@ -296,13 +304,13 @@ function fire() {
 
         // Calculate the difference between current and target positions
         console.log("cursorx: "+getCursorX())
-        const dx = getCursorX() - currentX;
-        const dy = getCursorY() - currentY;
+        const dx = cursX - currentX;
+        const dy = cursY - currentY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
 
         // Stop animation if the projectile is close enough to the target
-        if (distance < 1) {
+        if (distance < 2) {
             getProjectile().style.background = "rgba(0,0,0,0)";
             setAnimation(false);
             return;
