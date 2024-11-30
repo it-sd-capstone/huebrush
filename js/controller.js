@@ -18,9 +18,14 @@ document.addEventListener('visibilitychange', () => {
 
   if(!isPageVisible){
     enemyPause = true;
+    isEnemyChasing = false;
   }else{
     enemyPause = false;
+    lastTime = 0;
+    if (!isEnemyChasing) {
+      isEnemyChasing = true;
     requestAnimationFrame(chaseBox);
+    }
   }
 });
 
@@ -261,6 +266,8 @@ function checkProximityAroundBox(box, radius) {
       isEnemyChasing = false;
       return;
     }
+    
+    isEnemyChasing = true;
     const container = document.querySelector('.playArea');
     const enemy = document.querySelector('#game_canvas #enemy');
 
@@ -370,6 +377,8 @@ export function enemyLife(enemy){
 
   //Apply damage
   const checkPosition = setInterval(() => {
+    if(enemyPause || !isPageVisible) return;
+
     // Convert string to number
     let left = parseInt(enemy.style.left.replace('px', '')); 
     let top = parseInt(enemy.style.top.replace('px', ''));
