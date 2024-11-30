@@ -48,12 +48,13 @@ function checkProximityAroundBox(box, radius) {
 
   // Get all lakes relative to the container
   const lakes = getObjectsRelativeToContainer(container, '.lake');
-  lakes.forEach(lake => {
+  console.log(lakes);
+  for (let i = 0; i < lakes.length; i++) {
       const lakeRect = {
-          top: lake.top,
-          bottom: lake.top + lake.height,
-          left: lake.left,
-          right: lake.left + lake.width,
+          top: lakes[i].top,
+          bottom: lakes[i].top + lakes[i].height,
+          left: lakes[i].left,
+          right: lakes[i].left + lakes[i].width,
       };
 
       // Check if the lake's rectangular border intersects with the extended box
@@ -65,9 +66,10 @@ function checkProximityAroundBox(box, radius) {
       );
 
       if (isOverlapping) {
-          addToInventory(lake); // Existing function to add the lake to the inventory
-      }
-  });
+          addToInventory(lakes[i]); // Existing function to add the lake to the inventory
+          return;
+      } 
+  }
 }
 
   // ##### TODO rework where color drain occurs ######
@@ -269,8 +271,8 @@ function checkProximityAroundBox(box, radius) {
       dy /= distance;
 
       // Move the enemy
-      enemyX += dx * moveSpeed * delta;
-      enemyY += dy * moveSpeed * delta;
+      //enemyX += dx * moveSpeed * delta;
+      //enemyY += dy * moveSpeed * delta;
       
       enemy.style.left = `${enemyX}px`;
       enemy.style.top = `${enemyY}px`;
