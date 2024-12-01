@@ -5,15 +5,18 @@
  
 ### Added
 - Created Local Save Data to spawn in correct level. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
 
 ### Changed
 - Updated Inventories look and location to sit under the gamecanvas as a single line. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Moved myBox to player.js and enemy to enemy.js. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Moved some animations out of controller to animation.js ([Issue #3](https://github.com/it-sd-capstone/huebrush/issues/3)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Updated enemy health with new variable name: enemyHealth, and added call to enemyLife container function found in controller. [@Yams650](https://github.com/Yams650)
  
 ### Fixed
 - Updated Inventories creation to a createInventory function rather than hard coding the HTML. ([Issue #9](https://github.com/it-sd-capstone/huebrush/issues/9)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Updated Level transition so new level and objects in existing levels properly scale horizontally. ([Issue #4](https://github.com/it-sd-capstone/huebrush/issues/4)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
 
 ## [v0.1.0] - 2024-11-17
  

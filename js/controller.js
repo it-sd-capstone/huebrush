@@ -1,27 +1,53 @@
 import { createLevel1, createLevel1End } from './level1.js';
 import { openGateOne } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
-import { spawnEnemy } from './enemy.js';
+import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
-import { getAmmo } from './inventory.js';
+import { getAmmo, fire } from './inventory.js';
 import { getBox } from './inventory.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
   initializeGame();
 });
 
+//Watch for page activity
+document.addEventListener('visibilitychange', () => {
+  isPageVisible = !document.hidden;
+
+  if(!isPageVisible){
+    enemyPause = true;
+    isEnemyChasing = false;
+  }else{
+    enemyPause = false;
+    lastTime = 0;
+    if (!isEnemyChasing) {
+      isEnemyChasing = true;
+    requestAnimationFrame(chaseBox);
+    }
+  }
+});
+
 let moveBy = 10;
 let hasFadedOut = false;
+
 
 let enemy = document.querySelector('#game_canvas #enemy');
 let moveSpeed = 50; //px per sec
 let lastTime = 0;
 
-// Prevent arrow keys from causing scroll action.
-window.addEventListener("keydown", function(e) {
+
+  //Pause movement for the enemy if the page is not active variables
+  let isPageVisible = true;
+  let enemyPause = false;
+  let isEnemyChasing = false;
+
+  // Prevent arrow keys from causing scroll action.
+  window.addEventListener("keydown", function(e) {
+
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
         e.preventDefault();
     }
@@ -270,9 +296,19 @@ function checkGateColor(box, levelNum) {
 
   //Move Enemy Program
 
+  //Move Enemy Program
+
   export function chaseBox(time) {
+    if (!isPageVisible || enemyPause) {
+      isEnemyChasing = false;
+      return;
+    }
+    
+    isEnemyChasing = true;
     const container = document.querySelector('.playArea');
     const enemy = document.querySelector('#game_canvas #enemy');
+
+    if(!enemy) return;
 
     let player = getObjectsRelativeToContainer(container, '.myBox');
 
@@ -317,7 +353,9 @@ function checkGateColor(box, levelNum) {
     // }
 
     // Continue the chase
-    requestAnimationFrame(chaseBox);
+    if(isPageVisible && !enemyPause){
+      requestAnimationFrame(chaseBox);
+    }
   }
 
   // TODO: Needs reworked.
@@ -338,3 +376,67 @@ function checkGateColor(box, levelNum) {
       element.remove(); 
     });
   }
+
+export function enemyLife() {
+  // Set up a loop to check for collisions
+  const checkCollisions = setInterval(() => {
+    const projectiles = document.querySelectorAll('#projectile'); // All projectiles
+    const enemies = document.querySelectorAll('.enemy'); // All active enemies
+
+    projectiles.forEach(projectile => {
+      const projectileX = parseFloat(projectile.style.left);
+      const projectileY = parseFloat(projectile.style.top);
+
+      enemies.forEach(enemy => {
+        const enemyX = parseFloat(enemy.style.left);
+        const enemyY = parseFloat(enemy.style.top);
+
+        // Check if projectile is within specified range of the enemy
+        const distance = Math.sqrt(
+          (projectileX - enemyX) ** 2 + (projectileY - enemyY) ** 2
+        );
+
+        if (distance < 20) { // Adjust for specified range
+          console.log('Projectile hit');
+
+          // Reduce enemy health
+          if (typeof enemy.enemyHealth === 'number') {
+            enemy.enemyHealth -= 25; // Adjust this for more or less damage
+            console.log(`Enemy health: ${enemy.enemyHealth}`);
+            updateHealth(enemy, enemy.enemyHealth);
+          } else {
+            console.error('Enemy health is not initialized');
+          }
+        
+          projectile.remove();
+
+          // Check if enemy is defeated
+          if (enemy.enemyHealth <= 0) {
+            console.log('Enemy destroyed');
+            createExplosion(enemy);
+            enemy.remove();
+          }
+        }
+      });
+    });
+  }, 100); // Check every 100ms
+
+  // Create an explosion effect
+  function createExplosion(enemy) {
+    const explosion = document.createElement('div');
+    explosion.style.position = 'absolute';
+    explosion.style.left = enemy.style.left;
+    explosion.style.top = enemy.style.top;
+    explosion.style.width = '50px';
+    explosion.style.height = '50px';
+    explosion.style.background = 'radial-gradient(circle, rgba(0, 0, 0, 0) 0%, orange 100%)';
+    explosion.style.borderRadius = '50%';
+    explosion.style.zIndex = '5';
+    explosion.style.opacity = '1';
+
+    document.querySelector('.playArea').appendChild(explosion);
+
+    // Remove explosion after animation
+    setTimeout(() => explosion.remove(), 500);
+  }
+}

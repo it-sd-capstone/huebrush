@@ -390,7 +390,7 @@ document.addEventListener('keydown',  (e) => {
     }
 });
 
-function fire() {
+export function fire() {
     // Initialize projectile position and color
     const projectileRect = getProjectile().getBoundingClientRect();
     const parentRect = level1.getBoundingClientRect();
