@@ -34,17 +34,18 @@ export function loadLevel(level) {
       createLevel1(2, 2);
       createLevel1End();
       spawnPlayer(2, 2, '300px', '300px');
-      createAmmo('rgba(0,0,0,0)');
+      createAmmo('rgba(128,128,128,0.35)');
       createProjectile('rgba(0,0,0,0)');
       break;
     case 2:
       createLevel1(1, 2);
       createLevel2(1, 2, 50);
+      openGateOne();
       spawnPlayer(1, 2, '260px', '440px');
-      createAmmo('rgba(0,0,0,0)');
-      createProjectile('rgba(0,0,0,0)');
       spawnEnemy();
       createLevel2End();
+      createAmmo('rgba(0,0,0,0)');
+      createProjectile('rgba(0,0,0,0)');
       chaseBox();
       break;
     case 3:

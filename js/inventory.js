@@ -171,7 +171,7 @@ export function getAmmo() {
     return document.querySelector('#ammo');
 }
 
-function getBox() {
+export function getBox() {
     return document.querySelector('#myBox');
 }
 
@@ -330,7 +330,6 @@ function swapAmmo(direction) {
     let blackBottomTop = parseInt(getBlackBottom().style.top);
     let blackBottomLeft = parseInt(getBlackBottom().style.left);
     let whiteBottomTop = parseInt(getWhiteBottom().style.top);
-    let whiteBottomLeft = parseInt(getWhiteBottom().style.left);
 
     if (direction == 'q' && getCurrentColorQ() !== 0) {
         setCurrentColorQ((getCurrentColorQ() - 1));
@@ -377,7 +376,7 @@ document.addEventListener('keydown',  (e) => {
     }
 
     if (getInvEmpty()) {
-        getAmmo().style.background = "rgba(0,0,0,0)";
+        getAmmo().style.background = "rgba(128,128,128,0.35)";
         setLastItem(-1);
     }
     
@@ -511,5 +510,6 @@ window.shiftInventory = shiftInventory;
 window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
+window.getBox = getBox;
 //window.getPlayArea = getPlayArea;
 

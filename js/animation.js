@@ -1,4 +1,4 @@
-export function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox) {
+export function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox, ammo) {
 
   let speed = 1.75;
 
@@ -16,16 +16,24 @@ export function levelXTransition(objects = [], newLevel, newLevelObjects = [], m
   console.log(myBox);
 
   // If we just device myBox's width by 2 myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
-  let newLeft = (parseInt(myBox.style.left, 10) / 2);
-  newLeft = Math.round(newLeft / 10) * 10;
+  let newBoxLeft = (parseInt(myBox.style.left, 10) / 2);
+  newBoxLeft = Math.round(newBoxLeft / 10) * 10;
+
+  let newAmmoLeft = (parseInt(ammo.style.left, 10) / 2);
+  newAmmoLeft = Math.round(newAmmoLeft / 10) * 10;
 
   myBox.style.transition = `left ${speed}s ease, width ${speed}s ease`;
-  myBox.style.left = `${newLeft}px`;
+  myBox.style.left = `${newBoxLeft}px`;
   myBox.style.width = `${parseInt(myBox.style.width, 10) / 2}px`;
+
+  ammo.style.transition = `left ${speed}s ease, width ${speed}s ease`;
+  ammo.style.left = `${newAmmoLeft+6}px`;
+  
 
   // If we do not wipe out transition then movements to the left and right are effected by ease. 
   setTimeout(() => {
     myBox.style.transition = ``;
+    ammo.style.transition = ``;
   }, speed * 1000); 
 
 }

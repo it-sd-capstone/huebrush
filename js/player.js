@@ -10,8 +10,7 @@ export function spawnPlayer(widthModifier,heightModifier,top,left) {
     height: `${heightModifier * 10}px`,
     left: `${left}`,
     top: `${top}`,
-    zIndex: '3'
+    zIndex: '3',
   });
-
   playArea.appendChild(myBox);
 }
