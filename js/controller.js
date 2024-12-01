@@ -4,7 +4,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
-import { getAmmo } from './inventory.js';
+import { getAmmo, fire } from './inventory.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -340,62 +340,66 @@ function checkProximityAroundBox(box, radius) {
     });
   }
 
-export function enemyLife(enemy){
-  function createExplosion(enemy) {
-    const enemyElem = enemy.getBoundingClientRect();
+export function enemyLife() {
+  // Set up a loop to check for collisions
+  const checkCollisions = setInterval(() => {
+    const projectiles = document.querySelectorAll('#projectile'); // All projectiles
+    const enemies = document.querySelectorAll('.enemy'); // All active enemies
 
+    projectiles.forEach(projectile => {
+      const projectileX = parseFloat(projectile.style.left);
+      const projectileY = parseFloat(projectile.style.top);
+
+      enemies.forEach(enemy => {
+        const enemyX = parseFloat(enemy.style.left);
+        const enemyY = parseFloat(enemy.style.top);
+
+        // Check if projectile is within specified range of the enemy
+        const distance = Math.sqrt(
+          (projectileX - enemyX) ** 2 + (projectileY - enemyY) ** 2
+        );
+
+        if (distance < 20) { // Adjust for specified range
+          console.log('Projectile hit');
+
+          // Reduce enemy health
+          if (typeof enemy.enemyHealth === 'number') {
+            enemy.enemyHealth -= 25; // Adjust this for more or less damage
+            console.log(`Enemy health: ${enemy.enemyHealth}`);
+            updateHealth(enemy, enemy.enemyHealth);
+          } else {
+            console.error('Enemy health is not initialized');
+          }
+        
+          projectile.remove();
+
+          // Check if enemy is defeated
+          if (enemy.enemyHealth <= 0) {
+            console.log('Enemy destroyed');
+            createExplosion(enemy);
+            enemy.remove();
+          }
+        }
+      });
+    });
+  }, 100); // Check every 100ms
+
+  // Create an explosion effect
+  function createExplosion(enemy) {
     const explosion = document.createElement('div');
     explosion.style.position = 'absolute';
-    explosion.style.width = '50px'; 
+    explosion.style.left = enemy.style.left;
+    explosion.style.top = enemy.style.top;
+    explosion.style.width = '50px';
     explosion.style.height = '50px';
     explosion.style.background = 'radial-gradient(circle, rgba(0, 0, 0, 0) 0%, orange 100%)';
     explosion.style.borderRadius = '50%';
+    explosion.style.zIndex = '5';
     explosion.style.opacity = '1';
-    explosion.style.zIndex = '4'; 
-    explosion.style.left = enemyElem.left + 'px';
-    explosion.style.top = enemyElem.top + 'px';
 
-    const explosionSound = document.getElementById('explosion');
-    if (explosionSound) {
-      explosionSound.play();
-    } else {
-      console.log('Explosion sound element not found');
-    }
+    document.querySelector('.playArea').appendChild(explosion);
 
-    document.querySelector('#game_canvas').appendChild(explosion);
-    enemy.remove(); 
-
-    // Fade out the explosion 
-    setTimeout(() => {
-      explosion.style.transition = 'opacity 0.5s ease';
-      explosion.style.opacity = '0';
-  
-      // Remove the explosion 
-      setTimeout(() => explosion.remove(), 500);
-    }, 200); // Explosion duration
+    // Remove explosion after animation
+    setTimeout(() => explosion.remove(), 500);
   }
-
-  //Apply damage
-  const checkPosition = setInterval(() => {
-    if(enemyPause || !isPageVisible) return;
-
-    // Convert string to number
-    let left = parseInt(enemy.style.left.replace('px', '')); 
-    let top = parseInt(enemy.style.top.replace('px', ''));
-
-    //Check for projectile to be in range for damage
-    //Will need to add the correct element name, for now just coordinates 
-    //To test to make sure it works
-    if (left >= 300 && top >= 300) {
-      console.log('Triggering enemy health reduction...');
-      enemy.enemyHealth -= 15; // Increment damage
-      updateHealth(enemy, enemy.enemyHealth); 
-
-      if (enemy.enemyHealth <= 0) {
-        createExplosion(enemy); 
-        clearInterval(checkPosition); // Stop checking position
-      }
-
-    }
-  }, 100);
 }
