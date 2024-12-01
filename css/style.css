@@ -74,3 +74,24 @@ footer .social-links a {
   font-size: 1.2rem;
 }
 
+#ammo {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 0.025rem solid black;
+    background: rgba(128,128,128,1);
+}
+
+#myBox {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 0.075rem solid black;
+}
+
+#gate1 {
+    transition: transform 500ms ease-in-out;
+}
+
+
+

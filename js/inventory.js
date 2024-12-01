@@ -4,7 +4,8 @@ let isCursorInside = false;
 //should represent the current slot[] index of the last non-x in the array
 let lastItem = -1;
 //should reflect the current slot[] index being represented by the ammo div
-let currentColor = 0;
+let currentColorQ = 0;
+let currentColorE = 0;
 
 //for projectiles
 let cursorX;
@@ -25,6 +26,7 @@ export function createInventory() {
   Inventory.style.position = 'relative';
   Inventory.style.zIndex = 1
   let leftCounter = 5
+
   for (let i = 1; i < 17; i++) {
     let invNumber = "inv" + i;
     let invslot = document.createElement('div');
@@ -42,6 +44,49 @@ export function createInventory() {
     Inventory.appendChild(invslot);
     leftCounter = leftCounter + 50
   }
+
+  const blackTopMarker = document.createElement('img');
+  blackTopMarker.src = './images/BlackTop.svg';
+  blackTopMarker.id = 'blackTop';
+  blackTopMarker.style.zIndex = 200;
+  blackTopMarker.style.top = '5px';
+  blackTopMarker.style.left = '5px';
+  blackTopMarker.style.opacity = '1';
+  blackTopMarker.style.padding = '0';
+  blackTopMarker.style.border = '0';
+  blackTopMarker.style.width = '40px';
+  blackTopMarker.style.height = '40px';
+  blackTopMarker.style.position = 'absolute';
+  Inventory.appendChild(blackTopMarker);
+
+  const whiteBottomMarker = document.createElement('img');
+  whiteBottomMarker.src = './images/WhiteBottom.svg';
+  whiteBottomMarker.id = 'whiteBottom';
+  whiteBottomMarker.style.zIndex = 199;
+  whiteBottomMarker.style.top = '5px';
+  whiteBottomMarker.style.left = '5px';
+  whiteBottomMarker.style.opacity = '1';
+  whiteBottomMarker.style.padding = '0';
+  whiteBottomMarker.style.border = '0';
+  whiteBottomMarker.style.width = '40px';
+  whiteBottomMarker.style.height = '40px';
+  whiteBottomMarker.style.position = 'absolute';
+  Inventory.appendChild(whiteBottomMarker);
+
+  const blackBottomMarker = document.createElement('img');
+  blackBottomMarker.src = './images/BlackBottom.svg';
+  blackBottomMarker.id = 'blackBottom';
+  blackBottomMarker.style.zIndex = 198;
+  blackBottomMarker.style.top = '5px';
+  blackBottomMarker.style.left = '5px';
+  blackBottomMarker.style.opacity = '1';
+  blackBottomMarker.style.padding = '0';
+  blackBottomMarker.style.border = '0';
+  blackBottomMarker.style.width = '40px';
+  blackBottomMarker.style.height = '40px';
+  blackBottomMarker.style.position = 'absolute';
+  Inventory.appendChild(blackBottomMarker);
+  
   fetch('./images/Inventory.svg')
     .then(response => response.text())
     .then(svgContent => {
@@ -53,8 +98,71 @@ export function createInventory() {
       document.querySelector('#game_canvas').appendChild(Inventory);
     })
     .catch(error => console.error('Error loading SVG:', error));
+
+    
 }
 
+function getBlackTop() {
+    return document.querySelector('#blackTop');
+}
+
+function getBlackBottom() {
+    return document.querySelector('#blackBottom');
+}
+
+function getWhiteBottom() {
+    return document.querySelector('#whiteBottom');
+}
+
+function setImgCoordinate(img, top, left) {
+    img.style.top = top + 'px';
+    img.style.left = left + 'px';
+    console.log("newImgTopLeft:"+top+" "+left);
+}
+
+function setBoxColor() {
+    let color1 = slot[getCurrentColorQ()];
+    let color2 = slot[getCurrentColorE()];
+
+    switch (color1 + '-' + color2) {
+        case "x-x":
+            getBox().style.background = 'grey';
+            break;
+        case "x-red":
+        case "red-x":
+        case "red-red":
+            getBox().style.background = 'red';
+            break;
+        case "x-blue":
+        case "blue-x":
+        case "blue-blue":
+            getBox().style.background = 'blue';
+            break;
+        case "x-yellow":
+        case "yellow-x":
+        case "yellow-yellow":
+            getBox().style.background = 'yellow';
+            break;
+        case "red-blue":
+        case "blue-red":
+            getBox().style.background = 'purple';
+            break;
+        case "red-yellow":
+        case "yellow-red":
+            getBox().style.background = 'orange';
+            break;
+        case "blue-yellow":
+        case "yellow-blue":
+            getBox().style.background = 'green';
+            break;
+        default:
+            break;
+    }
+}
+
+function getSlotArray() {
+    return slot;
+}
 function createPlayArea() {
 
 }
@@ -63,7 +171,7 @@ export function getAmmo() {
     return document.querySelector('#ammo');
 }
 
-function getBox() {
+export function getBox() {
     return document.querySelector('#myBox');
 }
 
@@ -79,12 +187,18 @@ function setCursorInside(boolean) {
     isCursorInside = boolean;
 }
 
-function getCurrentColor() {
-    return currentColor;
+function getCurrentColorQ() {
+    return currentColorQ;
+}
+function getCurrentColorE() {
+    return currentColorE;
 }
 
-export function setCurrentColor(index) {
-    currentColor = index;
+export function setCurrentColorQ(index) {
+    currentColorQ = index;
+}
+export function setCurrentColorE(index) {
+    currentColorE = index;
 }
 
 function setCursorX(x) {
@@ -104,11 +218,14 @@ function getCursorY() {
 }
 
 export function setLastItem() {
-    for (let i = 0; i < slot.length; i++) {
+    for (let i = 0; i < getSlotArray().length; i++) {
+        console.log("slot"+i+":"+slot[i]);
         if (slot[i] !== 'x') {
             lastItem = i;
+            console.log("lastItem:"+lastItem);
         }
     }
+    console.log("lastItem:"+lastItem);
 }
 
 function getLastItem() {
@@ -155,51 +272,31 @@ function getIsCursorInside() {
 
 export function addToInventory(lake) {
     if (!invFull) {
-        for (let i = 0; i < slot.length; i++) { 
+        for (let i = 0; i < getSlotArray().length; i++) { 
             if (getSlot(i) == 'x') {
                 setSlot(i, lake.background);
+                console.log("lake.background:"+lake.background);
 
                 displayItem(i, lake.background);
-                setBackground(getAmmo(), slot[i]);
-                setCurrentColor(i);
+                //setBackground(getAmmo(), slot[i]);
+                console.log("calling set last item...");
                 setLastItem();
-                break;
+                console.log("last item set");
+                setInvFull(!slot.includes('x'));
+                setInvEmpty(slot.every((item) => item === 'x'));
+                setBackground(getAmmo(), getSlot(getLastItem()));
+                setBoxColor();
+                return;
             }
         }
     } else {
         //TODO display <p> saying the inventory is full
     }
-    
+    setBoxColor();
     setInvFull(!slot.includes('x'));
     setInvEmpty(slot.every((item) => item === 'x'));
-    setBackground(ammo, slot[currentColor]);
+    setBackground(ammo, slot[getLastItem()]);
 
-}
-
-function combineColors(key) {
-    const keyString = key.getAttribute("color");
-    const [rK, gK, bK, aK] = keyString.match(/[\d.]+/g).map((value, index) => (index < 3 ? parseInt(value, 10) : parseFloat(value)));
-    const boxString = box.getAttribute("color");
-    const [rB, gB, bB, aB] = boxString.match(/[\d.]+/g).map((value, index) => (index < 3 ? parseInt(value, 10) : parseFloat(value)));
-    var r = rK + rB;
-    var g = gK + gB;
-    var b = bK + bB;
-    var a = aK + aB;
-    box.style.background = `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-
-function spawnNewKey(key) {
-    const newKey = document.createElement("div");
-    
-    newKey.id = "key";
-    newKey.style.background = key.style.background;
-    newKey.setAttribute("color", key.style.background);
-    newKey.setAttribute("count", `${keyCount}`);
-    newKey.style.left = `${Math.floor(Math.random() * 361)}px`;
-    newKey.style.top = `${Math.floor(Math.random() * 361)}px`;
-
-    document.getElementById("container").appendChild(newKey);
-    keyCount++;
 }
 
 export function displayItem(slotIndex, color) {
@@ -217,30 +314,55 @@ function displayInventory() {
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
             setBackground(invSlot, slot[i]);
-        } else setBackground(invSlot, "rgba(0,0,0,0)");
+        } else setBackground(invSlot, "grey");
     }
 }
 
 function swapAmmo(direction) {
     for (let i = 0; i < slot.length; i++) {
         if (slot[i] != 'x') {
-            lastItem = i;
+            setLastItem(i);
         }
     }
 
-    if (direction == 'q' && currentColor != 0) {
-        setCurrentColor(currentColor - 1);
-        getAmmo().style.background = `${slot[getCurrentColor()]}`;
-    } else if (direction == 'q' && getCurrentColor() == 0) {
-        setCurrentColor(lastItem);
-        getAmmo().style.background = `${slot[getLastItem()]}`;
-    } else if (direction == 'e' && getCurrentColor() != lastItem) {
-        setCurrentColor(parseInt(currentColor + 1));
-        getAmmo().style.background = `${slot[getCurrentColor()]}`;
-    } else if (direction == 'e' && getCurrentColor() == lastItem) {
-        setCurrentColor(0);
-        getAmmo().style.background = `${slot[0]}`;
+    let blackTopTop = parseInt(getBlackTop().style.top);
+    let blackTopLeft = parseInt(getBlackTop().style.left);
+    let blackBottomTop = parseInt(getBlackBottom().style.top);
+    let blackBottomLeft = parseInt(getBlackBottom().style.left);
+    let whiteBottomTop = parseInt(getWhiteBottom().style.top);
+
+    if (direction == 'q' && getCurrentColorQ() !== 0) {
+        setCurrentColorQ((getCurrentColorQ() - 1));
+        setImgCoordinate(getBlackTop(), blackTopTop, (blackTopLeft - 50));
+        setImgCoordinate(getBlackBottom(), blackBottomTop, blackBottomLeft - 50);
+        console.log("ccq:"+getCurrentColorQ());
+
+    } else if (direction == 'q' && getCurrentColorQ() == 0) {
+        setCurrentColorQ(15);
+        console.log("ccq:"+getCurrentColorQ());
+
+        let newLeft = 15;
+        newLeft *= 50;
+        newLeft += 5;
+
+        if (newLeft == 0) newLeft = 5;
+        setImgCoordinate(getBlackTop(), blackTopTop, newLeft);
+        setImgCoordinate(getBlackBottom(), blackBottomTop, newLeft);
+    } else if (direction == 'e' && getCurrentColorE() != 15) {
+        setCurrentColorE((getCurrentColorE() + 1));
+        console.log("cce:"+getCurrentColorE());
+        let newLeft = 0;
+        newLeft += getCurrentColorE();
+        newLeft *= 50;
+        newLeft += 5;
+        if (newLeft == 0) newLeft = 5;
+        setImgCoordinate(getWhiteBottom(), whiteBottomTop, newLeft);
+    } else if (direction == 'e' && getCurrentColorE() == 15) {
+        setCurrentColorE(0);
+        console.log("cce:"+getCurrentColorE());
+        setImgCoordinate(getWhiteBottom(), whiteBottomTop, 5);
     }
+    setBoxColor();
 }
 
 document.addEventListener('keydown',  (e) => {
@@ -253,9 +375,8 @@ document.addEventListener('keydown',  (e) => {
         setLastItem(); 
     }
 
-    const ammo = document.querySelector('#ammo');
-    if (invEmpty) {
-        getAmmo().style.background = "rgba(0,0,0,0)";
+    if (getInvEmpty()) {
+        getAmmo().style.background = "rgba(128,128,128,0.35)";
         setLastItem(-1);
     }
     
@@ -273,18 +394,20 @@ export function fire() {
     // Initialize projectile position and color
     const projectileRect = getProjectile().getBoundingClientRect();
     const parentRect = level1.getBoundingClientRect();
-    
+    let cursX = getCursorX();
+    let cursY = getCursorY();
+
     getProjectile().style.top = `${getAmmo().offsetTop}px`;
     getProjectile().style.left = `${getAmmo().offsetLeft}px`;
-    getProjectile().style.background = slot[getCurrentColor()];
-
+    getProjectile().style.background = slot[getLastItem()];
+    
     let lastTime = performance.now(); // Initialize time
     
     function moveProjectile(currentTime) {
         
         console.log('firing repeatedly');
         setAnimation(true);
-        setBackground(ammo, slot[currentColor]);
+        setBackground(ammo, slot[lastItem]);
         const deltaTime = (currentTime - lastTime) / 1000; // Time elapsed in seconds
         lastTime = currentTime;
 
@@ -296,13 +419,13 @@ export function fire() {
 
         // Calculate the difference between current and target positions
         console.log("cursorx: "+getCursorX())
-        const dx = getCursorX() - currentX;
-        const dy = getCursorY() - currentY;
+        const dx = cursX - currentX;
+        const dy = cursY - currentY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
 
         // Stop animation if the projectile is close enough to the target
-        if (distance < 1) {
+        if (distance < 2) {
             getProjectile().style.background = "rgba(0,0,0,0)";
             setAnimation(false);
             return;
@@ -331,27 +454,25 @@ export function setBackground(ele, color) {
 }
 
 function shiftInventory() {
-    //move all inventory items down one slot and fill in the last slot with an x.
+    //remove the last inventory item
     setLastItem();
-    for (let i = getCurrentColor(); i < slot.length; i++) {
-        if (i !== slot.length - 1) {
-            setSlot(i, getSlot(parseInt(i + 1)));
+    for (let i = 0; i < slot.length; i++) {
+        if (slot[i] == 'x') {
+            setSlot((i-1), 'x');
         } else if (i == slot.length - 1) {
             setSlot(i, 'x');
         }
     }
-
-    if (getCurrentColor() == getLastItem()) {
-        setCurrentColor(currentColor - 1);
-    }
-
     setLastItem();
-
+    
     setInvFull(!slot.includes('x'));
     setInvEmpty(slot.every((item) => item === 'x'));
 
     //reset ammo color
-    getAmmo().style.background = slot[getCurrentColor()];
+    if (slot[lastItem] !== 'x') {
+        setBackground(getAmmo(), slot[getLastItem()]);
+    }
+    setBoxColor();
 }
 
 export function createMouseEnterDetection() {
@@ -389,5 +510,6 @@ window.shiftInventory = shiftInventory;
 window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
+window.getBox = getBox;
 //window.getPlayArea = getPlayArea;
 

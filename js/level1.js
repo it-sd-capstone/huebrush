@@ -488,6 +488,8 @@ export function createLevel1(widthModifier,heightModifier) {
     top: `${heightModifier * 120}px`,
     left: `${widthModifier * 400}px`,
   });
+  gate1.classList.add('wallSolid');
+
 
   const wallBlack1 = createElement('div', 'wallBlack1', ['wallSolid']);
 
@@ -601,6 +603,12 @@ function getLevel1Objects() {
   return childStack1;
 }
 
+export function openGateOne() {
+    gate1.style.transform = 'rotate(-180deg)';
+    gate1.style.transformOrigin = 'top right'; 
+}
+
+window.openGateOne = openGateOne;
 window.createLevel1 = createLevel1;
 window.createLevel1End = createLevel1End;
 window.getLevel1Objects = getLevel1Objects;
