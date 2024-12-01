@@ -1,36 +1,49 @@
 import { createLevel1, createLevel1End } from './level1.js';
+import { openGateOne } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { spawnEnemy } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
 import { getAmmo } from './inventory.js';
-
+import { getBox } from './inventory.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
   initializeGame();
 });
 
-  let moveBy = 10;
-  let hasFadedOut = false;
+let moveBy = 10;
+let hasFadedOut = false;
 
-  let enemy = document.querySelector('#game_canvas #enemy');
-  let moveSpeed = 50; //px per sec
-  let lastTime = 0;
+let enemy = document.querySelector('#game_canvas #enemy');
+let moveSpeed = 50; //px per sec
+let lastTime = 0;
 
-  // Prevent arrow keys from causing scroll action.
-  window.addEventListener("keydown", function(e) {
+// Prevent arrow keys from causing scroll action.
+window.addEventListener("keydown", function(e) {
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
         e.preventDefault();
     }
-  }, false);
+}, false);
 
-  //Event listener to add items to inventory
-  document.addEventListener('keydown', (e) => {
+//Event listener to add items to inventory
+document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     if (e.key.toLowerCase() === 'f') {
         checkProximityAroundBox(box, 10);
+    }
+});
+
+// Event listener to check gate proximity and color
+document.addEventListener('keydown', (e) => {
+    let box = document.querySelector('#myBox');
+    let gate1 = document.querySelector('#gate1');
+    if (e.key.toLowerCase() ==='g') {
+        if(checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+            gate1.style.transform = 'rotate(-180deg)';
+            gate1.style.transformOrigin = 'top right';            
+        }
     }
 });
 
@@ -70,6 +83,22 @@ function checkProximityAroundBox(box, radius) {
           return;
       } 
   }
+}
+
+function checkGateProximity(box, levelNum) {
+    if (levelNum == 1 && box.style.left == '780px') {
+        console.log(box.style.left);
+        return true;
+    }
+    return false;
+}
+
+function checkGateColor(box, levelNum) {
+    if (levelNum == 1 && box.style.background == 'purple') {
+        console.log(box.style.background);
+        return true;
+    }
+    return false;
 }
 
   // ##### TODO rework where color drain occurs ######
@@ -193,6 +222,7 @@ function checkProximityAroundBox(box, radius) {
     }
 
     const myBox = document.querySelector('.myBox');
+    const ammo = document.querySelector('#ammo');
     let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
@@ -201,7 +231,8 @@ function checkProximityAroundBox(box, radius) {
       level1Objects,
       newLevel,
       level2Objects,
-      myBox
+      myBox,
+      ammo
     );
   
       localStorage.setItem('Current Level', currentLevel + 1);
@@ -271,8 +302,8 @@ function checkProximityAroundBox(box, radius) {
       dy /= distance;
 
       // Move the enemy
-      //enemyX += dx * moveSpeed * delta;
-      //enemyY += dy * moveSpeed * delta;
+      enemyX += dx * moveSpeed * delta;
+      enemyY += dy * moveSpeed * delta;
       
       enemy.style.left = `${enemyX}px`;
       enemy.style.top = `${enemyY}px`;
