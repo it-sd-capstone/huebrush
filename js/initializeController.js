@@ -1,5 +1,6 @@
-import { createLevel1, createLevel1End } from './level1.js';
-import { createLevel2, createLevel2End } from './level2.js';
+import { createLevel1, createLevel1End, openGateOne } from './level1.js';
+import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
+import { createLevel3 } from './level3.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
 import { createInventory } from './inventory.js';
@@ -50,7 +51,15 @@ export function loadLevel(level) {
       chaseBox();
       break;
     case 3:
-      console.log('Level 3 not implemented yet');
+      createLevel1(1, 1);
+      createLevel2(1, 1, 50);
+      createLevel3(2,1,50);
+      openGateOne();
+      openGateTwo();
+      spawnPlayer(1, 1, '280px', '950px');
+      createLevel2End();
+      createAmmo('rgba(0,0,0,0)');
+      createProjectile('rgba(0,0,0,0)');
       break;
     case 4:
       console.log('Level 4 not implemented yet');

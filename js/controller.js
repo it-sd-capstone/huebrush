@@ -1,12 +1,10 @@
-import { createLevel1, createLevel1End } from './level1.js';
-import { openGateOne } from './level1.js';
+import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
+import { createLevel3 } from './level3.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
-import { getAmmo, fire } from './inventory.js';
-import { getBox } from './inventory.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +33,6 @@ let moveBy = 10;
 let hasFadedOut = false;
 
 
-let enemy = document.querySelector('#game_canvas #enemy');
 let moveSpeed = 50; //px per sec
 let lastTime = 0;
 
@@ -65,10 +62,14 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
+    let gate2 = document.querySelector('#gate2');
     if (e.key.toLowerCase() ==='g') {
-        if(checkGateProximity(box, 1) && checkGateColor(box, 1)) {
-            gate1.style.transform = 'rotate(-180deg)';
-            gate1.style.transformOrigin = 'top right';            
+        if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+          gate1.style.transform = 'rotate(-180deg)';
+          gate1.style.transformOrigin = 'top right';            
+        } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
+          gate2.style.transform = 'rotate(-180deg)';
+          gate2.style.transformOrigin = 'bottom left';
         }
     }
 });
@@ -113,8 +114,9 @@ function checkProximityAroundBox(box, radius) {
 
 function checkGateProximity(box, levelNum) {
     if (levelNum == 1 && box.style.left == '780px') {
-        console.log(box.style.left);
-        return true;
+      return true;
+    } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
+      return true;
     }
     return false;
 }
@@ -123,6 +125,9 @@ function checkGateColor(box, levelNum) {
     if (levelNum == 1 && box.style.background == 'purple') {
         console.log(box.style.background);
         return true;
+    }  else if (levelNum == 2 && box.style.background == 'green') {
+      console.log(box.style.background);
+      return true;
     }
     return false;
 }
@@ -232,10 +237,8 @@ function checkGateColor(box, levelNum) {
 
       removeObject('levelEnd');
   
-      const currentLevelSelector = `#level${currentLevel}`;
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
-      const currentLevelDiv = document.querySelector(currentLevelSelector);
       const nextLevelDiv = document.querySelector(nextLevelSelector);
   
       if (!nextLevelDiv) {
@@ -244,6 +247,8 @@ function checkGateColor(box, levelNum) {
             createLevel2End();
             spawnEnemy();
             chaseBox();
+        } else if (currentLevel + 1 === 3) {
+          createLevel3(2,1,100);
         }
     }
 
@@ -253,13 +258,24 @@ function checkGateColor(box, levelNum) {
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
   
-    levelXTransition(
-      level1Objects,
-      newLevel,
-      level2Objects,
-      myBox,
-      ammo
-    );
+    if (currentLevel + 1 === 2) {
+      levelXTransition(
+        level1Objects,
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    } else if  (currentLevel + 1 === 3) {
+      console.log("slide level 3 in");
+      levelYTransition(
+        [level1Objects, level2Objects],
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    }
   
       localStorage.setItem('Current Level', currentLevel + 1);
   }
@@ -407,9 +423,9 @@ export function enemyLife() {
           } else {
             console.error('Enemy health is not initialized');
           }
-        
-          projectile.remove();
-
+          console.log(projectile);
+          projectile.style.background = 'rgba(0,0,0,0)';
+          console.log(enemy.enemyHealth);
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
             console.log('Enemy destroyed');
