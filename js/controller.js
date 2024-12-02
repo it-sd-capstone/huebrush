@@ -1,12 +1,9 @@
-import { createLevel1, createLevel1End } from './level1.js';
-import { openGateOne } from './level1.js';
+import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
-import { getAmmo, fire } from './inventory.js';
-import { getBox } from './inventory.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +32,6 @@ let moveBy = 10;
 let hasFadedOut = false;
 
 
-let enemy = document.querySelector('#game_canvas #enemy');
 let moveSpeed = 50; //px per sec
 let lastTime = 0;
 
@@ -232,10 +228,8 @@ function checkGateColor(box, levelNum) {
 
       removeObject('levelEnd');
   
-      const currentLevelSelector = `#level${currentLevel}`;
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
-      const currentLevelDiv = document.querySelector(currentLevelSelector);
       const nextLevelDiv = document.querySelector(nextLevelSelector);
   
       if (!nextLevelDiv) {

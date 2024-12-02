@@ -423,8 +423,10 @@ export function fire() {
         const distance = Math.sqrt(dx * dx + dy * dy);
         
 
-        // Stop animation if the projectile is close enough to the target
-        if (distance < 2) {
+        // Stop animation if the projectile is close enough to the target.
+        // distance should be left at 5 or higher to avoid projectile jumping
+        // and not despawning.
+        if (distance < 5) {
             getProjectile().style.background = "rgba(0,0,0,0)";
             getProjectile().style.border = '0px';
             getProjectile().style.top = '-20px';
