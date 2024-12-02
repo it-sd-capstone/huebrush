@@ -61,10 +61,14 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
+    let gate2 = document.querySelector('#gate2');
     if (e.key.toLowerCase() ==='g') {
-        if(checkGateProximity(box, 1) && checkGateColor(box, 1)) {
-            gate1.style.transform = 'rotate(-180deg)';
-            gate1.style.transformOrigin = 'top right';            
+        if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+          gate1.style.transform = 'rotate(-180deg)';
+          gate1.style.transformOrigin = 'top right';            
+        } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
+          gate2.style.transform = 'rotate(-180deg)';
+          gate2.style.transformOrigin = 'bottom left';
         }
     }
 });
@@ -109,8 +113,9 @@ function checkProximityAroundBox(box, radius) {
 
 function checkGateProximity(box, levelNum) {
     if (levelNum == 1 && box.style.left == '780px') {
-        console.log(box.style.left);
-        return true;
+      return true;
+    } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
+      return true;
     }
     return false;
 }
@@ -119,6 +124,9 @@ function checkGateColor(box, levelNum) {
     if (levelNum == 1 && box.style.background == 'purple') {
         console.log(box.style.background);
         return true;
+    }  else if (levelNum == 2 && box.style.background == 'green') {
+      console.log(box.style.background);
+      return true;
     }
     return false;
 }

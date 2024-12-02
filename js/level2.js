@@ -708,6 +708,15 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
       });
       lakeYellow.appendChild(lake);
     });
+    
+    const gate2 = createElement('div', 'gate2', ['gate2'], {
+      background: 'green',
+      width: `${widthModifier * 10}px`,
+      height: `${heightModifier * 30}px`,
+      top: `${heightModifier * 220}px`,
+      left: `${widthModifier * 430}px`,
+    });
+    gate2.classList.add('wallSolid');
 
     // TODOconst shadows = createElement('div', 'shadow', ['shadow']);
 
@@ -742,6 +751,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
   level2.appendChild(columns);
   level2.appendChild(wallBlack2);
   level2.appendChild(lakeYellow);
+  level2.appendChild(gate2);
   //TODO:level2.appendChild(shadows);
 
   playArea.appendChild(level2);
