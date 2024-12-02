@@ -629,7 +629,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
       columns.appendChild(wall);
     });
 
-    const wallBlack2 = createElement('div', 'wallBlack1', ['wallSolid']);
+    const wallBlack2 = createElement('div', 'wallBlack2', ['wallSolid']);
 
     const wallBlack2Config = [
       { id: 'wall1', 
