@@ -404,21 +404,20 @@ export function fire() {
     let lastTime = performance.now(); // Initialize time
     
     function moveProjectile(currentTime) {
-        
-        console.log('firing repeatedly');
+        getProjectile().style.boxSizing = 'border-box';
+        getProjectile().style.border = '0.025rem solid black';
         setAnimation(true);
         setBackground(ammo, slot[lastItem]);
         const deltaTime = (currentTime - lastTime) / 1000; // Time elapsed in seconds
         lastTime = currentTime;
 
-        const rect = projectile.getBoundingClientRect();
+        const rect = getProjectile().getBoundingClientRect();
         const currentX = rect.left + rect.width / 2 - parentRect.left;
         const currentY = rect.top + rect.height / 2 - parentRect.top;
 
         const speed = 500; // Speed in pixels per second
 
         // Calculate the difference between current and target positions
-        console.log("cursorx: "+getCursorX())
         const dx = cursX - currentX;
         const dy = cursY - currentY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -427,6 +426,8 @@ export function fire() {
         // Stop animation if the projectile is close enough to the target
         if (distance < 2) {
             getProjectile().style.background = "rgba(0,0,0,0)";
+            getProjectile().style.border = '0px';
+            getProjectile().style.top = '-20px';
             setAnimation(false);
             return;
         }

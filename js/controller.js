@@ -407,9 +407,9 @@ export function enemyLife() {
           } else {
             console.error('Enemy health is not initialized');
           }
-        
-          projectile.remove();
-
+          console.log(projectile);
+          projectile.style.background = 'rgba(0,0,0,0)';
+          console.log(enemy.enemyHealth);
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
             console.log('Enemy destroyed');

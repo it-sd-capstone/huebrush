@@ -22,7 +22,7 @@ export function createProjectile(color) {
     projectile.style.position = 'absolute';
     projectile.style.width = '10px';
     projectile.style.height = '10px';
-    projectile.style.top = '0px';
+    projectile.style.top = '-20px';
     projectile.style.left = '0px';
     projectile.style.zIndex = '100';
     projectile.style.background = color;
