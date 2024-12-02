@@ -1,4 +1,4 @@
-import { createLevel1, createLevel1End } from './level1.js';
+import { createLevel1, createLevel1End, openGateOne } from './level1.js';
 import { createLevel2, createLevel2End } from './level2.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
