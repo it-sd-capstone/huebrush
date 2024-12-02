@@ -6,8 +6,8 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
   const level2 = createElement('div', 'level2', ['box'], {
     position: 'absolute',
     background: 'white',
-    width: '1000px',
-    height: '600px',
+    width: `${widthModifier * 500}px`,
+    height: `${heightModifier * 300}px`,
     padding: '0px',
     border: '0px',
     left: `${offscreen}%`,
@@ -708,7 +708,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
       });
       lakeYellow.appendChild(lake);
     });
-    
+
     const gate2 = createElement('div', 'gate2', ['gate2'], {
       background: 'green',
       width: `${widthModifier * 10}px`,
@@ -801,5 +801,8 @@ export function getLevel2Objects() {
   return childStack;
 }
 
-window.createLevel2 = createLevel2;
-window.createLevel2End = createLevel2End;
+export function openGateTwo() {
+  let gate2 = document.querySelector('#gate2');
+  gate2.style.transform = 'rotate(-180deg)';
+  gate2.style.transformOrigin = 'bottom left'; 
+}

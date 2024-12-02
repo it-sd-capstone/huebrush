@@ -1,9 +1,10 @@
 import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
+import { createLevel3 } from './level3.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -246,6 +247,8 @@ function checkGateColor(box, levelNum) {
             createLevel2End();
             spawnEnemy();
             chaseBox();
+        } else if (currentLevel + 1 === 3) {
+          createLevel3(2,1,100);
         }
     }
 
@@ -255,13 +258,24 @@ function checkGateColor(box, levelNum) {
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
   
-    levelXTransition(
-      level1Objects,
-      newLevel,
-      level2Objects,
-      myBox,
-      ammo
-    );
+    if (currentLevel + 1 === 2) {
+      levelXTransition(
+        level1Objects,
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    } else if  (currentLevel + 1 === 3) {
+      console.log("slide level 3 in");
+      levelYTransition(
+        [level1Objects, level2Objects],
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    }
   
       localStorage.setItem('Current Level', currentLevel + 1);
   }

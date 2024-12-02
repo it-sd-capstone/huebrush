@@ -604,6 +604,7 @@ export function getLevel1Objects() {
 }
 
 export function openGateOne() {
+  let gate1 = document.querySelector('#gate1');
     gate1.style.transform = 'rotate(-180deg)';
     gate1.style.transformOrigin = 'top right'; 
 }
