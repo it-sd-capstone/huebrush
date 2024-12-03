@@ -2,8 +2,14 @@
 //   localStorage.setItem('inventory', "x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x");
 // }
 
-//var slot = localStorage.getItem('inventory').split(",");
-var slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+
+if (!localStorage.getItem('inventory')) {
+  let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+} else {
+  let slot = localStorage.getItem('inventory').split(",");
+}
+
 let isCursorInside = false;
 
 //should represent the current slot[] index of the last non-x in the array
@@ -38,6 +44,7 @@ export function createInventory() {
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
+    console.log(slot);
     if (slot[i-1] == 'x') {
       invslot.style.background = 'grey';
     } else {
