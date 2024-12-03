@@ -1,4 +1,4 @@
-var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
+var slot = localStorage.getItem('inventory').split(",");
 let isCursorInside = false;
 
 //should represent the current slot[] index of the last non-x in the array
@@ -33,7 +33,12 @@ export function createInventory() {
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
-    invslot.style.background = 'grey';
+    if (slot[i-1] == 'x') {
+      invslot.style.background = 'grey';
+    } else {
+      invslot.style.background = slot[i-1];
+    }
+    
     invslot.style.width = '40px';
     invslot.style.height = '40px';
     invslot.style.top = '5px';
@@ -99,7 +104,7 @@ export function createInventory() {
     })
     .catch(error => console.error('Error loading SVG:', error));
 
-    
+
 }
 
 function getBlackTop() {
@@ -166,14 +171,15 @@ export function getSlotArray() {
 
 export function setSlotArray(inventoryString) {
   let inventoryArray = inventoryString.split(",")
+  let counter = 0
   
   inventoryArray.forEach(element => {
-    inventoryArray[element] = slot[element];
+    setSlot[counter,element]
+    counter++
   });
+  
   console.log(inventoryArray)
-  console.log(slot)
-
-  //displayInventory();
+  console.log(getSlotArray())
 }
 
 export function getAmmo() {
@@ -249,9 +255,9 @@ function getSlot(index) {
     return slot[index];
 }
 
-export function setInvEmpty() {
-    invEmpty = slot.every((item) => item === 'x');
-}
+// export function setInvEmpty() {
+//     invEmpty = slot.every((item) => item === 'x');
+// }
 
 function getInvEmpty() {
     return invEmpty;
@@ -292,7 +298,7 @@ export function addToInventory(lake) {
                 setLastItem();
                 console.log("last item set");
                 setInvFull();
-                setInvEmpty();
+                //setInvEmpty();
                 setBackground(getAmmo(), getSlot(getLastItem()));
                 setBoxColor();
                 return;
@@ -303,7 +309,7 @@ export function addToInventory(lake) {
     }
     setBoxColor();
     setInvFull();
-    setInvEmpty();
+    //setInvEmpty();
     setBackground(ammo, slot[getLastItem()]);
 
 }
@@ -322,6 +328,7 @@ function displayInventory() {
         let id = divIdStr + divIdNum;
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
+          console.log(invSlot, i, slot[i])
             setBackground(invSlot, slot[i]);
         } else setBackground(invSlot, "grey");
     }
@@ -458,10 +465,8 @@ export function fire() {
     moveProjectile(lastTime); // Start moving the projectile
 }
 
-
-
-
 export function setBackground(ele, color) {
+  console.log(ele)
     ele.style.background = color;
 }
 
@@ -478,7 +483,7 @@ function shiftInventory() {
     setLastItem();
     
     setInvFull();
-    setInvEmpty();
+    //setInvEmpty();
 
     //reset ammo color
     if (slot[lastItem] !== 'x') {
@@ -523,7 +528,6 @@ window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
 window.getBox = getBox;
-window.setInvEmpty = setInvEmpty;
 window.setInvFull = setInvFull;
 //window.getPlayArea = getPlayArea;
 

@@ -3,8 +3,7 @@ import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
 import { createLevel3 } from './level3.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
-import { createInventory, setSlotArray } from './inventory.js';
-import { setInvEmpty, getSlotArray } from './inventory.js';
+import { createInventory, setSlotArray, getSlotArray, setLastItem } from './inventory.js';
 import { setInvFull } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
@@ -27,21 +26,22 @@ export function initializeGame() {
 
   createInventory();
 
+  console.log(document.getElementById('Inventory'));
+
   const currentLevel = Number(localStorage.getItem('Current Level'));
   loadLevel(currentLevel);
 }
 
 export function loadLevel(level) {
-
-  
   setInvFull();
-  setInvEmpty();
 
   if (!localStorage.getItem('inventory')) {
     localStorage.setItem('inventory', getSlotArray());
   } else {
     setSlotArray(localStorage.getItem('inventory'));
   }
+
+  setLastItem();
 
 
   switch (level) {

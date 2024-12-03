@@ -5,22 +5,22 @@
 
 ### Added
 - Added inventory selection indicators that change the color of the player based on their selection (color mixing). [@ph4zers](https://github.com/ph4zers)
-
+- Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
+- Added local storage for inventory on reload. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added level 3 and transition for level 3 [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added hitbox for enemy [@Yams650](https://github.com/Yams650)
+- Added random spawnpoint for the enemy [@Yams650](https://github.com/Yams650)
 ### Changed
 - Updated how the ammo box is displayed during and after the trasition from level 1 to level 2. [@ph4zers](https://github.com/ph4zers)
 - Updated setInvFull() and setInvEmpty() to be unparamterized. Added calls to these functions for level creation. [@ph4zers](https://github.com/ph4zers)
 - Updated where the projectile div is stored while not in use. [@ph4zers](https://github.com/ph4zers)
 - Updated how the projectile is handled after it is fired. 
-
-
-### Added
-- Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
-
-### Changed
 - Updated enemy health with new variable name: enemyHealth, and added call to enemyLife container function found in controller. [@Yams650](https://github.com/Yams650)
+- Updated key event listeners to use keycode. Thanks Kevin. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
  
 ### Fixed
 - Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
+- Fixed walls within level 2 for users using Firefox. Thanks Kevin. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
  
 ## [v0.2.0]
 
