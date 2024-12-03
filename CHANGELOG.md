@@ -8,7 +8,8 @@
 - Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
 - Added local storage for inventory on reload. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Added level 3 and transition for level 3 [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
-
+- Added hitbox for enemy [@Yams650](https://github.com/Yams650)
+- Added random spawnpoint for the enemy [@Yams650](https://github.com/Yams650)
 ### Changed
 - Updated how the ammo box is displayed during and after the trasition from level 1 to level 2. [@ph4zers](https://github.com/ph4zers)
 - Updated setInvFull() and setInvEmpty() to be unparamterized. Added calls to these functions for level creation. [@ph4zers](https://github.com/ph4zers)
