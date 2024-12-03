@@ -1,8 +1,9 @@
-if (!localStorage.getItem('inventory')) {
-  localStorage.setItem('inventory', "x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x");
-}
+// if (!localStorage.getItem('inventory')) {
+//   localStorage.setItem('inventory', "x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x");
+// }
 
-var slot = localStorage.getItem('inventory').split(",");
+//var slot = localStorage.getItem('inventory').split(",");
+var slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 let isCursorInside = false;
 
 //should represent the current slot[] index of the last non-x in the array
@@ -386,6 +387,7 @@ function swapAmmo(direction) {
 }
 
 document.addEventListener('keydown',  (e) => {
+    setInvEmpty();
     if (e.code == "Space" && !getInvEmpty() && isCursorInside && animation == false) {
         console.log("firing");
         fire();
