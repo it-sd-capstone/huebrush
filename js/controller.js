@@ -305,9 +305,6 @@ function checkGateColor(box, levelNum) {
     });
 }
 
-
-  //Move Enemy Program
-
   //Move Enemy Program
 
   export function chaseBox(time) {
@@ -408,12 +405,12 @@ export function enemyLife() {
           (projectileX - enemyX) ** 2 + (projectileY - enemyY) ** 2
         );
 
-        if (distance < 20) { // Adjust for specified range
+        if (distance < 60) { // Adjust for specified range
           console.log('Projectile hit');
 
           // Reduce enemy health
           if (typeof enemy.enemyHealth === 'number') {
-            enemy.enemyHealth -= 25; // Adjust this for more or less damage
+            enemy.enemyHealth -= 15; // Adjust this for more or less damage
             console.log(`Enemy health: ${enemy.enemyHealth}`);
             updateHealth(enemy, enemy.enemyHealth);
           } else {
