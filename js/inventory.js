@@ -240,16 +240,16 @@ function getSlot(index) {
     return slot[index];
 }
 
-function setInvEmpty(boolean) {
-    invEmpty = boolean;
+export function setInvEmpty() {
+    invEmpty = slot.every((item) => item === 'x');
 }
 
 function getInvEmpty() {
     return invEmpty;
 }
 
-function setInvFull(boolean) {
-    invFull = boolean;
+export function setInvFull() {
+    invFull = !slot.includes('x');
 }
 
 function getInvFull() {
@@ -271,7 +271,7 @@ function getIsCursorInside() {
 
 
 export function addToInventory(lake) {
-    if (!invFull) {
+    if (!getInvFull()) {
         for (let i = 0; i < getSlotArray().length; i++) { 
             if (getSlot(i) == 'x') {
                 setSlot(i, lake.background);
@@ -282,8 +282,8 @@ export function addToInventory(lake) {
                 console.log("calling set last item...");
                 setLastItem();
                 console.log("last item set");
-                setInvFull(!slot.includes('x'));
-                setInvEmpty(slot.every((item) => item === 'x'));
+                setInvFull();
+                setInvEmpty();
                 setBackground(getAmmo(), getSlot(getLastItem()));
                 setBoxColor();
                 return;
@@ -293,8 +293,8 @@ export function addToInventory(lake) {
         //TODO display <p> saying the inventory is full
     }
     setBoxColor();
-    setInvFull(!slot.includes('x'));
-    setInvEmpty(slot.every((item) => item === 'x'));
+    setInvFull();
+    setInvEmpty();
     setBackground(ammo, slot[getLastItem()]);
 
 }
@@ -366,7 +366,7 @@ function swapAmmo(direction) {
 }
 
 document.addEventListener('keydown',  (e) => {
-    if (e.code == "Space" && !invEmpty && isCursorInside && animation == false) {
+    if (e.code == "Space" && !getInvEmpty() && isCursorInside && animation == false) {
         console.log("firing");
         fire();
         console.log("done firing");
@@ -468,8 +468,8 @@ function shiftInventory() {
     }
     setLastItem();
     
-    setInvFull(!slot.includes('x'));
-    setInvEmpty(slot.every((item) => item === 'x'));
+    setInvFull();
+    setInvEmpty();
 
     //reset ammo color
     if (slot[lastItem] !== 'x') {
@@ -514,5 +514,7 @@ window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
 window.getBox = getBox;
+window.setInvEmpty = setInvEmpty;
+window.setInvFull = setInvFull;
 //window.getPlayArea = getPlayArea;
 

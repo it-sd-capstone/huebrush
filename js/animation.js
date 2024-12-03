@@ -3,8 +3,8 @@ export function levelXTransition(objects = [], newLevel, newLevelObjects = [], m
   let speed = 1.75;
 
   for (let object in objects) {
-    let newWidth = (parseInt(objects[object].style.width, 10) / 2)
-    let newLeft = (parseInt(objects[object].style.left, 10) / 2)
+    let newWidth = (parseInt(objects[object].style.width, 10) / 2);
+    let newLeft = (parseInt(objects[object].style.left, 10) / 2);
 
     objects[object].style.transition = `left ${speed}s ease, width ${speed}s ease`;
     objects[object].style.left = `${newLeft}px`;
@@ -48,9 +48,9 @@ export function levelYTransition(objects = [], newLevel, newLevelObjects = [], m
 
   for (let object of flattenedObjects) {
     console.log(object);
-    console.log(flattenedObjects[object])
-    let newHeight = (parseInt(object.style.height, 10) / 2)
-    let newTop = (parseInt(object.style.top, 10) / 2)
+    console.log(flattenedObjects[object]);
+    let newHeight = (parseInt(object.style.height, 10) / 2);
+    let newTop = (parseInt(object.style.top, 10) / 2);
 
     object.style.transition = `top ${speed}s ease, height ${speed}s ease`;
     object.style.top = `${newTop}px`;
@@ -60,18 +60,24 @@ export function levelYTransition(objects = [], newLevel, newLevelObjects = [], m
   newLevel.style.top = `50%`;
 
   // If we just device myBox's height by 2 myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
-  let newBoxTop = (parseInt(myBox.style.any, 10) / 2);
+  let newBoxTop = (parseInt(myBox.style.top, 10) / 2);
   newBoxTop = Math.round(newBoxTop / 10) * 10;
 
   let newAmmoTop = (parseInt(ammo.style.top, 10) / 2);
-  newAmmoTop = Math.round(newAmmoTop / 10) * 10;
+  newAmmoTop = (Math.round(newAmmoTop / 10) * 10);
+
+  let newAmmoLeft = parseInt(ammo.style.left) + 1 + 'px';
 
   myBox.style.transition = `top ${speed}s ease, height ${speed}s ease`;
   myBox.style.top = `${newBoxTop}px`;
   myBox.style.height = `${parseInt(myBox.style.height, 10) / 2}px`;
 
   ammo.style.transition = `top ${speed}s ease, height ${speed}s ease`;
-  ammo.style.top = `${newAmmoTop+6}px`;
+  ammo.style.top = `${newAmmoTop-3}px`;
+  ammo.style.width = '7px';
+  ammo.style.height = '7px';
+  ammo.style.left = newAmmoLeft;
+  
   
 
   // If we do not wipe out transition then movements to the up and down are effected by ease. 
