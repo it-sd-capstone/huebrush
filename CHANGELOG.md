@@ -1,19 +1,50 @@
 
 # Change Log
- 
+
 ## [Unreleased]
+
+### Added
+- Added inventory selection indicators that change the color of the player based on their selection (color mixing). [@ph4zers](https://github.com/ph4zers)
+- Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
+- Added local storage for inventory on reload. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added level 3 and transition for level 3 [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added hitbox for enemy [@Yams650](https://github.com/Yams650)
+- Added random spawnpoint for the enemy [@Yams650](https://github.com/Yams650)
+### Changed
+- Updated how the ammo box is displayed during and after the trasition from level 1 to level 2. [@ph4zers](https://github.com/ph4zers)
+- Updated setInvFull() and setInvEmpty() to be unparamterized. Added calls to these functions for level creation. [@ph4zers](https://github.com/ph4zers)
+- Updated where the projectile div is stored while not in use. [@ph4zers](https://github.com/ph4zers)
+- Updated how the projectile is handled after it is fired. 
+- Updated enemy health with new variable name: enemyHealth, and added call to enemyLife container function found in controller. [@Yams650](https://github.com/Yams650)
+- Updated key event listeners to use keycode. Thanks Kevin. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
  
+### Fixed
+- Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
+- Fixed walls within level 2 for users using Firefox. Thanks Kevin. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+ 
+## [v0.2.0]
+
+### Added
+- Created methods to cycle through inventory.[@ph4zers](https://github.com/ph4zers)
+- Created methods to shoot projectiles.[@ph4zers](https://github.com/ph4zers)
+
+### Changed
+- Refactor inventory.js to implement modules. [@ph4zers](https://github.com/ph4zers)
+
 ### Added
 - Created Local Save Data to spawn in correct level. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
 
 ### Changed
 - Updated Inventories look and location to sit under the gamecanvas as a single line. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Moved myBox to player.js and enemy to enemy.js. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Moved some animations out of controller to animation.js ([Issue #3](https://github.com/it-sd-capstone/huebrush/issues/3)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Updated enemy health with new variable name: enemyHealth, and added call to enemyLife container function found in controller. [@Yams650](https://github.com/Yams650)
  
 ### Fixed
 - Updated Inventories creation to a createInventory function rather than hard coding the HTML. ([Issue #9](https://github.com/it-sd-capstone/huebrush/issues/9)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Updated Level transition so new level and objects in existing levels properly scale horizontally. ([Issue #4](https://github.com/it-sd-capstone/huebrush/issues/4)) [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
 
 ## [v0.1.0] - 2024-11-17
  

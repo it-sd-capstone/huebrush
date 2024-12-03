@@ -488,6 +488,8 @@ export function createLevel1(widthModifier,heightModifier) {
     top: `${heightModifier * 120}px`,
     left: `${widthModifier * 400}px`,
   });
+  gate1.classList.add('wallSolid');
+
 
   const wallBlack1 = createElement('div', 'wallBlack1', ['wallSolid']);
 
@@ -582,7 +584,7 @@ export function createLevel1End(){
   level1.appendChild(level1End);
 }
 
-function getLevel1Objects() {
+export function getLevel1Objects() {
   let stack1 = Array.from(level1.children);
   let childStack1 = [];
 
@@ -601,6 +603,10 @@ function getLevel1Objects() {
   return childStack1;
 }
 
-window.createLevel1 = createLevel1;
-window.createLevel1End = createLevel1End;
-window.getLevel1Objects = getLevel1Objects;
+export function openGateOne() {
+  let gate1 = document.querySelector('#gate1');
+    gate1.style.transform = 'rotate(-180deg)';
+    gate1.style.transformOrigin = 'top right'; 
+}
+
+

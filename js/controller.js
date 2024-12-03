@@ -1,10 +1,10 @@
-import { createLevel1, createLevel1End } from './level1.js';
+import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
-import { spawnEnemy } from './enemy.js';
+import { createLevel3 } from './level3.js';
+import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
-import { addToInventory } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut  } from './animation.js';
-import { getAmmo } from './inventory.js';
+import { addToInventory, getSlotArray } from './inventory.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,25 +12,65 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeGame();
 });
 
-  let moveBy = 10;
-  let hasFadedOut = false;
+//Watch for page activity
+document.addEventListener('visibilitychange', () => {
+  isPageVisible = !document.hidden;
 
-  let enemy = document.querySelector('#game_canvas #enemy');
-  let moveSpeed = 50; //px per sec
-  let lastTime = 0;
+  if(!isPageVisible){
+    enemyPause = true;
+    isEnemyChasing = false;
+  }else{
+    enemyPause = false;
+    lastTime = 0;
+    if (!isEnemyChasing) {
+      isEnemyChasing = true;
+    requestAnimationFrame(chaseBox);
+    }
+  }
+});
+
+let moveBy = 10;
+let hasFadedOut = false;
+
+
+let moveSpeed = 50; //px per sec
+let lastTime = 0;
+
+
+  //Pause movement for the enemy if the page is not active variables
+  let isPageVisible = true;
+  let enemyPause = false;
+  let isEnemyChasing = false;
 
   // Prevent arrow keys from causing scroll action.
   window.addEventListener("keydown", function(e) {
+
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
         e.preventDefault();
     }
-  }, false);
+}, false);
 
-  //Event listener to add items to inventory
-  document.addEventListener('keydown', (e) => {
+//Event listener to add items to inventory
+document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
-    if (e.key.toLowerCase() === 'f') {
+    if (e.code === 'KeyF') {
         checkProximityAroundBox(box, 10);
+    }
+});
+
+// Event listener to check gate proximity and color
+document.addEventListener('keydown', (e) => {
+    let box = document.querySelector('#myBox');
+    let gate1 = document.querySelector('#gate1');
+    let gate2 = document.querySelector('#gate2');
+    if (e.code ==='KeyG') {
+        if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+          gate1.style.transform = 'rotate(-180deg)';
+          gate1.style.transformOrigin = 'top right';            
+        } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
+          gate2.style.transform = 'rotate(-180deg)';
+          gate2.style.transformOrigin = 'bottom left';
+        }
     }
 });
 
@@ -48,12 +88,13 @@ function checkProximityAroundBox(box, radius) {
 
   // Get all lakes relative to the container
   const lakes = getObjectsRelativeToContainer(container, '.lake');
-  lakes.forEach(lake => {
+  console.log(lakes);
+  for (let i = 0; i < lakes.length; i++) {
       const lakeRect = {
-          top: lake.top,
-          bottom: lake.top + lake.height,
-          left: lake.left,
-          right: lake.left + lake.width,
+          top: lakes[i].top,
+          bottom: lakes[i].top + lakes[i].height,
+          left: lakes[i].left,
+          right: lakes[i].left + lakes[i].width,
       };
 
       // Check if the lake's rectangular border intersects with the extended box
@@ -65,9 +106,30 @@ function checkProximityAroundBox(box, radius) {
       );
 
       if (isOverlapping) {
-          addToInventory(lake); // Existing function to add the lake to the inventory
-      }
-  });
+          addToInventory(lakes[i]); // Existing function to add the lake to the inventory
+          return;
+      } 
+  }
+}
+
+function checkGateProximity(box, levelNum) {
+    if (levelNum == 1 && box.style.left == '780px') {
+      return true;
+    } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
+      return true;
+    }
+    return false;
+}
+
+function checkGateColor(box, levelNum) {
+    if (levelNum == 1 && box.style.background == 'purple') {
+        console.log(box.style.background);
+        return true;
+    }  else if (levelNum == 2 && box.style.background == 'green') {
+      console.log(box.style.background);
+      return true;
+    }
+    return false;
 }
 
   // ##### TODO rework where color drain occurs ######
@@ -94,8 +156,8 @@ function checkProximityAroundBox(box, radius) {
     let wasdFade = localStorage.getItem('wasd');
     let ammo = document.querySelector('#ammo');
 
-    const keys = ['w', 'a', 's', 'd'];
-    if (keys.includes(e.key) && wasdFade == '1') {
+    const keys = ['KeyW', 'KeyA', 'KeyS', 'KeyD'];
+    if (keys.includes(e.code) && wasdFade == '1') {
       localStorage.setItem('wasd', 0);
 
         let tutorialWASD = document.querySelector('#tutorialWASD');
@@ -110,41 +172,37 @@ function checkProximityAroundBox(box, radius) {
     let newAmmoTop = parseInt(ammo.style.top);
     let newAmmoLeft = parseInt(ammo.style.left);
 
-    switch (e.key) {
-        case 'ArrowUp':
-        case 'w':
-        case 'W':
-            if (boxRect.top - moveBy >= containerRect.top) {
-                newTop -= moveBy;
-                newAmmoTop -= moveBy;
-            }
-            break;
-        case 'ArrowDown':
-        case 's':
-        case 'S':
-            if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                newTop += moveBy;
-                newAmmoTop += moveBy;
-            }
-            break;
-        case 'ArrowLeft':
-        case 'a':
-        case 'A':
-            if (boxRect.left - moveBy >= containerRect.left) {
-                newLeft -= moveBy;
-                newAmmoLeft -= moveBy;
-            }
-            break;
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-            if (boxRect.right + moveBy <= containerRect.right) {
-                newLeft += moveBy;
-                newAmmoLeft += moveBy;
-            }
-            break;
-        default:
-            return;
+    switch (e.code) {
+      case "KeyW":
+      case "ArrowUp":
+        if (boxRect.top - moveBy >= containerRect.top) {
+          newTop -= moveBy;
+          newAmmoTop -= moveBy;
+        }
+        break;
+      case "KeyS":
+      case "ArrowDown":
+        if (boxRect.bottom + moveBy <= containerRect.bottom) {
+            newTop += moveBy;
+            newAmmoTop += moveBy;
+        }
+        break;
+      case "KeyA":
+      case "ArrowLeft":
+        if (boxRect.left - moveBy >= containerRect.left) {
+          newLeft -= moveBy;
+          newAmmoLeft -= moveBy;
+        }
+        break;
+      case "KeyD":
+      case "ArrowRight":
+        if (boxRect.right + moveBy <= containerRect.right) {
+          newLeft += moveBy;
+          newAmmoLeft += moveBy;
+        }
+        break;
+      default:
+        return;
     }
 
     const simulatedBox = {
@@ -175,10 +233,8 @@ function checkProximityAroundBox(box, radius) {
 
       removeObject('levelEnd');
   
-      const currentLevelSelector = `#level${currentLevel}`;
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
-      const currentLevelDiv = document.querySelector(currentLevelSelector);
       const nextLevelDiv = document.querySelector(nextLevelSelector);
   
       if (!nextLevelDiv) {
@@ -187,20 +243,35 @@ function checkProximityAroundBox(box, radius) {
             createLevel2End();
             spawnEnemy();
             chaseBox();
+        } else if (currentLevel + 1 === 3) {
+          createLevel3(2,1,100);
         }
     }
 
     const myBox = document.querySelector('.myBox');
+    const ammo = document.querySelector('#ammo');
     let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
     let level2Objects = getLevel2Objects();
   
-    levelXTransition(
-      level1Objects,
-      newLevel,
-      level2Objects,
-      myBox
-    );
+    if (currentLevel + 1 === 2) {
+      levelXTransition(
+        level1Objects,
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    } else if  (currentLevel + 1 === 3) {
+      console.log("slide level 3 in");
+      levelYTransition(
+        [level1Objects, level2Objects],
+        newLevel,
+        level2Objects,
+        myBox,
+        ammo
+      );
+    }
   
       localStorage.setItem('Current Level', currentLevel + 1);
   }
@@ -237,9 +308,19 @@ function checkProximityAroundBox(box, radius) {
 
   //Move Enemy Program
 
+  //Move Enemy Program
+
   export function chaseBox(time) {
+    if (!isPageVisible || enemyPause) {
+      isEnemyChasing = false;
+      return;
+    }
+    
+    isEnemyChasing = true;
     const container = document.querySelector('.playArea');
     const enemy = document.querySelector('#game_canvas #enemy');
+
+    if(!enemy) return;
 
     let player = getObjectsRelativeToContainer(container, '.myBox');
 
@@ -284,7 +365,9 @@ function checkProximityAroundBox(box, radius) {
     // }
 
     // Continue the chase
-    requestAnimationFrame(chaseBox);
+    if(isPageVisible && !enemyPause){
+      requestAnimationFrame(chaseBox);
+    }
   }
 
   // TODO: Needs reworked.
@@ -305,3 +388,71 @@ function checkProximityAroundBox(box, radius) {
       element.remove(); 
     });
   }
+
+export function enemyLife() {
+  // Set up a loop to check for collisions
+  const checkCollisions = setInterval(() => {
+    const projectiles = document.querySelectorAll('#projectile'); // All projectiles
+    const enemies = document.querySelectorAll('.enemy'); // All active enemies
+
+    projectiles.forEach(projectile => {
+      const projectileX = parseFloat(projectile.style.left);
+      const projectileY = parseFloat(projectile.style.top);
+
+      enemies.forEach(enemy => {
+        const enemyX = parseFloat(enemy.style.left);
+        const enemyY = parseFloat(enemy.style.top);
+
+        // Check if projectile is within specified range of the enemy
+        const distance = Math.sqrt(
+          (projectileX - enemyX) ** 2 + (projectileY - enemyY) ** 2
+        );
+
+        if (distance < 20) { // Adjust for specified range
+          console.log('Projectile hit');
+
+          // Reduce enemy health
+          if (typeof enemy.enemyHealth === 'number') {
+            enemy.enemyHealth -= 25; // Adjust this for more or less damage
+            console.log(`Enemy health: ${enemy.enemyHealth}`);
+            updateHealth(enemy, enemy.enemyHealth);
+          } else {
+            console.error('Enemy health is not initialized');
+          }
+          console.log(projectile);
+          projectile.style.background = 'rgba(0,0,0,0)';
+          console.log(enemy.enemyHealth);
+          // Check if enemy is defeated
+          if (enemy.enemyHealth <= 0) {
+            console.log('Enemy destroyed');
+            createExplosion(enemy);
+            enemy.remove();
+          }
+        }
+      });
+    });
+  }, 100); // Check every 100ms
+
+  // Create an explosion effect
+  function createExplosion(enemy) {
+    const explosion = document.createElement('div');
+    explosion.style.position = 'absolute';
+    explosion.style.left = enemy.style.left;
+    explosion.style.top = enemy.style.top;
+    explosion.style.width = '50px';
+    explosion.style.height = '50px';
+    explosion.style.background = 'radial-gradient(circle, rgba(0, 0, 0, 0) 0%, orange 100%)';
+    explosion.style.borderRadius = '50%';
+    explosion.style.zIndex = '5';
+    explosion.style.opacity = '1';
+
+    document.querySelector('.playArea').appendChild(explosion);
+
+    // Remove explosion after animation
+    setTimeout(() => explosion.remove(), 500);
+  }
+}
+
+window.addEventListener('beforeunload', (event) => {
+  localStorage.setItem('inventory', getSlotArray());
+});

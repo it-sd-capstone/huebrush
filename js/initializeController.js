@@ -1,11 +1,13 @@
-import { createLevel1, createLevel1End } from './level1.js';
-import { createLevel2, createLevel2End } from './level2.js';
+import { createLevel1, createLevel1End, openGateOne } from './level1.js';
+import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
+import { createLevel3 } from './level3.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
-import { createInventory } from './inventory.js';
+import { createInventory, setSlotArray, getSlotArray, setLastItem } from './inventory.js';
+import { setInvFull } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
-import { chaseBox } from './controller.js';
+import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 
 export function initializeGame() {
@@ -24,31 +26,54 @@ export function initializeGame() {
 
   createInventory();
 
+  console.log(document.getElementById('Inventory'));
+
   const currentLevel = Number(localStorage.getItem('Current Level'));
   loadLevel(currentLevel);
 }
 
 export function loadLevel(level) {
+  setInvFull();
+
+  if (!localStorage.getItem('inventory')) {
+    localStorage.setItem('inventory', getSlotArray());
+  } else {
+    setSlotArray(localStorage.getItem('inventory'));
+  }
+
+  setLastItem();
+
+
   switch (level) {
     case 1:
       createLevel1(2, 2);
       createLevel1End();
       spawnPlayer(2, 2, '300px', '300px');
-      createAmmo('rgba(0,0,0,0)');
-      createProjectile('rgba(0,0,0,0)');
+      createAmmo('rgba(128,128,128,0.35)', level);
+      createProjectile('rgba(0,0,0,0)', level);
       break;
     case 2:
       createLevel1(1, 2);
       createLevel2(1, 2, 50);
+      openGateOne();
       spawnPlayer(1, 2, '260px', '440px');
-      createAmmo('rgba(0,0,0,0)');
-      createProjectile('rgba(0,0,0,0)');
+      createAmmo('rgba(128,128,128,0.35)', level);
+      createProjectile('rgba(0,0,0,0)', level);
       spawnEnemy();
+      enemyLife(enemy);
       createLevel2End();
       chaseBox();
       break;
     case 3:
-      console.log('Level 3 not implemented yet');
+      createLevel1(1, 1);
+      createLevel2(1, 1, 50);
+      createLevel3(2,1,50);
+      openGateOne();
+      openGateTwo();
+      spawnPlayer(1, 1, '280px', '950px');
+      createAmmo('rgba(128,128,128,0.35)', level);
+      createProjectile('rgba(0,0,0,0)', level);
+      createLevel2End();
       break;
     case 4:
       console.log('Level 4 not implemented yet');
