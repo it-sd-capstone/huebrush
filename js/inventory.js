@@ -366,7 +366,7 @@ function swapAmmo(direction) {
 }
 
 document.addEventListener('keydown',  (e) => {
-    if (e.key == " " && !invEmpty && isCursorInside && animation == false) {
+    if (e.code == "Space" && !invEmpty && isCursorInside && animation == false) {
         console.log("firing");
         fire();
         console.log("done firing");
@@ -383,9 +383,9 @@ document.addEventListener('keydown',  (e) => {
 });
 
 document.addEventListener('keydown',  (e) => {
-    if (e.key.toLowerCase() == 'q') {
+    if (e.code == 'KeyQ') {
         swapAmmo('q');
-    } else if (e.key.toLowerCase() == 'e') {
+    } else if (e.code == 'KeyE') {
         swapAmmo('e');
     }
 });

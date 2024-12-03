@@ -53,7 +53,7 @@ let lastTime = 0;
 //Event listener to add items to inventory
 document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
-    if (e.key.toLowerCase() === 'f') {
+    if (e.code === 'KeyF') {
         checkProximityAroundBox(box, 10);
     }
 });
@@ -63,7 +63,7 @@ document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
     let gate2 = document.querySelector('#gate2');
-    if (e.key.toLowerCase() ==='g') {
+    if (e.code ==='KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';            
@@ -156,8 +156,8 @@ function checkGateColor(box, levelNum) {
     let wasdFade = localStorage.getItem('wasd');
     let ammo = document.querySelector('#ammo');
 
-    const keys = ['w', 'a', 's', 'd'];
-    if (keys.includes(e.key) && wasdFade == '1') {
+    const keys = ['KeyW', 'KeyA', 'KeyS', 'KeyD'];
+    if (keys.includes(e.code) && wasdFade == '1') {
       localStorage.setItem('wasd', 0);
 
         let tutorialWASD = document.querySelector('#tutorialWASD');
