@@ -172,41 +172,37 @@ function checkGateColor(box, levelNum) {
     let newAmmoTop = parseInt(ammo.style.top);
     let newAmmoLeft = parseInt(ammo.style.left);
 
-    switch (e.key) {
-        case 'ArrowUp':
-        case 'w':
-        case 'W':
-            if (boxRect.top - moveBy >= containerRect.top) {
-                newTop -= moveBy;
-                newAmmoTop -= moveBy;
-            }
-            break;
-        case 'ArrowDown':
-        case 's':
-        case 'S':
-            if (boxRect.bottom + moveBy <= containerRect.bottom) {
-                newTop += moveBy;
-                newAmmoTop += moveBy;
-            }
-            break;
-        case 'ArrowLeft':
-        case 'a':
-        case 'A':
-            if (boxRect.left - moveBy >= containerRect.left) {
-                newLeft -= moveBy;
-                newAmmoLeft -= moveBy;
-            }
-            break;
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-            if (boxRect.right + moveBy <= containerRect.right) {
-                newLeft += moveBy;
-                newAmmoLeft += moveBy;
-            }
-            break;
-        default:
-            return;
+    switch (e.code) {
+      case "KeyW":
+      case "ArrowUp":
+        if (boxRect.top - moveBy >= containerRect.top) {
+          newTop -= moveBy;
+          newAmmoTop -= moveBy;
+        }
+        break;
+      case "KeyS":
+      case "ArrowDown":
+        if (boxRect.bottom + moveBy <= containerRect.bottom) {
+            newTop += moveBy;
+            newAmmoTop += moveBy;
+        }
+        break;
+      case "KeyA":
+      case "ArrowLeft":
+        if (boxRect.left - moveBy >= containerRect.left) {
+          newLeft -= moveBy;
+          newAmmoLeft -= moveBy;
+        }
+        break;
+      case "KeyD":
+      case "ArrowRight":
+        if (boxRect.right + moveBy <= containerRect.right) {
+          newLeft += moveBy;
+          newAmmoLeft += moveBy;
+        }
+        break;
+      default:
+        return;
     }
 
     const simulatedBox = {
