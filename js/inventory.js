@@ -1,5 +1,5 @@
 if (!localStorage.getItem('inventory')) {
-  localStorage.setItem('inventory', getSlotArray());
+  localStorage.setItem('inventory', "x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x");
 }
 
 var slot = localStorage.getItem('inventory').split(",");
