@@ -35,8 +35,8 @@ export function loadLevel(level) {
       createLevel1(2, 2);
       createLevel1End();
       spawnPlayer(2, 2, '300px', '300px');
-      createAmmo('rgba(128,128,128,0.35)');
-      createProjectile('rgba(0,0,0,0)');
+      createAmmo('rgba(128,128,128,0.35)', level);
+      createProjectile('rgba(0,0,0,0)', level);
       break;
     case 2:
       createLevel1(1, 2);
@@ -46,8 +46,8 @@ export function loadLevel(level) {
       spawnEnemy();
       enemyLife(enemy);
       createLevel2End();
-      createAmmo('rgba(0,0,0,0)');
-      createProjectile('rgba(0,0,0,0)');
+      createAmmo('rgba(0,0,0,0)', level);
+      createProjectile('rgba(0,0,0,0)', level);
       chaseBox();
       break;
     case 3:
@@ -58,8 +58,8 @@ export function loadLevel(level) {
       openGateTwo();
       spawnPlayer(1, 1, '280px', '950px');
       createLevel2End();
-      createAmmo('rgba(0,0,0,0)');
-      createProjectile('rgba(0,0,0,0)');
+      createAmmo('rgba(0,0,0,0)', level);
+      createProjectile('rgba(0,0,0,0)', level);
       break;
     case 4:
       console.log('Level 4 not implemented yet');
