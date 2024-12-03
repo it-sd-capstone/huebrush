@@ -3,7 +3,7 @@ import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { createLevel3 } from './level3.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
-import { addToInventory } from './inventory.js';
+import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 
 
@@ -452,3 +452,7 @@ export function enemyLife() {
     setTimeout(() => explosion.remove(), 500);
   }
 }
+
+window.addEventListener('beforeunload', (event) => {
+  localStorage.setItem('inventory', getSlotArray());
+});

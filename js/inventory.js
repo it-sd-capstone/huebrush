@@ -160,11 +160,20 @@ function setBoxColor() {
     }
 }
 
-function getSlotArray() {
+export function getSlotArray() {
     return slot;
 }
-function createPlayArea() {
 
+export function setSlotArray(inventoryString) {
+  let inventoryArray = inventoryString.split(",")
+  
+  inventoryArray.forEach(element => {
+    inventoryArray[element] = slot[element];
+  });
+
+  console.log(slot)
+
+  //displayInventory();
 }
 
 export function getAmmo() {
