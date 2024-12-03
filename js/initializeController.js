@@ -22,6 +22,8 @@ export function initializeGame() {
     localStorage.setItem('wasd', 1);
   }
 
+
+
   console.log("Starting Level: ", localStorage.getItem('Current Level'));
 
   createInventory();

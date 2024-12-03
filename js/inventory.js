@@ -1,3 +1,7 @@
+if (!localStorage.getItem('inventory')) {
+  localStorage.setItem('inventory', getSlotArray());
+}
+
 var slot = localStorage.getItem('inventory').split(",");
 let isCursorInside = false;
 
