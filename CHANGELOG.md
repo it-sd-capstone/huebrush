@@ -2,7 +2,17 @@
 # Change Log
 
 ## [Unreleased]
- 
+
+### Added
+- Added inventory selection indicators that change the color of the player based on their selection (color mixing). [@ph4zers](https://github.com/ph4zers)
+
+### Changed
+- Updated how the ammo box is displayed during and after the trasition from level 1 to level 2. [@ph4zers](https://github.com/ph4zers)
+- Updated setInvFull() and setInvEmpty() to be unparamterized. Added calls to these functions for level creation. [@ph4zers](https://github.com/ph4zers)
+- Updated where the projectile div is stored while not in use. [@ph4zers](https://github.com/ph4zers)
+- Updated how the projectile is handled after it is fired. 
+
+
 ### Added
 - Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
 
