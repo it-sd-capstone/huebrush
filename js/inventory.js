@@ -1,14 +1,21 @@
-// if (!localStorage.getItem('inventory')) {
-//   localStorage.setItem('inventory', "x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x");
-// }
-
 let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+if (!localStorage.getItem('inventory')) {
+    localStorage.setItem('inventory', "x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x");
+
+}
+
+
+
+
 
 if (!localStorage.getItem('inventory')) {
+  console.log("hello");
   let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 } else {
+  console.log("goodbye");
   let slot = localStorage.getItem('inventory').split(",");
 }
+
 
 let isCursorInside = false;
 
@@ -45,10 +52,10 @@ export function createInventory() {
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
     console.log(slot);
-    if (slot[i-1] == 'x') {
-      invslot.style.background = 'grey';
+    if (localStorage.getItem('inventory').split(',')[i-1] == 'x') {
+    invslot.style.background = 'grey';
     } else {
-      invslot.style.background = slot[i-1];
+    invslot.style.background = localStorage.getItem('inventory').split(',')[i-1];
     }
     
     invslot.style.width = '40px';
@@ -116,7 +123,8 @@ export function createInventory() {
     })
     .catch(error => console.error('Error loading SVG:', error));
 
-
+    slot = localStorage.getItem('inventory').split(',');
+    
 }
 
 function getBlackTop() {
@@ -137,7 +145,7 @@ function setImgCoordinate(img, top, left) {
     console.log("newImgTopLeft:"+top+" "+left);
 }
 
-function setBoxColor() {
+export function setBoxColor() {
     let color1 = slot[getCurrentColorQ()];
     let color2 = slot[getCurrentColorE()];
 
@@ -175,6 +183,10 @@ function setBoxColor() {
         default:
             break;
     }
+}
+
+export function setAmmoColor() {
+    getAmmo().style.background = getSlot(lastItem)
 }
 
 export function getSlotArray() {
@@ -267,9 +279,9 @@ function getSlot(index) {
     return slot[index];
 }
 
-// export function setInvEmpty() {
-//     invEmpty = slot.every((item) => item === 'x');
-// }
+export function setInvEmpty() {
+     invEmpty = slot.every((item) => item === 'x');
+}
 
 function getInvEmpty() {
     return invEmpty;
@@ -305,12 +317,12 @@ export function addToInventory(lake) {
                 console.log("lake.background:"+lake.background);
 
                 displayItem(i, lake.background);
-                //setBackground(getAmmo(), slot[i]);
+                setBackground(getAmmo(), slot[i]);
                 console.log("calling set last item...");
                 setLastItem();
                 console.log("last item set");
                 setInvFull();
-                //setInvEmpty();
+                setInvEmpty();
                 setBackground(getAmmo(), getSlot(getLastItem()));
                 setBoxColor();
                 return;
@@ -321,7 +333,7 @@ export function addToInventory(lake) {
     }
     setBoxColor();
     setInvFull();
-    //setInvEmpty();
+    setInvEmpty();
     setBackground(ammo, slot[getLastItem()]);
 
 }
@@ -496,7 +508,7 @@ function shiftInventory() {
     setLastItem();
     
     setInvFull();
-    //setInvEmpty();
+    setInvEmpty();
 
     //reset ammo color
     if (slot[lastItem] !== 'x') {
