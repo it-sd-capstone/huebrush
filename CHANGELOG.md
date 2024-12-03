@@ -23,7 +23,14 @@
 - Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
  
 ## [v0.2.0]
- 
+
+### Added
+- Created methods to cycle through inventory.[@ph4zers](https://github.com/ph4zers)
+- Created methods to shoot projectiles.[@ph4zers](https://github.com/ph4zers)
+
+### Changed
+- Refactor inventory.js to implement modules. [@ph4zers](https://github.com/ph4zers)
+
 ### Added
 - Created Local Save Data to spawn in correct level. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 - Created container function to hold enemy functions within controller, added fucntion to initializeController [@Yams650](https://github.com/Yams650)
