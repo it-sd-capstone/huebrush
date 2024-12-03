@@ -170,7 +170,7 @@ export function setSlotArray(inventoryString) {
   inventoryArray.forEach(element => {
     inventoryArray[element] = slot[element];
   });
-
+  console.log(inventoryArray)
   console.log(slot)
 
   //displayInventory();
