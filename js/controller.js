@@ -63,6 +63,7 @@ document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
     let gate2 = document.querySelector('#gate2');
+    let gate3 = document.querySelector('#gate3');
     if (e.code ==='KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
           gate1.style.transform = 'rotate(-180deg)';
