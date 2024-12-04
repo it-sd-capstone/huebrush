@@ -1,4 +1,4 @@
-import { createSwitches } from "./switches";
+import { createSwitches } from "./switches.js";
 
 export function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox, ammo) {
 
