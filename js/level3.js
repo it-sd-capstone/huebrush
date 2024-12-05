@@ -209,10 +209,13 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
     beacon.appendChild(light);
   });
 
+  
+
   level3.appendChild(wallBlack3);
   level3.appendChild(factoryBase);
   level3.appendChild(factoryTop);
   level3.appendChild(beacon);
+ 
 
   playArea.appendChild(level3);
 
@@ -244,3 +247,4 @@ export function getLevel3Objects() {
 
   return childStack;
 }
+

@@ -5,6 +5,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
+import { createSwitchObserver } from './switches.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -457,3 +458,6 @@ export function enemyLife() {
 window.addEventListener('beforeunload', (event) => {
   localStorage.setItem('inventory', getSlotArray());
 });
+
+
+

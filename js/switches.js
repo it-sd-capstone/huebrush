@@ -1,83 +1,73 @@
+function createSwitch(id, heightModifier, widthModifier, topFactor, leftFactor, background) {
+    const switchDiv = document.createElement('div');
+    switchDiv.classList.add('switch');
+    switchDiv.id = id;
+    switchDiv.style.position = 'absolute';
+    switchDiv.style.top = `${heightModifier * topFactor}px`;
+    switchDiv.style.left = `${widthModifier * leftFactor}px`;
+    switchDiv.style.height = `${heightModifier * 15}px`;
+    switchDiv.style.width = `${widthModifier * 15}px`;
+    switchDiv.style.background = background;
+    switchDiv.style.zIndex = 1;
+    return switchDiv;
+}
+
+// Create switches
 export function createSwitches(heightModifier, widthModifier) {
-    const level3 = document.querySelector(`#level3`);
-    
-    let switch1 = document.createElement(`div`);
-    switch1.classList.add("switch");
-    switch1.id = `switch1`;
-    switch1.style.position = `absolute`;
-    switch1.style.top = `${heightModifier * 20}px`;
-    switch1.style.left = `${widthModifier * 970}px`;
-    switch1.style.height = `${heightModifier * 15}px`;
-    switch1.style.width = `${widthModifier * 15}px`;
-    switch1.style.background = `rgba(230, 200, 120, 0.3)`;
-    switch1.style.zIndex = 1;
+    const level3 = document.querySelector('#level3');
 
-    let switch2 = document.createElement(`div`);
-    switch2.classList.add("switch");
-    switch2.id = `switch2`;
-    switch2.style.position = `absolute`;
-    switch2.style.top = `${heightModifier * 250}px`;
-    switch2.style.left = `${widthModifier * 860}px`;
-    switch2.style.height = `${heightModifier * 15}px`;
-    switch2.style.width = `${widthModifier * 15}px`;
-    switch2.style.background = `rgba(255, 0, 0, 0.5)`;
-    switch2.style.zIndex = 1;
+    const switches = [
+        createSwitch('switch1', heightModifier, widthModifier, 20, 970, 'rgba(230, 200, 120, 0.3)'),
+        createSwitch('switch2', heightModifier, widthModifier, 250, 860, 'rgba(255, 0, 0, 0.5)'),
+        createSwitch('switch3', heightModifier, widthModifier, 60, 500, 'rgba(255, 255, 0, 0.5)'),
+        createSwitch('switch4', heightModifier, widthModifier, 270, 205, 'rgba(0, 0, 255, 0.5)'),
+        createSwitch('switch5', heightModifier, widthModifier, 115, 80, 'rgba(0, 0, 255, 0.5)'),
+        createSwitch('switch6', heightModifier, widthModifier, 160, 80, 'rgba(0, 255, 0, 0.5)')
+    ];
 
+    switches.forEach((sw) => level3.appendChild(sw));
+}
 
-    let switch3 = document.createElement(`div`);
-    switch3.classList.add("switch");
-    switch3.id = `switch3`;
-    switch3.style.position = `absolute`;
-    switch3.style.top = `${heightModifier * 60}px`;
-    switch3.style.left = `${widthModifier * 500}px`;
-    switch3.style.height = `${heightModifier * 15}px`;
-    switch3.style.width = `${widthModifier * 10}px`;
-    switch3.style.background = `rgba(255, 255, 0, 0.5)`;
-    switch3.style.zIndex = 1;
+// Create observer for overlap detection
+export function createSwitchObserver() {
+    console.log('Initializing Switch Observer');
 
+    const switch1 = document.querySelector('#switch1');
+    const switch2 = document.querySelector('#switch2');
+    const switch3 = document.querySelector('#switch3');
+    const switch4 = document.querySelector('#switch4');
+    const switch5 = document.querySelector('#switch5');
+    const switch6 = document.querySelector('#switch6');
+    const box = document.querySelector('#myBox');
 
-    let switch4 = document.createElement(`div`);
-    switch4.classList.add("switch");
-    switch4.id = `switch4`;
-    switch4.style.position = `absolute`;
-    switch4.style.top = `${heightModifier * 270}px`;
-    switch4.style.left = `${widthModifier * 205}px`;
-    switch4.style.height = `${heightModifier * 15}px`;
-    switch4.style.width = `${widthModifier * 15}px`;
-    switch4.style.background = `rgba(0, 0, 255, 0.5)`;
-    switch4.style.zIndex = 1;
+    // Observer callback to handle intersection changes
+    const observerCallback = (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                console.log(`${entry.target.id} is intersecting!`);
+            } else {
+                console.log(`${entry.target.id} is NOT intersecting.`);
+            }
+        });
+    };
 
+    // Observer options
+    const observerOptions = {
+        root: null, // Use the viewport for intersection
+        threshold: 0.1, // Trigger when at least 10% of the element is visible
+        rootMargin: '5000px', // Add a margin of 5px around the viewport for early triggers
+    };
 
+    // Create the IntersectionObserver
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    let switch5 = document.createElement(`div`);
-    switch5.classList.add("switch");
-    switch5.id = `switch5`;
-    switch5.style.position = `absolute`;
-    switch5.style.top = `${heightModifier * 115}px`;
-    switch5.style.left = `${widthModifier * 80}px`;
-    switch5.style.height = `${heightModifier * 15}px`;
-    switch5.style.width = `${widthModifier * 15}px`;
-    switch5.style.background = `rgba(0, 0, 255, 0.5`;
-    switch5.style.zIndex = 1;
+    // Observe each switch element
+    observer.observe(switch1);
+    observer.observe(switch2);
+    observer.observe(switch3);
+    observer.observe(switch4);
+    observer.observe(switch5);
+    observer.observe(switch6);
 
-
-    let switch6 = document.createElement(`div`);
-    switch6.classList.add("switch");
-    switch6.id = `switch6`;
-    switch6.style.position = `absolute`;
-    switch6.style.top = `${heightModifier * 160}px`;
-    switch6.style.left = `${widthModifier * 80}px`;
-    switch6.style.height = `${heightModifier * 15}px`;
-    switch6.style.width = `${widthModifier * 15}px`;
-    switch6.style.background = `rgba(0, 255, 0, 0.5)`;
-    switch6.style.zIndex = 1;
-
-    level3.appendChild(switch1);
-    level3.appendChild(switch2);
-    level3.appendChild(switch3);
-    level3.appendChild(switch4);
-    level3.appendChild(switch5);
-    level3.appendChild(switch6);
-
-
+    return observer;
 }

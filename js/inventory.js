@@ -9,10 +9,8 @@ if (!localStorage.getItem('inventory')) {
 
 
 if (!localStorage.getItem('inventory')) {
-  console.log("hello");
   let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 } else {
-  console.log("goodbye");
   let slot = localStorage.getItem('inventory').split(",");
 }
 
@@ -258,7 +256,6 @@ function getCursorY() {
 
 export function setLastItem() {
     for (let i = 0; i < getSlotArray().length; i++) {
-        console.log("slot"+i+":"+slot[i]);
         if (slot[i] !== 'x') {
             lastItem = i;
             console.log("lastItem:"+lastItem);
