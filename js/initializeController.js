@@ -85,7 +85,7 @@ export function loadLevel(level) {
       createLevel2End();
       setBoxColor();
       setAmmoColor();
-      createSwitches();
+      createSwitches(1, 1);
 
       break;
     case 4:

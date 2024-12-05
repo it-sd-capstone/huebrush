@@ -80,7 +80,7 @@ export function levelYTransition(objects = [], newLevel, newLevelObjects = [], m
   ammo.style.height = '7px';
   ammo.style.left = newAmmoLeft;
 
-  createSwitches();
+  createSwitches(1, 1);
   
   
 
