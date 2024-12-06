@@ -5,6 +5,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
+import { createSwitches, monitorSwitches } from './switches.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
