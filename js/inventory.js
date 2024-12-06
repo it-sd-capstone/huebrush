@@ -1,4 +1,22 @@
-var slot = ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"];
+let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+if (!localStorage.getItem('inventory')) {
+    localStorage.setItem('inventory', "x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x");
+
+}
+
+
+
+
+
+if (!localStorage.getItem('inventory')) {
+  console.log("hello");
+  let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+} else {
+  console.log("goodbye");
+  let slot = localStorage.getItem('inventory').split(",");
+}
+
+
 let isCursorInside = false;
 
 //should represent the current slot[] index of the last non-x in the array
@@ -33,7 +51,13 @@ export function createInventory() {
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
+    console.log(slot);
+    if (localStorage.getItem('inventory').split(',')[i-1] == 'x') {
     invslot.style.background = 'grey';
+    } else {
+    invslot.style.background = localStorage.getItem('inventory').split(',')[i-1];
+    }
+    
     invslot.style.width = '40px';
     invslot.style.height = '40px';
     invslot.style.top = '5px';
@@ -99,6 +123,7 @@ export function createInventory() {
     })
     .catch(error => console.error('Error loading SVG:', error));
 
+    slot = localStorage.getItem('inventory').split(',');
     
 }
 
@@ -120,7 +145,7 @@ function setImgCoordinate(img, top, left) {
     console.log("newImgTopLeft:"+top+" "+left);
 }
 
-function setBoxColor() {
+export function setBoxColor() {
     let color1 = slot[getCurrentColorQ()];
     let color2 = slot[getCurrentColorE()];
 
@@ -160,11 +185,25 @@ function setBoxColor() {
     }
 }
 
-function getSlotArray() {
+export function setAmmoColor() {
+    getAmmo().style.background = getSlot(lastItem)
+}
+
+export function getSlotArray() {
     return slot;
 }
-function createPlayArea() {
 
+export function setSlotArray(inventoryString) {
+  let inventoryArray = inventoryString.split(",")
+  let counter = 0
+  
+  inventoryArray.forEach(element => {
+    setSlot[counter,element]
+    counter++
+  });
+  
+  console.log(inventoryArray)
+  console.log(getSlotArray())
 }
 
 export function getAmmo() {
@@ -241,7 +280,7 @@ function getSlot(index) {
 }
 
 export function setInvEmpty() {
-    invEmpty = slot.every((item) => item === 'x');
+     invEmpty = slot.every((item) => item === 'x');
 }
 
 function getInvEmpty() {
@@ -278,7 +317,7 @@ export function addToInventory(lake) {
                 console.log("lake.background:"+lake.background);
 
                 displayItem(i, lake.background);
-                //setBackground(getAmmo(), slot[i]);
+                setBackground(getAmmo(), slot[i]);
                 console.log("calling set last item...");
                 setLastItem();
                 console.log("last item set");
@@ -313,6 +352,7 @@ function displayInventory() {
         let id = divIdStr + divIdNum;
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
+          console.log(invSlot, i, slot[i])
             setBackground(invSlot, slot[i]);
         } else setBackground(invSlot, "grey");
     }
@@ -366,6 +406,7 @@ function swapAmmo(direction) {
 }
 
 document.addEventListener('keydown',  (e) => {
+    setInvEmpty();
     if (e.code == "Space" && !getInvEmpty() && isCursorInside && animation == false) {
         console.log("firing");
         fire();
@@ -449,10 +490,8 @@ export function fire() {
     moveProjectile(lastTime); // Start moving the projectile
 }
 
-
-
-
 export function setBackground(ele, color) {
+  console.log(ele)
     ele.style.background = color;
 }
 
@@ -514,7 +553,6 @@ window.setLastItem = setLastItem;
 window.setBackground = setBackground;
 window.swapAmmo = swapAmmo;
 window.getBox = getBox;
-window.setInvEmpty = setInvEmpty;
 window.setInvFull = setInvFull;
 //window.getPlayArea = getPlayArea;
 
