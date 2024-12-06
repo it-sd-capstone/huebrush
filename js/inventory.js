@@ -149,34 +149,34 @@ export function setBoxColor() {
 
     switch (color1 + '-' + color2) {
         case "x-x":
-            getBox().style.background = 'grey';
+            getBox().style.background = 'rgba(128, 128, 128, 1)';
             break;
         case "x-red":
         case "red-x":
         case "red-red":
-            getBox().style.background = 'red';
+            getBox().style.background = 'rgba(255, 0, 0, 1)';
             break;
         case "x-blue":
         case "blue-x":
         case "blue-blue":
-            getBox().style.background = 'blue';
+            getBox().style.background = 'rgba(0, 0, 255, 1)';
             break;
         case "x-yellow":
         case "yellow-x":
         case "yellow-yellow":
-            getBox().style.background = 'yellow';
+            getBox().style.background = 'rgba(255, 255, 0, 1)';
             break;
         case "red-blue":
         case "blue-red":
-            getBox().style.background = 'purple';
+            getBox().style.background = 'rgba(128, 0, 128, 1)';
             break;
         case "red-yellow":
         case "yellow-red":
-            getBox().style.background = 'orange';
+            getBox().style.background = 'rgba(255, 165, 0, 1)';
             break;
         case "blue-yellow":
         case "yellow-blue":
-            getBox().style.background = 'green';
+            getBox().style.background = 'rgba(0, 128, 0, 1)';
             break;
         default:
             break;
@@ -349,7 +349,6 @@ function displayInventory() {
         let id = divIdStr + divIdNum;
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
-          console.log(invSlot, i, slot[i])
             setBackground(invSlot, slot[i]);
         } else setBackground(invSlot, "grey");
     }
@@ -372,11 +371,9 @@ function swapAmmo(direction) {
         setCurrentColorQ((getCurrentColorQ() - 1));
         setImgCoordinate(getBlackTop(), blackTopTop, (blackTopLeft - 50));
         setImgCoordinate(getBlackBottom(), blackBottomTop, blackBottomLeft - 50);
-        console.log("ccq:"+getCurrentColorQ());
 
     } else if (direction == 'q' && getCurrentColorQ() == 0) {
         setCurrentColorQ(15);
-        console.log("ccq:"+getCurrentColorQ());
 
         let newLeft = 15;
         newLeft *= 50;
@@ -387,7 +384,6 @@ function swapAmmo(direction) {
         setImgCoordinate(getBlackBottom(), blackBottomTop, newLeft);
     } else if (direction == 'e' && getCurrentColorE() != 15) {
         setCurrentColorE((getCurrentColorE() + 1));
-        console.log("cce:"+getCurrentColorE());
         let newLeft = 0;
         newLeft += getCurrentColorE();
         newLeft *= 50;
@@ -396,7 +392,6 @@ function swapAmmo(direction) {
         setImgCoordinate(getWhiteBottom(), whiteBottomTop, newLeft);
     } else if (direction == 'e' && getCurrentColorE() == 15) {
         setCurrentColorE(0);
-        console.log("cce:"+getCurrentColorE());
         setImgCoordinate(getWhiteBottom(), whiteBottomTop, 5);
     }
     setBoxColor();
@@ -405,16 +400,14 @@ function swapAmmo(direction) {
 document.addEventListener('keydown',  (e) => {
     setInvEmpty();
     if (e.code == "Space" && !getInvEmpty() && isCursorInside && animation == false) {
-        console.log("firing");
         fire();
-        console.log("done firing");
         shiftInventory();
         displayInventory();
         setLastItem(); 
     }
 
     if (getInvEmpty()) {
-        getAmmo().style.background = "rgba(128,128,128,0.35)";
+        getAmmo().style.background = "rgba(128, 128, 128, 0.35)";
         setLastItem(-1);
     }
     
@@ -465,7 +458,7 @@ export function fire() {
         // distance should be left at 5 or higher to avoid projectile jumping
         // and not despawning.
         if (distance < 5) {
-            getProjectile().style.background = "rgba(0,0,0,0)";
+            getProjectile().style.background = "rgba(0, 0, 0, 0)";
             getProjectile().style.border = '0px';
             getProjectile().style.top = '-20px';
             setAnimation(false);

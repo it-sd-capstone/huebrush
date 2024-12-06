@@ -78,7 +78,7 @@ footer .social-links a {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border: 0.025rem solid black;
-    background: rgba(128,128,128,1);
+    background: rgba(128, 128, 128, 0.5);
 }
 
 #myBox {
@@ -98,7 +98,7 @@ footer .social-links a {
 
 #switch1 {
     position: relative;
-    background-color: rgb(200, 230, 120, 0.5);
+    background-color: rgba(200, 230, 120, 0.2);
     height: 15px;
     width: 15px;
 }
@@ -118,7 +118,7 @@ footer .social-links a {
 
 #switch2 {
     position: relative;
-    background-color: rgb(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.2);
     height: 15px; 
     width: 15px; 
 }
@@ -138,7 +138,7 @@ footer .social-links a {
 
 #switch3 {
     position: relative;
-    background-color: rgb(255, 255, 0, 0.5);
+    background-color: rgba(255, 255, 0, 0.2);
     height: 15px; 
     width: 15px; 
 }
@@ -158,7 +158,7 @@ footer .social-links a {
 
 #switch4 {
     position: relative;
-    background-color: rgba(0, 0, 255, 0.5);
+    background-color: rgba(0, 0, 255, 0.2);
     height: 15px; 
     width: 15px;  
 }
@@ -177,7 +177,7 @@ footer .social-links a {
 }
 #switch5 {
     position: relative;
-    background-color: rgba(0, 0, 255, 0.5);
+    background-color: rgba(0, 0, 255, 0.2);
     height: 15px; 
     width: 15px;  
 }
@@ -197,7 +197,7 @@ footer .social-links a {
 
 #switch6 {
     position: relative;
-    background-color: rgba(0, 255, 0, 0.5);
+    background-color: rgba(0, 255, 0, 0.2);
     height: 15px; 
     width: 15px;  
 }

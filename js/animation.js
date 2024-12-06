@@ -1,4 +1,5 @@
-import { createSwitches } from "./switches.js";
+import { createSwitches, monitorSwitches } from "./switches.js";
+
 
 export function levelXTransition(objects = [], newLevel, newLevelObjects = [], myBox, ammo) {
 
@@ -79,9 +80,6 @@ export function levelYTransition(objects = [], newLevel, newLevelObjects = [], m
   ammo.style.width = '7px';
   ammo.style.height = '7px';
   ammo.style.left = newAmmoLeft;
-
-  createSwitches(1, 1);
-  
   
 
   // If we do not wipe out transition then movements to the up and down are effected by ease. 
