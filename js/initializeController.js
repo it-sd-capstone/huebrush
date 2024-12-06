@@ -9,6 +9,7 @@ import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
+import { createSwitches, monitorSwitches } from './switches.js';
 
 
 export function initializeGame() {
@@ -84,7 +85,8 @@ export function loadLevel(level) {
       createLevel2End();
       setBoxColor();
       setAmmoColor();
-
+      createSwitches(1, 1);
+      setInterval(monitorSwitches, 100);
       break;
     case 4:
       console.log('Level 4 not implemented yet');

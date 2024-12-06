@@ -5,7 +5,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
-
+import { createSwitches, monitorSwitches } from './switches.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when DOM content is loaded
@@ -63,8 +63,10 @@ document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
     let gate2 = document.querySelector('#gate2');
-    if (e.code ==='KeyG') {
+    let gate3 = document.querySelector('#gate3');
+    if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+          console.log("gate1");
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';            
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
@@ -122,12 +124,10 @@ function checkGateProximity(box, levelNum) {
 }
 
 function checkGateColor(box, levelNum) {
-    if (levelNum == 1 && box.style.background == 'purple') {
-        console.log(box.style.background);
+    if (levelNum == 1 && box.style.background == 'rgb(128, 0, 128)') {
         return true;
-    }  else if (levelNum == 2 && box.style.background == 'green') {
-      console.log(box.style.background);
-      return true;
+    }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
+        return true;
     }
     return false;
 }
@@ -271,6 +271,8 @@ function checkGateColor(box, levelNum) {
         myBox,
         ammo
       );
+      createSwitches(1, 1);
+      setInterval(monitorSwitches, 100);
     }
   
       localStorage.setItem('Current Level', currentLevel + 1);
@@ -467,3 +469,6 @@ export function enemyLife() {
 window.addEventListener('beforeunload', (event) => {
   localStorage.setItem('inventory', getSlotArray());
 });
+
+
+

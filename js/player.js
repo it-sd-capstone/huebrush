@@ -17,7 +17,7 @@ export function spawnPlayer(widthModifier,heightModifier,top,left) {
 
   const myBox = createElement('div', 'myBox', ['myBox'], {
     position: 'absolute',
-    background: 'grey',
+    background: 'rgba(128, 128, 128, 1)',
     width: `${widthModifier * 10}px`,
     height: `${heightModifier * 10}px`,
     left: `${left}`,
