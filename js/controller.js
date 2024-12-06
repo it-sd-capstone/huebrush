@@ -356,10 +356,24 @@ function checkGateColor(box, levelNum) {
     } 
 
     // Catch the box
-    // if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
-    //   alert('You have been caught!');
-    //   return; 
-    // }
+    if (Math.abs(enemyX - boxX) < 20 && Math.abs(enemyY - boxY) < 20) {
+      const hearts = document.querySelectorAll('#player-hearts .heart');
+    if (hearts.length > 0) {
+        hearts[hearts.length - 1].remove(); // Remove one heart
+    } else {
+        alert('Game Over!');
+        localStorage.clear();
+        location.reload();
+      return; 
+    }
+
+    const directionX = enemyX - boxX > 0 ? 1 : -1; // Determine push direction
+    const directionY = enemyY - boxY > 0 ? 1 : -1;
+    const bounceDistance = 50;
+
+    enemy.style.left = `${parseFloat(enemy.style.left) + directionX * bounceDistance}px`;
+    enemy.style.top = `${parseFloat(enemy.style.top) + directionY * bounceDistance}px`;
+  }
 
     // Continue the chase
     if(isPageVisible && !enemyPause){
