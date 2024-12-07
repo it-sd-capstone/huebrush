@@ -544,6 +544,86 @@ export function createLevel1(widthModifier,heightModifier) {
       level1.appendChild(tutorialWASD);
     }
 
+    //Ouput the Bottom F overlay for tutorial
+    if (localStorage.getItem('f') == '0') {
+      const tutorialF = createElement('div', 'tutorialF', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 200}px`,
+        left: `${widthModifier * 65}px`,
+        opacity: '0',
+      });
+
+      const svgFObject = document.createElement('object');
+      svgFObject.data = './images/F.svg';
+      svgFObject.type = 'image/svg+xml';
+      svgFObject.alt = 'F Tutorial';
+      svgFObject.classList.add("tutorialfade");
+      svgFObject.style.height = `${heightModifier * 30}px`;
+      tutorialF.appendChild(svgFObject);
+      
+      level1.appendChild(tutorialF);
+    }
+
+    //Ouput the warning overlay for tutorial
+    if (localStorage.getItem('warn') == '0') {
+      const tutorialWarn = createElement('div', 'tutorialWarn', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 100}px`,
+        left: `${widthModifier * 220}px`,
+        opacity: '0',
+      });
+
+      const svgWarnObject = document.createElement('object');
+      svgWarnObject.data = './images/Warning.svg';
+      svgWarnObject.type = 'image/svg+xml';
+      svgWarnObject.alt = 'Warn Tutorial';
+      svgWarnObject.classList.add("tutorialfade");
+      svgWarnObject.style.height = `${heightModifier * 30}px`;
+      tutorialWarn.appendChild(svgWarnObject);
+      
+      level1.appendChild(tutorialWarn);
+    }
+
+    // Create the second Top F sign for the second lake
+    if (localStorage.getItem('f2') == '0') {
+      const tutorialF2 = createElement('div', 'tutorialF2', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 35}px`,
+        left: `${widthModifier * 65}px`,
+        opacity: '0',
+      });
+
+        const svgFObject2 = document.createElement('object');
+        svgFObject2.data = './images/F.svg';
+        svgFObject2.type = 'image/svg+xml';
+        svgFObject2.alt = 'F Tutorial';
+        svgFObject2.classList.add("tutorialfade");
+        svgFObject2.style.height = `${heightModifier * 30}px`;
+        tutorialF2.appendChild(svgFObject2);
+
+      level1.appendChild(tutorialF2);
+    }
+
+    // Create the G sign for the gate
+    if (localStorage.getItem('g') == '0') {
+      const tutorialG = createElement('div', 'tutorialG', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 130}px`,
+        left: `${widthModifier * 420}px`,
+        opacity: '0',
+      });
+
+        const svgGObject = document.createElement('object');
+        svgGObject.data = './images/Gate.svg';
+        svgGObject.type = 'image/svg+xml';
+        svgGObject.alt = 'F Tutorial';
+        svgGObject.classList.add("tutorialfade");
+        svgGObject.style.height = `${heightModifier * 30}px`;
+        tutorialG.appendChild(svgGObject);
+
+      level1.appendChild(tutorialG);
+    }
+
 
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
