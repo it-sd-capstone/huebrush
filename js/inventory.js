@@ -49,7 +49,6 @@ export function createInventory() {
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
-    console.log(slot);
     if (localStorage.getItem('inventory').split(',')[i-1] == 'x') {
     invslot.style.background = 'grey';
     } else {
@@ -200,8 +199,6 @@ export function setSlotArray(inventoryString) {
     counter++
   });
   
-  console.log(inventoryArray)
-  console.log(getSlotArray())
 }
 
 export function getAmmo() {
@@ -258,10 +255,8 @@ export function setLastItem() {
     for (let i = 0; i < getSlotArray().length; i++) {
         if (slot[i] !== 'x') {
             lastItem = i;
-            console.log("lastItem:"+lastItem);
         }
     }
-    console.log("lastItem:"+lastItem);
 }
 
 function getLastItem() {
