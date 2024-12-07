@@ -24,13 +24,7 @@ export function initializeGame() {
     localStorage.setItem('wasd', 1);
   }
 
-
-
-  console.log("Starting Level: ", localStorage.getItem('Current Level'));
-
   createInventory();
-
-  console.log(document.getElementById('Inventory'));
 
   const currentLevel = Number(localStorage.getItem('Current Level'));
   loadLevel(currentLevel);
@@ -92,7 +86,7 @@ export function loadLevel(level) {
       console.log('Level 4 not implemented yet');
       break;
     default:
-      console.log("Unknown level: ", level);
+      console.error("Unknown level: ", level);
   }
   createMouseEnterDetection();
 }
