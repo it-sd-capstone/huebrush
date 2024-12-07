@@ -1,6 +1,6 @@
 import { createLevel1, createLevel1End, openGateOne } from './level1.js';
 import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
-import { createLevel3 } from './level3.js';
+import { createLevel3, createLevel3End } from './level3.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
 import { createInventory, setSlotArray, getSlotArray, setLastItem, setBoxColor, setAmmoColor } from './inventory.js';
@@ -77,6 +77,10 @@ export function loadLevel(level) {
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
       createLevel2End();
+      spawnEnemy();
+      enemyLife(enemy);
+      createLevel3End();
+      chaseBox();
       setBoxColor();
       setAmmoColor();
       createSwitches(1, 1);

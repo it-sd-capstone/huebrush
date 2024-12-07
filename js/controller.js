@@ -1,6 +1,6 @@
 import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
-import { createLevel3 } from './level3.js';
+import { createLevel3, getLevel3Objects } from './level3.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
@@ -66,7 +66,6 @@ document.addEventListener('keydown', (e) => {
     let gate3 = document.querySelector('#gate3');
     if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
-          console.log("gate1");
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';            
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
@@ -245,6 +244,9 @@ function checkGateColor(box, levelNum) {
             chaseBox();
         } else if (currentLevel + 1 === 3) {
           createLevel3(2,1,100);
+          createLevel2End();
+          spawnEnemy();
+          chaseBox();
         }
     }
 
@@ -252,9 +254,9 @@ function checkGateColor(box, levelNum) {
     const ammo = document.querySelector('#ammo');
     let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
-    let level2Objects = getLevel2Objects();
   
     if (currentLevel + 1 === 2) {
+      let level2Objects = getLevel2Objects();
       levelXTransition(
         level1Objects,
         newLevel,
@@ -263,11 +265,12 @@ function checkGateColor(box, levelNum) {
         ammo
       );
     } else if  (currentLevel + 1 === 3) {
-      console.log("slide level 3 in");
+      let level2Objects = getLevel2Objects();
+      let level3Objects = getLevel3Objects();
       levelYTransition(
         [level1Objects, level2Objects],
         newLevel,
-        level2Objects,
+        level3Objects,
         myBox,
         ammo
       );
@@ -422,22 +425,17 @@ export function enemyLife() {
         );
 
         if (distance < 60) { // Adjust for specified range
-          console.log('Projectile hit');
 
           // Reduce enemy health
           if (typeof enemy.enemyHealth === 'number') {
             enemy.enemyHealth -= 15; // Adjust this for more or less damage
-            console.log(`Enemy health: ${enemy.enemyHealth}`);
             updateHealth(enemy, enemy.enemyHealth);
           } else {
             console.error('Enemy health is not initialized');
           }
-          console.log(projectile);
           projectile.style.background = 'rgba(0,0,0,0)';
-          console.log(enemy.enemyHealth);
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
-            console.log('Enemy destroyed');
             createExplosion(enemy);
             enemy.remove();
           }

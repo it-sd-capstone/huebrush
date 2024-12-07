@@ -50,7 +50,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
       left: `${widthModifier * 30}px`,
     },
     { id: 'wall6', 
-      width: `${widthModifier * 420}px`,
+      width: `${widthModifier * 430}px`,
       height: `${heightModifier * 10}px`,
       top: `${heightModifier * 0}px`,
       left: `${widthModifier * 0}px`,
@@ -84,10 +84,10 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
       height: `${heightModifier * 10}px`,
       top: `${heightModifier * 220}px`,
       left: `${widthModifier * 450}px`,
-    }
+    },
   ];
 
-  wallBlack3Config.forEach(({ id, width, height, top, left }) => {
+  wallBlack3Config.forEach(({ id, width, height, top, left}) => {
     const wall = createElement('div', id, ['wallSolid'], {
       background: 'rgb(0, 0, 0)',
       width,
@@ -97,6 +97,15 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
     });
     wallBlack3.appendChild(wall);
   });
+
+  createElement('div', 'wall12', ['blackswitch'], {
+    background: 'rgb(0, 0, 0)',
+    width: `${widthModifier * 70}px`,
+    height: `${heightModifier * 10}px`,
+    top: `${heightModifier * 0}px`,
+    left: `${widthModifier * 430}px`,
+    opacity: `0`
+  })
 
   const factoryBase = createElement('div', 'factoryBase', ['wallSolid']);
 
@@ -209,12 +218,22 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
     beacon.appendChild(light);
   });
 
+  const gate3 = createElement('div', 'gate3', ['gate3'], {
+    background: 'rgb(0,192,143)',
+    width: `${widthModifier * 10}px`,
+    height: `${heightModifier * 30}px`,
+    top: `${heightModifier * 130}px`,
+    left: `${widthModifier * 30}px`,
+  });
+  gate3.classList.add('wallSolid');
+
   
 
   level3.appendChild(wallBlack3);
   level3.appendChild(factoryBase);
   level3.appendChild(factoryTop);
   level3.appendChild(beacon);
+  level3.appendChild(gate3);
  
 
   playArea.appendChild(level3);
@@ -228,6 +247,23 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
   }
 
 }
+
+export function createLevel3End(){
+  let level3 = document.querySelector('#level3')
+
+  const level3End = createElement('div', 'level3End', ['levelEnd'], {
+    position: 'absolute',
+    background: 'rgb(60, 199, 184)',
+    width: '15px',
+    height: '30px',
+    top: '130px',
+    left: '10px',
+    zIndex: '-2'
+  });
+
+  level3.appendChild(level3End);
+}
+
 export function getLevel3Objects() {
   let level3 = document.querySelector('#level3')
   let stack = Array.from(level3.children);

@@ -768,7 +768,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
 export function createLevel2End(){
   let level2 = document.querySelector('#level2')
 
-  const level2End = createElement('div', 'level1End', ['levelEnd'], {
+  const level2End = createElement('div', 'level2End', ['levelEnd'], {
     position: 'absolute',
     background: 'rgb(60, 199, 184)',
     width: '15px',
