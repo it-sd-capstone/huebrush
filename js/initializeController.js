@@ -12,7 +12,7 @@ import { createMouseEnterDetection } from './inventory.js';
 
 
 export function initializeGame() {
-  alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\nLocal save states will trigger upon completing a level (touching the blue box on the right). \n")
+  // alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\nLocal save states will trigger upon completing a level (touching the blue box on the right). \n")
   if (!localStorage.getItem('Current Level')) {
     localStorage.setItem('Current Level', 1);
   } else if (localStorage.getItem('Current Level') > 4) {
@@ -23,6 +23,21 @@ export function initializeGame() {
     localStorage.setItem('wasd', 1);
   }
 
+  if (!localStorage.getItem('f')) {
+    localStorage.setItem('f', 0);
+  }
+
+  if (!localStorage.getItem('f2')) {
+    localStorage.setItem('f2', 0);
+  }
+
+  if (!localStorage.getItem('warn')) {
+    localStorage.setItem('warn', 0);
+  }
+
+  if (!localStorage.getItem('g')) {
+    localStorage.setItem('g', 0);
+  }
 
 
   console.log("Starting Level: ", localStorage.getItem('Current Level'));

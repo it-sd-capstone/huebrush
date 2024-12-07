@@ -66,7 +66,10 @@ document.addEventListener('keydown', (e) => {
     if (e.code ==='KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
           gate1.style.transform = 'rotate(-180deg)';
-          gate1.style.transformOrigin = 'top right';            
+          gate1.style.transformOrigin = 'top right';  
+          localStorage.setItem('warn', 1);
+          let tutorialWarn = document.querySelector('#tutorialWarn');    
+          fadeOut(tutorialG);     
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
           gate2.style.transform = 'rotate(-180deg)';
           gate2.style.transformOrigin = 'bottom left';
@@ -150,7 +153,7 @@ function checkGateColor(box, levelNum) {
   //   }
   // }
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', (e) => { 
     let box = document.querySelector('.myBox');
     let container = document.querySelector('.playArea');
     let wasdFade = localStorage.getItem('wasd');
@@ -159,10 +162,17 @@ function checkGateColor(box, levelNum) {
     const keys = ['KeyW', 'KeyA', 'KeyS', 'KeyD'];
     if (keys.includes(e.code) && wasdFade == '1') {
       localStorage.setItem('wasd', 0);
+      localStorage.setItem('f', 1);
+      localStorage.setItem('f2', 1);
 
         let tutorialWASD = document.querySelector('#tutorialWASD');
+        let tutorialF = document.querySelector('#tutorialF');
+        let tutorialF2 = document.querySelector('#tutorialF2');
 
         fadeOut(tutorialWASD);
+        fadeIn(tutorialF);
+        fadeIn(tutorialF2);
+        fadeIn(tutorialG);
     }
 
     let boxRect = box.getBoundingClientRect();
@@ -239,12 +249,18 @@ function checkGateColor(box, levelNum) {
   
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
+          let tutorialF = document.querySelector('#tutorialF');
+          let tutorialWarn = document.querySelector('#tutorialWarn');
             createLevel2(1,2,100); 
             createLevel2End();
             spawnEnemy();
             chaseBox();
+            fadeOut(tutorialF);
+            fadeOut(tutorialF2);
+            fadeIn(tutorialWarn);
         } else if (currentLevel + 1 === 3) {
           createLevel3(2,1,100);
+          fadeOut(tutorialWarn);
         }
     }
 
@@ -437,6 +453,7 @@ export function enemyLife() {
           if (enemy.enemyHealth <= 0) {
             console.log('Enemy destroyed');
             createExplosion(enemy);
+            fadeOut(tutorialWarn);
             enemy.remove();
           }
         }
