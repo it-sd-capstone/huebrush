@@ -1,6 +1,7 @@
 import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
-import { createLevel3, getLevel3Objects } from './level3.js';
+import { createLevel3, createLevel3End, getLevel3Objects } from './level3.js';
+import { createLevel4, createLevel4End, getLevel4Objects } from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { initializeGame } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
@@ -238,6 +239,7 @@ function checkGateColor(box, levelNum) {
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
     if (isColliding(simulatedBox, levelEnd[0])) {
+      console.log("level3 end")
       let currentLevel = parseInt(localStorage.getItem('Current Level'));
 
       removeObject('levelEnd');
@@ -245,21 +247,21 @@ function checkGateColor(box, levelNum) {
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
       const nextLevelDiv = document.querySelector(nextLevelSelector);
-  
+
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
           let tutorialF = document.querySelector('#tutorialF');
           let tutorialWarn = document.querySelector('#tutorialWarn');
-            createLevel2(1,2,100); 
-            createLevel2End();
-            spawnEnemy();
-            chaseBox();
-            fadeOut(tutorialF);
-            fadeOut(tutorialF2);
-            fadeIn(tutorialWarn);
+          createLevel2(1,2,100); 
+          createLevel2End();
+          spawnEnemy();
+          chaseBox();
+          fadeOut(tutorialF);
+          fadeOut(tutorialF2);
+          fadeIn(tutorialWarn);
         } else if (currentLevel + 1 === 3) {
           createLevel3(2,1,100);
-          createLevel2End();
+          createLevel3End();
           spawnEnemy();
           chaseBox();
         }
@@ -289,8 +291,12 @@ function checkGateColor(box, levelNum) {
         myBox,
         ammo
       );
-      createSwitches(1, 1);
+      createSwitches(1, 2);
       setInterval(monitorSwitches, 100);
+    } else if (currentLevel + 1 === 4) {
+      let level2Objects = getLevel2Objects();
+      let level3Objects = getLevel3Objects();
+
     }
   
       localStorage.setItem('Current Level', currentLevel + 1);
