@@ -22,8 +22,8 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
             createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0.2)'),
             createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0.2)'),
             createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0.2)'),
-            createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0.2)'),
-            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0.2)')
+            createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0)'),
+            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0)')
         ];
 
         switches.forEach((sw) => level3.appendChild(sw));
@@ -59,8 +59,10 @@ export function monitorSwitches() {
                     createBlueLakes3(1, 1);
                     break;
                 case 4:
+                    switches[i].style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 5:
+                    switches[i].style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 deafault:
                     break;
