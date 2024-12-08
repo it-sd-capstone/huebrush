@@ -443,6 +443,7 @@ function checkGateColor(box, levelNum) {
 
 export function enemyLife() {
   // Set up a loop to check for collisions
+  let tutorialWarn = document.querySelector('#tutorialWarn');
   const checkCollisions = setInterval(() => {
     const projectiles = document.querySelectorAll('#projectile'); // All projectiles
     const enemies = document.querySelectorAll('.enemy'); // All active enemies
@@ -474,7 +475,12 @@ export function enemyLife() {
           if (enemy.enemyHealth <= 0) {
             createExplosion(enemy);
             enemy.remove();
-            fadeOut(tutorialWarn);
+            if(tutorialWarn != null){
+              fadeOut(tutorialWarn);
+            } else {
+              return;
+            }
+            
           }
         }
       });
