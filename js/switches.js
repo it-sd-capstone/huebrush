@@ -23,7 +23,7 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
             createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0)'),
             createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0)'),
             createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0)'),
-            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(255, 165, 0, 0)')
+            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0)')
         ];
 
         switches.forEach((sw) => level3.appendChild(sw));
