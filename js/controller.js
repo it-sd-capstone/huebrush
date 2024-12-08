@@ -353,11 +353,12 @@ function checkGateColor(box, levelNum) {
     let maxDistance = 500;
     console.log(distance)
     let intensity = 1.0 - Math.min(1.0, distance / maxDistance);
-
-    troubleTribalsAudio.volume = intensity;
-    console.log("volume: ", troubleTribalsAudio.volume);
-    magicScoutAudio.volume = 1.0 - intensity;
-    console.log("volume: ", magicScoutAudio.volume);
+    if (localStorage.getItem('muted') == '1') {
+      troubleTribalsAudio.volume = intensity;
+      console.log("volume: ", troubleTribalsAudio.volume);
+      magicScoutAudio.volume = 1.0 - intensity;
+      console.log("volume: ", magicScoutAudio.volume);
+    }
 }
 
   export function chaseBox(time) {
@@ -479,6 +480,8 @@ export function enemyLife() {
           projectile.style.background = 'rgba(0,0,0,0)';
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
+            console.log("enemy was x: ", enemyX, "and y: " , enemyY)
+            console.log("Projectile was: ", projectileX, "and y: " , projectileY )
             createExplosion(enemy);
             onEnemyDefeat();
             enemy.remove();
@@ -518,7 +521,7 @@ function onEnemyDefeat() {
   console.log("hi from audio");
 
   let interval = setInterval(() => {
-      if (troubleTribalsAudio.volume > 0) {
+      if (troubleTribalsAudio.volume > 0 && localStorage.getItem('muted', 0)) {
           troubleTribalsAudio.volume = Math.max(0, troubleTribalsAudio.volume - 0.1);
           magicScoutAudio.volume = Math.min(1.0, magicScoutAudio.volume + 0.1);
       } else {

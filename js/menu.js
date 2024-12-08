@@ -67,8 +67,8 @@ export function createMainMenu() {
    continueButton.addEventListener('click', () => {
      startMenu.remove();
      const currentLevel = Number(localStorage.getItem('Current Level')) || 1;
-     createInventory();
      loadLevel(currentLevel);
+     createInventory();
    });
  
    newGameButton.addEventListener('click', () => {
@@ -77,8 +77,8 @@ export function createMainMenu() {
      localStorage.setItem('Current Level', 1);
      const currentLevel = Number(localStorage.getItem('Current Level'));
      initializeGame();
-     createInventory();
      loadLevel(currentLevel);
+     createInventory();
    });
  
    [continueButton, newGameButton].forEach(button => {

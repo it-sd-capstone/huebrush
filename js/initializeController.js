@@ -68,9 +68,12 @@ export function initializeGame() {
 
 export function loadLevel(level) {
 
-  magicScoutAudio.loop = true;
-  magicScoutAudio.volume = 1.0;
-  magicScoutAudio.play();
+  if (localStorage.getItem('muted') == '1') {
+    console.log("unmuted", localStorage.getItem('muted'))
+    magicScoutAudio.loop = true;
+    magicScoutAudio.volume = 1.0;
+    magicScoutAudio.play();
+  }
 
 
   switch (level) {

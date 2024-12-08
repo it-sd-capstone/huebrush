@@ -1,3 +1,7 @@
+import { createElement } from "./level1.js";
+import { magicScoutAudio, troubleTribalsAudio } from "./initializeController.js";
+
+
 let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 if (!localStorage.getItem('inventory')) {
     localStorage.setItem('inventory', "x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x");
@@ -36,10 +40,22 @@ let invEmpty = false;
 let invFull = false;
 
 export function createInventory() {
+  const inventoryArea = createElement('div', 'inventoryArea', ['inventoryArea'], {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: `100%`,
+    height: `60px`,
+    padding: '0 20px',
+    boxSizing: 'border-box',
+  });
+
   const Inventory = document.createElement('div');
   Inventory.id = 'Inventory';
   Inventory.classList.add("Inventory");
   Inventory.style.position = 'relative';
+  Inventory.style.left = '10%';
   Inventory.style.zIndex = 1
   let leftCounter = 5
 
@@ -115,13 +131,57 @@ export function createInventory() {
       const svgContainer = document.createElement('div');
       svgContainer.innerHTML = svgContent;
       Inventory.appendChild(svgContainer);
-      // Append the `Inventory` element to the DOM
-      document.querySelector('#game_canvas').appendChild(Inventory);
     })
     .catch(error => console.error('Error loading SVG:', error));
 
-    slot = localStorage.getItem('inventory').split(',');
-    
+  slot = localStorage.getItem('inventory').split(',');
+
+  const muteButton = document.createElement('button');
+  muteButton.id = 'muteButton';
+  muteButton.style.width = '40px';
+  muteButton.style.height = '40px';
+  muteButton.style.border = 'none';
+  muteButton.style.backgroundSize = 'contain';
+  muteButton.style.backgroundColor = '#444';
+  muteButton.style.backgroundPosition = 'center';
+  muteButton.style.backgroundRepeat = 'no-repeat';
+  muteButton.style.cursor = 'pointer';
+  muteButton.style.borderRadius = '5px';
+  muteButton.style.backgroundImage = localStorage.getItem('muted') === '1'
+        ? `url('../images/musicOn.png')`
+        : `url('../images/musicOff.png')`;
+
+  let isMuted = false;
+
+  muteButton.addEventListener('click', () => {
+    isMuted = !isMuted;
+    let newVolume;
+    if (localStorage.getItem('muted') == '1') {
+        newVolume = 0;
+        localStorage.setItem('muted', 0);
+    } else {
+      newVolume = 1;
+      localStorage.setItem('muted', 1);
+      magicScoutAudio.loop = true;
+      magicScoutAudio.volume = 1.0;
+      magicScoutAudio.play();
+    }
+    magicScoutAudio.volume = newVolume;
+    troubleTribalsAudio.volume = newVolume;
+    muteButton.style.backgroundImage = localStorage.getItem('muted') == '0' ? `url('../images/musicOff.png')` : `url('../images/musicOn.png')`;
+  });
+
+  muteButton.addEventListener('mouseenter', () => {
+    muteButton.style.backgroundColor = '#666';
+  });
+  muteButton.addEventListener('mouseleave', () => {
+    muteButton.style.backgroundColor = '#444';
+  });
+
+  inventoryArea.appendChild(Inventory);
+  inventoryArea.appendChild(muteButton);
+
+  document.querySelector('#game_canvas').appendChild(inventoryArea);
 }
 
 function getBlackTop() {
@@ -529,15 +589,3 @@ export function createMouseEnterDetection() {
     }
     
 }
-
-
-window.createInventory = createInventory;
-window.fire = fire;
-window.shiftInventory = shiftInventory;
-window.setLastItem = setLastItem;
-window.setBackground = setBackground;
-window.swapAmmo = swapAmmo;
-window.getBox = getBox;
-window.setInvFull = setInvFull;
-//window.getPlayArea = getPlayArea;
-
