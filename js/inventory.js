@@ -5,17 +5,6 @@ import { magicScoutAudio, troubleTribalsAudio } from "./initializeController.js"
 let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 if (!localStorage.getItem('inventory')) {
     localStorage.setItem('inventory', "x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x");
-
-}
-
-
-
-
-
-if (!localStorage.getItem('inventory')) {
-  let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
-} else {
-  let slot = localStorage.getItem('inventory').split(",");
 }
 
 

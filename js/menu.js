@@ -1,5 +1,5 @@
 import { createElement } from './level1.js'
-import { initializeGame, loadLevel } from './initializeController.js';
+import { initializeGame, loadLevel, magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { createInventory} from './inventory.js';
 
 export function createMainMenu() {
@@ -174,11 +174,13 @@ export function createMainMenu() {
     endMenu.remove();
     let playArea = document.querySelector('.playArea');
     playArea.remove();
-    let inventory = document.querySelector('.Inventory');
+    let inventory = document.querySelector('.inventoryArea');
     inventory.remove();
     localStorage.clear();
     localStorage.setItem('Current Level', 1);
     const currentLevel = Number(localStorage.getItem('Current Level'));
+    magicScoutAudio.pause()
+    troubleTribalsAudio.pause()
     initializeGame();
     loadLevel(currentLevel);
     createInventory();
@@ -250,6 +252,8 @@ export function createGameOverMenu() {
     inventory.remove();
     localStorage.clear();
     localStorage.setItem('Current Level', 1);
+    magicScoutAudio.pause()
+    troubleTribalsAudio.pause()
     const currentLevel = Number(localStorage.getItem('Current Level'));
     initializeGame();
     loadLevel(currentLevel);
