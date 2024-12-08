@@ -115,11 +115,11 @@ export function loadLevel(level) {
       chaseBox();
       setBoxColor();
       setAmmoColor();
-      createSwitches(1, 2, 3);
       if (localStorage.getItem('Red Lakes')) createRedLakes3(1, 1);
       if (localStorage.getItem('Yellow Lakes')) createYellowLakes3(1, 1);
       if (localStorage.getItem('Blue Lakes')) createBlueLakes3(1, 1);
-      setInterval(monitorSwitches, 100);
+      createSwitches(1, 2, 3);
+      setInterval(function() {monitorSwitches(3); }, 100);
       break;
     case 4:
       initializeGame();
@@ -143,7 +143,7 @@ export function loadLevel(level) {
       if (localStorage.getItem('Yellow Lakes')) createYellowLakes3(1, 0.5);
       if (localStorage.getItem('Blue Lakes')) createBlueLakes3(1, 0.5);
       createSwitches(1, 1, 4);
-      setInterval(monitorSwitches, 100);
+      setInterval(function() {monitorSwitches(4); }, 100);
       break;
     default:
       console.error("Unknown level: ", level);

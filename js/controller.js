@@ -61,12 +61,14 @@ document.addEventListener('keydown', (e) => {
     let gate2 = document.querySelector('#gate2');
     if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
+          console.log("hello");
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';
           localStorage.setItem('warn', 1);
           let tutorialG = document.querySelector('#tutorialG');
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
+          console.log("hello");
           gate2.style.transform = 'rotate(-180deg)';
           gate2.style.transformOrigin = 'bottom left';
         }
@@ -303,7 +305,8 @@ function checkGateColor(box, levelNum) {
         ammo
       );
       createSwitches(1, 1, 4);
-      setInterval(monitorSwitches, 100);
+      setInterval(function() {monitorSwitches(4); }, 100);
+      
     } else if (currentLevel >= 4) {
       createEndMenu();
       if (document.querySelector('.enemy')) {

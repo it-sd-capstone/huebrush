@@ -18,25 +18,44 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level3 = document.querySelector('#level3');
 
         const switches = [
-            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0.2)'),
-            createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0.2)'),
-            createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0.2)'),
-            createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0.2)'),
+            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0)'),
+            createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0)'),
+            createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0)'),
+            createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0)'),
             createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0)'),
-            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0)')
+            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(255, 165, 0, 0)')
         ];
 
         switches.forEach((sw) => level3.appendChild(sw));
 
     } else if (levelNum == 4) {
+        const level4 = document.querySelector('#level4');
 
+        const switches = [
+            createSwitch('switch7', heightModifier, widthModifier, 55, 70, 'rgba(255, 0, 0, 1)'),
+            createSwitch('switch8', heightModifier, widthModifier, 85, 70, 'rgba(0, 0, 255, 1)'),
+            createSwitch('switch9', heightModifier, widthModifier, 115, 70, 'rgba(255, 255, 0, 1)'),
+            createSwitch('switch10', heightModifier, widthModifier, 160, 70, 'rgba(128, 0, 128, 1)'),
+            createSwitch('switch11', heightModifier, widthModifier, 190, 70, 'rgba(0, 128, 0, 1)'),
+            createSwitch('switch12', heightModifier, widthModifier, 220, 70, 'rgba(255, 165, 0, 1)')
+        ];
+
+        switches.forEach((sw) => level4.appendChild(sw));
     }
 }
 
-export function monitorSwitches() {
+export function monitorSwitches(levelNum) {
     const box = document.querySelector('#myBox');
     const switches = document.querySelectorAll('.switch');
-    
+    let heightModifier;
+    let widthModifier;
+    if (levelNum == 3) {
+        heightModifier = 1;
+        widthModifier = 1;
+    } else if (levelNum == 4) {
+        heightModifier = 1;
+        widthModifier = 0.5;
+    }
 
     for (let i = 0; i < switches.length; i++) {
         let id = i+1;
@@ -50,19 +69,31 @@ export function monitorSwitches() {
                 case 0:
                     break;
                 case 1:
-                    createRedLakes3(1, 1);
+                    createRedLakes3(heightModifier, widthModifier);
                     break;
                 case 2:
-                    createYellowLakes3(1, 1);
+                    createYellowLakes3(heightModifier, widthModifier);
                     break;
                 case 3:
-                    createBlueLakes3(1, 1);
+                    createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 4:
                     switches[i].style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 5:
                     switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10: 
+                    break;
+                case 11: 
                     break;
                 deafault:
                     break;
