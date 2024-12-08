@@ -180,11 +180,83 @@ export function createMainMenu() {
     localStorage.setItem('Current Level', 1);
     const currentLevel = Number(localStorage.getItem('Current Level'));
     initializeGame();
-    createInventory();
     loadLevel(currentLevel);
+    createInventory();
   });
 
   [exploreButton, newGameButton].forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      button.style.backgroundColor = '#666';
+    });
+    button.addEventListener('mouseleave', () => {
+      button.style.backgroundColor = '#444';
+    });
+  });
+}
+
+export function createGameOverMenu() {
+  const GameOver = createElement('div', 'GameOver', ['GameOver'], {
+    display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    justifyContent:'center',
+    height:'100vh',
+    backgroundColor:'rgba(0, 0, 0, 0.8)',
+    color: 'white',
+    position: 'absolute',
+    width: '100%',
+    zIndex: '10',
+  });
+
+  const title = createElement('div', 'title', ['title'], {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 'xx-large',
+    fontWeight: '900',
+    webkitTextStrokeColor: 'white',
+  });
+
+  const normalText = document.createElement('span');
+  normalText.textContent = 'Game Over!';
+  normalText.style.color = 'red';
+  normalText.innerHTML += '&nbsp;'
+  title.appendChild(normalText);
+
+  GameOver.appendChild(title);
+
+  const newGameButton = createElement('div', 'newGameButton', ['newGameButton'], {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '18px',
+    backgroundColor: '#444',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  });
+
+   newGameButton.textContent = 'New Game';
+   GameOver.appendChild(newGameButton);
+
+  document.querySelector('#game_canvas').appendChild(GameOver);
+
+  newGameButton.addEventListener('click', () => {
+    GameOver.remove();
+    let playArea = document.querySelector('.playArea');
+    playArea.remove();
+    let inventory = document.querySelector('.inventoryArea');
+    inventory.remove();
+    localStorage.clear();
+    localStorage.setItem('Current Level', 1);
+    const currentLevel = Number(localStorage.getItem('Current Level'));
+    initializeGame();
+    loadLevel(currentLevel);
+    createInventory();
+  });
+
+  [newGameButton].forEach(button => {
     button.addEventListener('mouseenter', () => {
       button.style.backgroundColor = '#666';
     });

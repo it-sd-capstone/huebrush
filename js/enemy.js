@@ -48,8 +48,6 @@ export function spawnEnemy() {
   enemy.style.borderRadius = '50px';
   enemy.style.left = randomXSpawnPoint()/*canvasWidth*/ + 'px'; 
   enemy.style.top = randomYSpawnPoint()/*canvasHeight*/ + 'px';
-  console.log('True Left: ' + enemy.style.left)
-  console.log('True Top: ' + enemy.style.top)
   enemy.style.zIndex = '3';
   enemy.style.position = 'absolute';
   //enemy.style.left = '300px'; 

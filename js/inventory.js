@@ -199,7 +199,6 @@ function getWhiteBottom() {
 function setImgCoordinate(img, top, left) {
     img.style.top = top + 'px';
     img.style.left = left + 'px';
-    console.log("newImgTopLeft:"+top+" "+left);
 }
 
 export function setBoxColor() {
@@ -366,13 +365,10 @@ export function addToInventory(lake) {
         for (let i = 0; i < getSlotArray().length; i++) { 
             if (getSlot(i) == 'x') {
                 setSlot(i, lake.background);
-                console.log("lake.background:"+lake.background);
 
                 displayItem(i, lake.background);
                 setBackground(getAmmo(), slot[i]);
-                console.log("calling set last item...");
                 setLastItem();
-                console.log("last item set");
                 setInvFull();
                 setInvEmpty();
                 setBackground(getAmmo(), getSlot(getLastItem()));
@@ -536,8 +532,7 @@ export function fire() {
 }
 
 export function setBackground(ele, color) {
-  console.log(ele)
-    ele.style.background = color;
+  ele.style.background = color;
 }
 
 function shiftInventory() {

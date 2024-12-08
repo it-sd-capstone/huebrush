@@ -7,7 +7,7 @@ import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js'
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 import { createSwitches, monitorSwitches } from './switches.js';
-import { createEndMenu } from './menu.js';
+import { createEndMenu, createGameOverMenu } from './menu.js';
 
 //Watch for page activity
 document.addEventListener('visibilitychange', () => {
@@ -87,7 +87,6 @@ function checkProximityAroundBox(box, radius) {
 
   // Get all lakes relative to the container
   const lakes = getObjectsRelativeToContainer(container, '.lake');
-  console.log(lakes);
   for (let i = 0; i < lakes.length; i++) {
       const lakeRect = {
           top: lakes[i].top,
@@ -233,11 +232,7 @@ function checkGateColor(box, levelNum) {
 
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
-    console.log(localStorage.getItem('Current Level'))
-
     if (isColliding(simulatedBox, levelEnd[0]) && (parseInt(localStorage.getItem('Current Level')) < 5)) {
-
-      console.log("level3 end")
       let currentLevel = parseInt(localStorage.getItem('Current Level'));
 
       removeObject('levelEnd');
@@ -355,9 +350,7 @@ function checkGateColor(box, levelNum) {
     let intensity = 1.0 - Math.min(1.0, distance / maxDistance);
     if (localStorage.getItem('muted') == '1') {
       troubleTribalsAudio.volume = intensity;
-      console.log("volume: ", troubleTribalsAudio.volume);
       magicScoutAudio.volume = 1.0 - intensity;
-      console.log("volume: ", magicScoutAudio.volume);
     }
 }
 
@@ -417,9 +410,7 @@ function checkGateColor(box, levelNum) {
     if (hearts.length > 0) {
         hearts[hearts.length - 1].remove(); // Remove one heart
     } else {
-        alert('Game Over!');
-        localStorage.clear();
-        location.reload();
+        createGameOverMenu();
       return; 
     }
 
@@ -518,8 +509,6 @@ export function enemyLife() {
 }
 
 function onEnemyDefeat() {
-  console.log("hi from audio");
-
   let interval = setInterval(() => {
       if (troubleTribalsAudio.volume > 0 && localStorage.getItem('muted', 0)) {
           troubleTribalsAudio.volume = Math.max(0, troubleTribalsAudio.volume - 0.1);

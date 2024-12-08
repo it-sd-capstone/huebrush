@@ -3,7 +3,6 @@ export function levelXTransition(objects = [],currentLevel, newLevel, direction,
   let speed = 1.75;
 
   if (direction == `right`) {
-    console.log(newLevel);
     newLevel.style.left = `50%`;
     for (let object in objects) {
       let newWidth = (parseInt(objects[object].style.width, 10) / 2);
@@ -43,14 +42,11 @@ export function levelXTransition(objects = [],currentLevel, newLevel, direction,
       objects[object].style.left = `${newLeft}px`;
       objects[object].style.width = `${newWidth}px`;
     }
-    console.log("I am currentLevel ", currentLevel);
-    console.log("I am newLevel ", newLevel);
 
     currentLevel.style.left = '50%';
     newLevel.style.left = `0%`;
 
     if(myBox) {
-      console.log("here")
       // If we just divide myBox's width by 2, myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
       let newBoxLeft = (parseInt(myBox.style.left, 10) / 2);
       //Adding 9 to keep Ammo in the correct spot after transition. 
