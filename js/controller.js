@@ -473,8 +473,8 @@ export function enemyLife() {
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
             createExplosion(enemy);
-            fadeOut(tutorialWarn);
             enemy.remove();
+            fadeOut(tutorialWarn);
           }
         }
       });

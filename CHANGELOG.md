@@ -4,12 +4,13 @@
 ## [Unreleased]
 
 ### Added
-
+- Added Player Health that decrements when the enemy gets too close, allowing the player more time to react. [@Yams650](https://github.com/Yams650)
+- Added Tutorial for clarity on how to play the game. [@Yams650](https://github.com/Yams650)
 ### Changed
 
  
 ### Fixed
-
+- Enemy would not despawn if the warning tutorial was missing, fixed order of operations. [@Yams650](https://github.com/Yams650)
 
 ## [v0.3.0]
 
