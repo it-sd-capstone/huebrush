@@ -3,15 +3,11 @@ import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { createLevel3, createLevel3End, getLevel3Objects } from './level3.js';
 import { createLevel4, createLevel4End, getLevel4Objects } from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
-import { initializeGame } from './initializeController.js';
+import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
 import { createSwitches, monitorSwitches } from './switches.js';
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize the game when DOM content is loaded
-  initializeGame();
-});
+import { createEndMenu } from './menu.js';
 
 //Watch for page activity
 document.addEventListener('visibilitychange', () => {
@@ -239,7 +235,10 @@ function checkGateColor(box, levelNum) {
 
     let levelEnd = getObjectsRelativeToContainer(container, '.levelEnd');
 
-    if (isColliding(simulatedBox, levelEnd[0])) {
+    console.log(localStorage.getItem('Current Level'))
+
+    if (isColliding(simulatedBox, levelEnd[0]) && (parseInt(localStorage.getItem('Current Level')) < 5)) {
+
       console.log("level3 end")
       let currentLevel = parseInt(localStorage.getItem('Current Level'));
 
@@ -267,7 +266,7 @@ function checkGateColor(box, levelNum) {
           createLevel3End();
           spawnEnemy();
           chaseBox();
-        } else if (currentLevel +1 === 4) {
+        } else if (currentLevel + 1 === 4) {
           createLevel4(1,1,50,-50);
           createLevel4End();
           spawnEnemy();
@@ -312,6 +311,8 @@ function checkGateColor(box, levelNum) {
         myBox,
         ammo
       );
+    } else if (currentLevel >= 4) {
+      createEndMenu();
     }
   
       localStorage.setItem('Current Level', currentLevel + 1);
@@ -347,6 +348,17 @@ function checkGateColor(box, levelNum) {
 }
 
   //Move Enemy Program
+
+  function adjustAudioBasedOnDistance(distance) {
+    let maxDistance = 500;
+    console.log(distance)
+    let intensity = 1.0 - Math.min(1.0, distance / maxDistance);
+
+    troubleTribalsAudio.volume = intensity;
+    console.log("volume: ", troubleTribalsAudio.volume);
+    magicScoutAudio.volume = 1.0 - intensity;
+    console.log("volume: ", magicScoutAudio.volume);
+}
 
   export function chaseBox(time) {
     if (!isPageVisible || enemyPause) {
@@ -394,6 +406,8 @@ function checkGateColor(box, levelNum) {
       enemy.style.left = `${enemyX}px`;
       enemy.style.top = `${enemyY}px`;
 
+      adjustAudioBasedOnDistance(distance);
+
     } 
 
     // Catch the box
@@ -421,14 +435,6 @@ function checkGateColor(box, levelNum) {
       requestAnimationFrame(chaseBox);
     }
   }
-
-  // TODO: Needs reworked.
-  // function checkKey() {
-  //   if (parseInt(box.style.left) == parseInt(key.style.left) && parseInt(box.style.top) == parseInt(key.style.top)) {
-  //     box.style.background = "purple";
-  //     key.remove();
-  //   }
-  // }
 
   function removeObject(className) {
     const elements = document.getElementsByClassName(className);
@@ -474,6 +480,7 @@ export function enemyLife() {
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
             createExplosion(enemy);
+            onEnemyDefeat();
             enemy.remove();
             if(tutorialWarn != null){
               fadeOut(tutorialWarn);
@@ -507,9 +514,21 @@ export function enemyLife() {
   }
 }
 
+function onEnemyDefeat() {
+  console.log("hi from audio");
+
+  let interval = setInterval(() => {
+      if (troubleTribalsAudio.volume > 0) {
+          troubleTribalsAudio.volume = Math.max(0, troubleTribalsAudio.volume - 0.1);
+          magicScoutAudio.volume = Math.min(1.0, magicScoutAudio.volume + 0.1);
+      } else {
+          troubleTribalsAudio.pause();
+          clearInterval(interval);
+      }
+  }, 500);
+}
+
 window.addEventListener('beforeunload', (event) => {
   localStorage.setItem('inventory', getSlotArray());
 });
-
-
 
