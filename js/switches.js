@@ -17,12 +17,12 @@ export function createSwitches(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
 
     const switches = [
-        createSwitch('switch1', heightModifier, widthModifier, 20, 970, 'rgba(230, 200, 120, 0.2)'),
-        createSwitch('switch2', heightModifier, widthModifier, 250, 860, 'rgba(255, 0, 0, 0.2)'),
-        createSwitch('switch3', heightModifier, widthModifier, 60, 500, 'rgba(255, 255, 0, 0.2)'),
-        createSwitch('switch4', heightModifier, widthModifier, 270, 205, 'rgba(0, 0, 255, 0.2)'),
-        createSwitch('switch5', heightModifier, widthModifier, 115, 80, 'rgba(0, 0, 255, 0.2)'),
-        createSwitch('switch6', heightModifier, widthModifier, 160, 80, 'rgba(0, 128, 0, 0.2)')
+        createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0.2)'),
+        createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0.2)'),
+        createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0.2)'),
+        createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0.2)'),
+        createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0.2)'),
+        createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0.2)')
     ];
 
     switches.forEach((sw) => level3.appendChild(sw));

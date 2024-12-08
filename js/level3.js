@@ -1,6 +1,6 @@
 import { createElement } from './level1.js'
 
-export function createLevel3(widthModifier,heightModifier,offscreen) {
+export function createLevel3(widthModifier,heightModifier,offscreen, offscreenX) {
   let playArea = document.querySelector('.playArea');
 
   const level3 = createElement('div', 'level3', ['box'], {
@@ -10,7 +10,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
     height: `${heightModifier * 300}px`,
     padding: '0px',
     border: '0px',
-    left: `0%`,
+    left: `${offscreenX}%`,
     top: `${offscreen}%`,
     zIndex: '1',
     transition: 'top 1.75s ease, height 1.75s ease'
@@ -218,6 +218,93 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
     beacon.appendChild(light);
   });
 
+  const wires = createElement('div', 'wires', ['wires']);
+
+  const wiresConfig = [
+    { id: 'shadow1.1', 
+      background: 'rgb(237, 206, 159)',
+      top: `${heightModifier * 49}px`,
+      left: `${widthModifier * 42}px`,
+      width: `${widthModifier * 4}px`,
+      height: `${heightModifier * 66}px`,
+    },
+    { id: 'shadow1.2', 
+      background: 'rgb(237, 206, 159)',
+      top: `${heightModifier * 49}px`,
+      left: `${widthModifier * 44}px`,
+      width: `${widthModifier * 16}px`,
+      height: `${heightModifier * 4}px`,
+    },
+    { id: 'wire1.1', 
+      background: 'yellow',
+      top: `${heightModifier * 50}px`,
+      left: `${widthModifier * 43}px`,
+      width: `${widthModifier * 2}px`,
+      height: `${heightModifier * 65}px`,
+    },
+    { id: 'wire1.2', 
+      background: 'yellow',
+      top: `${heightModifier * 50}px`,
+      left: `${widthModifier * 45}px`,
+      width: `${widthModifier * 15.5}px`,
+      height: `${heightModifier * 2}px`,
+    },
+    { id: 'shadow2.1', 
+      background: 'rgb(237, 206, 159)',
+      top: `${heightModifier * 119}px`,
+      left: `${widthModifier * 55}px`,
+      width: `${widthModifier * 11}px`,
+      height: `${heightModifier * 4}px`,
+    },
+    { id: 'shadow2.2', 
+      background: 'rgb(237, 206, 159)',
+      top: `${heightModifier * 119}px`,
+      left: `${widthModifier * 62}px`,
+      width: `${widthModifier * 4}px`,
+      height: `${heightModifier * 121}px`,
+    },
+    { id: 'wire2.1', 
+      background: 'blue',
+      top: `${heightModifier * 120}px`,
+      left: `${widthModifier * 55}px`,
+      width: `${widthModifier * 10}px`,
+      height: `${heightModifier * 2}px`,
+    },
+    { id: 'wire2.2', 
+      background: 'blue',
+      top: `${heightModifier * 120}px`,
+      left: `${widthModifier * 63}px`,
+      width: `${widthModifier * 2}px`,
+      height: `${heightModifier * 120}px`,
+    },
+    { id: 'shadow3.1', 
+      background: 'rgb(237, 206, 159)',
+      top: `${heightModifier * 175}px`,
+      left: `${widthModifier * 42}px`,
+      width: `${widthModifier * 4}px`,
+      height: `${heightModifier * 65}px`,
+    },
+    { id: 'wire3.1', 
+      background: 'blue',
+      top: `${heightModifier * 175}px`,
+      left: `${widthModifier * 43}px`,
+      width: `${widthModifier * 2}px`,
+      height: `${heightModifier * 65}px`,
+    }
+  ];
+
+  wiresConfig.forEach(({ id, background, top, left, width, height }) => {
+    const wire = createElement('div', id, ['wires'], {
+      background,
+      width,
+      height,
+      top,
+      left,
+    });
+
+    wires.appendChild(wire);
+  });
+
   const gate3 = createElement('div', 'gate3', ['gate3'], {
     background: 'rgb(0,192,143)',
     width: `${widthModifier * 10}px`,
@@ -233,7 +320,8 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
   level3.appendChild(factoryBase);
   level3.appendChild(factoryTop);
   level3.appendChild(beacon);
-  level3.appendChild(gate3);
+  level3.appendChild(wires);
+  //level3.appendChild(gate3);
  
 
   playArea.appendChild(level3);
@@ -243,7 +331,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen) {
   for (let object in levelStack) {
     levelStack[object].style.zIndex = '2';
     levelStack[object].style.position = 'absolute';
-    levelStack[object].style.transition = `width ${1.75}s ease`;
+    levelStack[object].style.transition = `left ${1.75}s ease, height ${1.75}s ease, top ${1.75}s ease, width ${1.75}s ease`;
   }
 
 }
