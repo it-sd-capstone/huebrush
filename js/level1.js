@@ -665,6 +665,8 @@ export function createLevel1End(){
 }
 
 export function getLevel1Objects() {
+  let level1 = document.querySelector('#level1')
+
   let stack1 = Array.from(level1.children);
   let childStack1 = [];
 

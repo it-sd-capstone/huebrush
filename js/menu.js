@@ -1,53 +1,62 @@
+import { createElement } from './level1.js'
 import { initializeGame, loadLevel } from './initializeController.js';
 import { createInventory} from './inventory.js';
 
 export function createMainMenu() {
-   // Create start menu container
-   const startMenu = document.createElement('div');
-   startMenu.id = 'startMenu';
-   startMenu.style.display = 'flex';
-   startMenu.style.flexDirection = 'column';
-   startMenu.style.alignItems = 'center';
-   startMenu.style.justifyContent = 'center';
-   startMenu.style.height = '100vh';
-   startMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-   startMenu.style.color = 'white';
-   startMenu.style.position = 'absolute';
-   startMenu.style.width = '100%';
-   startMenu.style.zIndex = '10';
- 
-   // Add title
-   const title = document.createElement('h1');
-   title.textContent = 'HueBrush';
+
+  const startMenu = createElement('div', 'startMenu', ['startMenu'], {
+    display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    justifyContent:'center',
+    height:'100vh',
+    backgroundColor:'rgba(0, 0, 0, 0.8)',
+    color: 'white',
+    position: 'absolute',
+    width: '100%',
+    zIndex: '10',
+  });
+
+   const title = createElement('div', 'title', ['title'], {
+    fontSize: 'xx-large',
+    fontWeight: '900',
+    backgroundImage: 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)',
+    backgroundClip: 'text',
+    webkitTextFillColor: 'transparent',
+    webkitTextStrokeWidth: '0.2px',
+    webkitTextStrokeColor: 'white',
+  });
+   title.textContent = 'HueBrush!';
    startMenu.appendChild(title);
- 
-   // Add continue button
-   const continueButton = document.createElement('button');
+
+   const continueButton = createElement('div', 'continueButton', ['continueButton'], {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '18px',
+    backgroundColor: '#444',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  });
+
    continueButton.textContent = 'continue';
-   continueButton.style.padding = '10px 20px';
-   continueButton.style.margin = '10px';
-   continueButton.style.fontSize = '18px';
-   continueButton.style.backgroundColor = '#444';
-   continueButton.style.color = 'white';
-   continueButton.style.border = 'none';
-   continueButton.style.borderRadius = '5px';
-   continueButton.style.cursor = 'pointer';
    startMenu.appendChild(continueButton);
- 
-   // Add New Game button
-   const newGameButton = document.createElement('button');
+
+   const newGameButton = createElement('div', 'newGameButton', ['newGameButton'], {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '18px',
+    backgroundColor: '#444',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  });
+
    newGameButton.textContent = 'New Game';
-   newGameButton.style.padding = '10px 20px';
-   newGameButton.style.margin = '10px';
-   newGameButton.style.fontSize = '18px';
-   newGameButton.style.backgroundColor = '#444';
-   newGameButton.style.color = 'white';
-   newGameButton.style.border = 'none';
-   newGameButton.style.borderRadius = '5px';
-   newGameButton.style.cursor = 'pointer';
    startMenu.appendChild(newGameButton);
  
-   // Append menu to the body
    document.querySelector('#game_canvas').appendChild(startMenu);
  
    // Hide continue button if no saved game exists
@@ -55,7 +64,6 @@ export function createMainMenu() {
      continueButton.style.display = 'none';
    }
  
-   // Handle "continue" click
    continueButton.addEventListener('click', () => {
      startMenu.remove();
      const currentLevel = Number(localStorage.getItem('Current Level')) || 1;
@@ -63,7 +71,6 @@ export function createMainMenu() {
      loadLevel(currentLevel);
    });
  
-   // Handle "New Game" click
    newGameButton.addEventListener('click', () => {
      startMenu.remove();
      localStorage.clear();
@@ -74,7 +81,6 @@ export function createMainMenu() {
      loadLevel(currentLevel);
    });
  
-   // Add hover effects dynamically
    [continueButton, newGameButton].forEach(button => {
      button.addEventListener('mouseenter', () => {
        button.style.backgroundColor = '#666';
@@ -87,70 +93,89 @@ export function createMainMenu() {
 
 
  export function createEndMenu() {
-  // Create end menu container
-  const endMenu = document.createElement('div');
-  endMenu.id = 'startMenu';
-  endMenu.style.display = 'flex';
-  endMenu.style.flexDirection = 'column';
-  endMenu.style.alignItems = 'center';
-  endMenu.style.justifyContent = 'center';
-  endMenu.style.height = '100vh';
-  endMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-  endMenu.style.color = 'white';
-  endMenu.style.position = 'absolute';
-  endMenu.style.width = '100%';
-  endMenu.style.zIndex = '10';
+  const endMenu = createElement('div', 'endMenu', ['endMenu'], {
+    display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    justifyContent:'center',
+    height:'100vh',
+    backgroundColor:'rgba(0, 0, 0, 0.8)',
+    color: 'white',
+    position: 'absolute',
+    width: '100%',
+    zIndex: '10',
+  });
 
-  // Add title
-  const title = document.createElement('h1');
-  title.textContent = 'Thank you for playing HueBrush!';
+  const title = createElement('div', 'title', ['title'], {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 'xx-large',
+    fontWeight: '900',
+    webkitTextStrokeColor: 'white',
+  });
+
+  const normalText = document.createElement('span');
+  normalText.textContent = 'Thank you for playing';
+  normalText.style.color = 'red';
+  normalText.innerHTML += '&nbsp;'
+  title.appendChild(normalText);
+
+  const rainbowText = document.createElement('span');
+  rainbowText.textContent = 'HueBrush!';
+  rainbowText.style.backgroundImage = 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)';
+  rainbowText.style.backgroundClip = 'text';
+  rainbowText.style.webkitTextFillColor = 'transparent';
+  rainbowText.style.fontWeight = 'bold';
+  title.appendChild(rainbowText);
+
   endMenu.appendChild(title);
 
-  // Add explore button
-  const exploreButton = document.createElement('button');
-  exploreButton.textContent = 'explore';
-  exploreButton.style.padding = '10px 20px';
-  exploreButton.style.margin = '10px';
-  exploreButton.style.fontSize = '18px';
-  exploreButton.style.backgroundColor = '#444';
-  exploreButton.style.color = 'white';
-  exploreButton.style.border = 'none';
-  exploreButton.style.borderRadius = '5px';
-  exploreButton.style.cursor = 'pointer';
+  const exploreButton = createElement('div', 'exploreButton', ['exploreButton'], {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '18px',
+    backgroundColor: '#444',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  });
+
+  exploreButton.textContent = 'Explore';
   endMenu.appendChild(exploreButton);
 
-  // Add New Game button
-  const newGameButton = document.createElement('button');
-  newGameButton.textContent = 'New Game';
-  newGameButton.style.padding = '10px 20px';
-  newGameButton.style.margin = '10px';
-  newGameButton.style.fontSize = '18px';
-  newGameButton.style.backgroundColor = '#444';
-  newGameButton.style.color = 'white';
-  newGameButton.style.border = 'none';
-  newGameButton.style.borderRadius = '5px';
-  newGameButton.style.cursor = 'pointer';
-  endMenu.appendChild(newGameButton);
+  const newGameButton = createElement('div', 'newGameButton', ['newGameButton'], {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '18px',
+    backgroundColor: '#444',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  });
 
-  // Append menu to the body
+   newGameButton.textContent = 'New Game';
+   endMenu.appendChild(newGameButton);
+
   document.querySelector('#game_canvas').appendChild(endMenu);
 
-  // Hide explore button if no saved game exists
   if (!localStorage.getItem('Current Level')) {
     exploreButton.style.display = 'none';
   }
 
-  // Handle "explore" click
   exploreButton.addEventListener('click', () => {
     endMenu.remove();
-    const currentLevel = Number(localStorage.getItem('Current Level')) || 1;
-    createInventory();
-    loadLevel(currentLevel);
   });
 
-  // Handle "New Game" click
   newGameButton.addEventListener('click', () => {
     endMenu.remove();
+    let playArea = document.querySelector('.playArea');
+    playArea.remove();
+    let inventory = document.querySelector('.Inventory');
+    inventory.remove();
     localStorage.clear();
     localStorage.setItem('Current Level', 1);
     const currentLevel = Number(localStorage.getItem('Current Level'));
@@ -159,7 +184,6 @@ export function createMainMenu() {
     loadLevel(currentLevel);
   });
 
-  // Add hover effects dynamically
   [exploreButton, newGameButton].forEach(button => {
     button.addEventListener('mouseenter', () => {
       button.style.backgroundColor = '#666';

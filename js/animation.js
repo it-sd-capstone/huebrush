@@ -1,6 +1,3 @@
-import { createSwitches, monitorSwitches } from "./switches.js";
-
-
 export function levelXTransition(objects = [],currentLevel, newLevel, direction, myBox, ammo) {
 
   let speed = 1.75;
@@ -56,7 +53,8 @@ export function levelXTransition(objects = [],currentLevel, newLevel, direction,
       console.log("here")
       // If we just divide myBox's width by 2, myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
       let newBoxLeft = (parseInt(myBox.style.left, 10) / 2);
-      newBoxLeft = Math.round(newBoxLeft / 10) * 10 + 500;
+      //Adding 9 to keep Ammo in the correct spot after transition. 
+      newBoxLeft = Math.round(newBoxLeft / 10) * 10 + 500 + 9;
   
       let newAmmoLeft = (parseInt(ammo.style.left, 10) / 2);
       newAmmoLeft = Math.round(newAmmoLeft / 10) * 10 + 500;
@@ -79,7 +77,7 @@ export function levelXTransition(objects = [],currentLevel, newLevel, direction,
   
 }
 
-export function levelYTransition(objects = [], newLevel, newLevelObjects = [], myBox, ammo) {
+export function levelYTransition(objects = [], newLevel, myBox, ammo) {
 
   let speed = 1.75;
 

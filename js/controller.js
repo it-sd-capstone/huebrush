@@ -1,7 +1,7 @@
 import { getLevel1Objects } from './level1.js';
 import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
 import { createLevel3, createLevel3End, getLevel3Objects } from './level3.js';
-import { createLevel4, createLevel4End, getLevel4Objects } from './level4.js';
+import { createLevel4, createLevel4End} from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
@@ -27,7 +27,6 @@ document.addEventListener('visibilitychange', () => {
 });
 
 let moveBy = 10;
-let hasFadedOut = false;
 
 
 let moveSpeed = 50; //px per sec
@@ -60,14 +59,13 @@ document.addEventListener('keydown', (e) => {
     let box = document.querySelector('#myBox');
     let gate1 = document.querySelector('#gate1');
     let gate2 = document.querySelector('#gate2');
-    let gate3 = document.querySelector('#gate3');
     if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
           gate1.style.transform = 'rotate(-180deg)';
-          gate1.style.transformOrigin = 'top right';  
+          gate1.style.transformOrigin = 'top right';
           localStorage.setItem('warn', 1);
-          let tutorialWarn = document.querySelector('#tutorialWarn');    
-          fadeOut(tutorialG);     
+          let tutorialG = document.querySelector('#tutorialG');
+          fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
           gate2.style.transform = 'rotate(-180deg)';
           gate2.style.transformOrigin = 'bottom left';
@@ -291,11 +289,9 @@ function checkGateColor(box, levelNum) {
       );
     } else if  (currentLevel + 1 === 3) {
       let level2Objects = getLevel2Objects();
-      let level3Objects = getLevel3Objects();
       levelYTransition(
         [level1Objects, level2Objects],
         newLevel,
-        level3Objects,
         myBox,
         ammo
       );
@@ -313,6 +309,10 @@ function checkGateColor(box, levelNum) {
       );
     } else if (currentLevel >= 4) {
       createEndMenu();
+      if (document.querySelector('.enemy')) {
+        document.querySelector('.enemy').remove();
+        onEnemyDefeat();
+      }
     }
   
       localStorage.setItem('Current Level', currentLevel + 1);
@@ -450,7 +450,7 @@ function checkGateColor(box, levelNum) {
 export function enemyLife() {
   // Set up a loop to check for collisions
   let tutorialWarn = document.querySelector('#tutorialWarn');
-  const checkCollisions = setInterval(() => {
+  setInterval(() => {
     const projectiles = document.querySelectorAll('#projectile'); // All projectiles
     const enemies = document.querySelectorAll('.enemy'); // All active enemies
 
@@ -528,7 +528,7 @@ function onEnemyDefeat() {
   }, 500);
 }
 
-window.addEventListener('beforeunload', (event) => {
+window.addEventListener('beforeunload', () => {
   localStorage.setItem('inventory', getSlotArray());
 });
 

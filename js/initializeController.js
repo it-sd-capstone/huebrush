@@ -4,7 +4,7 @@ import { createLevel3, createLevel3End } from './level3.js';
 import { createLevel4, createLevel4End } from './level4.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
-import { createInventory, setSlotArray, getSlotArray, setLastItem, setBoxColor, setAmmoColor } from './inventory.js';
+import {setSlotArray, getSlotArray, setLastItem, setBoxColor, setAmmoColor } from './inventory.js';
 import { setInvFull } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('Current Level', 4);
   }
   
-  // Initialize the game when DOM content is loaded
   createMainMenu();
 });
 
@@ -92,7 +91,7 @@ export function loadLevel(level) {
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
       spawnEnemy();
-      enemyLife(enemy);
+      enemyLife();
       createLevel2End();
       chaseBox();
       setBoxColor();
@@ -108,7 +107,7 @@ export function loadLevel(level) {
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
       spawnEnemy();
-      enemyLife(enemy);
+      enemyLife();
       createLevel3End();
       chaseBox();
       setBoxColor();
@@ -123,10 +122,13 @@ export function loadLevel(level) {
       createLevel4(1,1,50);
       openGateOne();
       openGateTwo();
-      spawnPlayer(1, 1, '280px', '950px');
+      spawnPlayer(1, 1, '440px', '500px');
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
-      createLevel4End()
+      createLevel4End();
+      spawnEnemy();
+      enemyLife();
+      chaseBox();
       setBoxColor();
       setAmmoColor();
       createSwitches(1, 1);
