@@ -33,6 +33,10 @@ export function initializeGame() {
     localStorage.setItem('Current Level', 4);
   }
 
+  if (!localStorage.getItem('muted')) {
+    localStorage.setItem('muted', 1);
+  }
+
   if (!localStorage.getItem('wasd')) {
     localStorage.setItem('wasd', 1);
   }
