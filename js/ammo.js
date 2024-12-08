@@ -14,7 +14,7 @@ export function createAmmo(color, levelNum) {
         ammo.style.height = '10px';
         ammo.style.top = parseInt(box.style.top) - 4 + 'px';
         ammo.style.left = parseInt(box.style.left) - 4 + 'px';
-    } else if (levelNum == 3) {
+    } else if (levelNum == 3 || levelNum == 4) {
         ammo.style.width = '7px';
         ammo.style.height = '7px';
         ammo.style.top = parseInt(box.style.top) - 3 + 'px';
@@ -38,7 +38,7 @@ export function createProjectile(color, levelNum) {
     if (levelNum == 2 || levelNum == 1) {
         projectile.style.width = '10px';
         projectile.style.height = '10px';
-    } else if (levelNum == 3) {
+    } else if (levelNum == 3 || levelNum == 4) {
         projectile.style.width = '7px';
         projectile.style.height = '7px';
     }

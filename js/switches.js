@@ -13,19 +13,24 @@ function createSwitch(id, heightModifier, widthModifier, topFactor, leftFactor, 
 }
 
 // Create switches
-export function createSwitches(heightModifier, widthModifier) {
-    const level3 = document.querySelector('#level3');
+export function createSwitches(heightModifier, widthModifier, levelNum) {
+    if (levelNum == 3) {
+        const level3 = document.querySelector('#level3');
 
-    const switches = [
-        createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0.2)'),
-        createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0.2)'),
-        createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0.2)'),
-        createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0.2)'),
-        createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0.2)'),
-        createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0.2)')
-    ];
+        const switches = [
+            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0.2)'),
+            createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0.2)'),
+            createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0.2)'),
+            createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0.2)'),
+            createSwitch('switch5', heightModifier, widthModifier, 115, 40, 'rgba(0, 128, 0, 0.2)'),
+            createSwitch('switch6', heightModifier, widthModifier, 160, 40, 'rgba(0, 0, 255, 0.2)')
+        ];
 
-    switches.forEach((sw) => level3.appendChild(sw));
+        switches.forEach((sw) => level3.appendChild(sw));
+
+    } else if (levelNum == 4) {
+
+    }
 }
 
 export function monitorSwitches() {
@@ -116,8 +121,7 @@ function colorMatches(box, switchX) {
     return false;
 }
 
-function createRedLakes3(heightModifier, widthModifier) {
-    console.log("creating lake");
+export function createRedLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
     const lake1 = document.createElement('div');
     const lake2 = document.createElement('div'); 
@@ -193,10 +197,11 @@ function createRedLakes3(heightModifier, widthModifier) {
     level3.appendChild(lake5);
     level3.appendChild(lake6);
 
+    localStorage.setItem('Red Lakes', true);
+
 }
 
-function createYellowLakes3(heightModifier, widthModifier) {
-    console.log("creating lake");
+export function createYellowLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
     const lake1 = document.createElement('div');
     const lake2 = document.createElement('div'); 
@@ -271,10 +276,11 @@ function createYellowLakes3(heightModifier, widthModifier) {
     level3.appendChild(lake4);
     level3.appendChild(lake5);
     level3.appendChild(lake6);
+
+    localStorage.setItem('Yellow Lakes', true);
 }
 
-function createBlueLakes3(heightModifier, widthModifier) {
-    console.log("creating lake");
+export function createBlueLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
     const lake1 = document.createElement('div');
     const lake2 = document.createElement('div'); 
@@ -339,5 +345,6 @@ function createBlueLakes3(heightModifier, widthModifier) {
     level3.appendChild(lake4);
     level3.appendChild(lake5);
 
+    localStorage.setItem('Blue Lakes', true);
 
 }

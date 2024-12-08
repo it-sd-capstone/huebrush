@@ -4,13 +4,13 @@ import { createLevel3, createLevel3End } from './level3.js';
 import { createLevel4, createLevel4End } from './level4.js';
 import { spawnPlayer } from './player.js';
 import { spawnEnemy } from './enemy.js';
-import {setSlotArray, getSlotArray, setLastItem, setBoxColor, setAmmoColor } from './inventory.js';
+import { setSlotArray, getSlotArray, setLastItem, setBoxColor, setAmmoColor } from './inventory.js';
 import { setInvFull } from './inventory.js';
 import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
-import { createSwitches, monitorSwitches } from './switches.js';
+import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3 } from './switches.js';
 import { createMainMenu } from './menu.js';
 
 export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
@@ -75,6 +75,7 @@ export function loadLevel(level) {
 
   switch (level) {
     case 1:
+      initializeGame();
       createLevel1(2, 2);
       createLevel1End();
       spawnPlayer(2, 2, '300px', '300px');
@@ -84,6 +85,7 @@ export function loadLevel(level) {
       setAmmoColor();
       break;
     case 2:
+      initializeGame();
       createLevel1(1, 2);
       createLevel2(1, 2, 50);
       openGateOne();
@@ -98,6 +100,7 @@ export function loadLevel(level) {
       setAmmoColor();
       break;
     case 3:
+      initializeGame();
       createLevel1(1, 1);
       createLevel2(1, 1, 50);
       createLevel3(2,1,50,0);
@@ -112,10 +115,14 @@ export function loadLevel(level) {
       chaseBox();
       setBoxColor();
       setAmmoColor();
-      createSwitches(1, 2);
+      createSwitches(1, 2, 3);
+      if (localStorage.getItem('Red Lakes')) createRedLakes3(1, 1);
+      if (localStorage.getItem('Yellow Lakes')) createYellowLakes3(1, 1);
+      if (localStorage.getItem('Blue Lakes')) createBlueLakes3(1, 1);
       setInterval(monitorSwitches, 100);
       break;
     case 4:
+      initializeGame();
       createLevel1(1, 1);
       createLevel2(1, 1, 50);
       createLevel3(1,1,50,50);
@@ -131,7 +138,11 @@ export function loadLevel(level) {
       chaseBox();
       setBoxColor();
       setAmmoColor();
-      createSwitches(1, 1);
+      createSwitches(1, 1, 3);
+      if (localStorage.getItem('Red Lakes')) createRedLakes3(1, 0.5);
+      if (localStorage.getItem('Yellow Lakes')) createYellowLakes3(1, 0.5);
+      if (localStorage.getItem('Blue Lakes')) createBlueLakes3(1, 0.5);
+      createSwitches(1, 1, 4);
       setInterval(monitorSwitches, 100);
       break;
     default:

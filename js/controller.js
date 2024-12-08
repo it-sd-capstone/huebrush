@@ -290,7 +290,7 @@ function checkGateColor(box, levelNum) {
         myBox,
         ammo
       );
-      createSwitches(1, 2);
+      createSwitches(1, 2, 3);
       setInterval(monitorSwitches, 100);
     } else if (currentLevel + 1 === 4) {
       let level3Objects = getLevel3Objects();
@@ -302,6 +302,8 @@ function checkGateColor(box, levelNum) {
         myBox,
         ammo
       );
+      createSwitches(1, 1, 4);
+      setInterval(monitorSwitches, 100);
     } else if (currentLevel >= 4) {
       createEndMenu();
       if (document.querySelector('.enemy')) {
@@ -346,7 +348,6 @@ function checkGateColor(box, levelNum) {
 
   function adjustAudioBasedOnDistance(distance) {
     let maxDistance = 500;
-    console.log(distance)
     let intensity = 1.0 - Math.min(1.0, distance / maxDistance);
     if (localStorage.getItem('muted') == '1') {
       troubleTribalsAudio.volume = intensity;
