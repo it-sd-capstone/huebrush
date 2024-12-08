@@ -1,4 +1,5 @@
 import { enemyLife } from './controller.js';
+import { troubleTribalsAudio } from './initializeController.js';
 
 function randomYSpawnPoint(){
   let negOrPos = Math.floor(Math.random() * 10);
@@ -94,6 +95,10 @@ export function spawnEnemy() {
   enemyLife();
 
   playArea.appendChild(enemy)
+
+  troubleTribalsAudio.loop = true;
+  troubleTribalsAudio.volume = 0.0;
+  troubleTribalsAudio.play();
 
   return enemy
 }

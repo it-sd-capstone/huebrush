@@ -11,7 +11,20 @@ import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 import { createSwitches, monitorSwitches } from './switches.js';
+import { createMainMenu } from './menu.js';
 
+export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
+export let troubleTribalsAudio = new Audio('music/Trouble with Tribals.mp3');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('Current Level') > 4) {
+    localStorage.setItem('Current Level', 4);
+  }
+  
+  // Initialize the game when DOM content is loaded
+  createMainMenu();
+});
 
 export function initializeGame() {
   // alert("Use 'w, a, s, d' keys to move around the level.\nPress 'f' near a color pool to collect the color.\n Press 'q' and 'e' to cycle through your inventory.\nPress 'spacebar' to shoot your currently selected color toward your cursor.\nLocal save states will trigger upon completing a level (touching the blue box on the right). \n")
@@ -41,16 +54,6 @@ export function initializeGame() {
     localStorage.setItem('g', 0);
   }
 
-
-  console.log("Starting Level: ", localStorage.getItem('Current Level'));
-
-  createInventory();
-
-  const currentLevel = Number(localStorage.getItem('Current Level'));
-  loadLevel(currentLevel);
-}
-
-export function loadLevel(level) {
   setInvFull();
 
   if (!localStorage.getItem('inventory')) {
@@ -60,6 +63,15 @@ export function loadLevel(level) {
   }
 
   setLastItem();
+
+  console.log("Starting Level: ", localStorage.getItem('Current Level'));
+}
+
+export function loadLevel(level) {
+
+  magicScoutAudio.loop = true;
+  magicScoutAudio.volume = 1.0;
+  magicScoutAudio.play();
 
 
   switch (level) {
@@ -114,6 +126,7 @@ export function loadLevel(level) {
       spawnPlayer(1, 1, '280px', '950px');
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
+      createLevel4End()
       setBoxColor();
       setAmmoColor();
       createSwitches(1, 1);
