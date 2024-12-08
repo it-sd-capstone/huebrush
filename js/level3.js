@@ -13,7 +13,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen, offscreenX)
     left: `${offscreenX}%`,
     top: `${offscreen}%`,
     zIndex: '1',
-    transition: 'top 1.75s ease, height 1.75s ease'
+    transition: 'top 1.75s ease, height 1.75s ease,left 1.75s ease, width 1.75s ease'
   });
 
   const wallBlack3 = createElement('div', 'wallBlack3', ['wallSolid']);

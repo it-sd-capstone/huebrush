@@ -1,6 +1,6 @@
 import { createElement } from './level1.js'
 
-export function createLevel4(widthModifier,heightModifier,offscreen) {
+export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscreen) {
   let playArea = document.querySelector('.playArea');
 
   const level4 = createElement('div', 'level4', ['box'], {
@@ -10,10 +10,10 @@ export function createLevel4(widthModifier,heightModifier,offscreen) {
     height: `${heightModifier * 300}px`,
     padding: '0px',
     border: '0px',
-    left: `0%`,
+    left: `${leftoffscreen}%`,
     top: `${offscreen}%`,
     zIndex: '1',
-    transition: 'top 1.75s ease, height 1.75s ease'
+    transition: 'top 1.75s ease, height 1.75s ease,left 1.75s ease, width 1.75s ease'
   });
 
   const wallBlack4 = createElement('div', 'wallBlack4', ['wallSolid']);
@@ -50,29 +50,227 @@ export function createLevel4(widthModifier,heightModifier,offscreen) {
     wallBlack4.appendChild(wall);
   });
 
-  const pillar1Background = createElement('div', 'pillar1Background', ['wallSolid']);
+  const pillar2 = createElement('div', 'pillar2', ['wallSolid']);
 
-  const pillar1BackgroundConfig = [
-    { id: 'pillar1Background1', 
-      width: `${widthModifier * 500}px`,
-      height: `${heightModifier * 10}px`,
-      top: `${heightModifier * 0}px`,
-      left: `${widthModifier * 0}px`,
-    }
-  ];
+    const pillar2Background = createElement('div', 'pillar2Background', ['wallSolid']);
 
-  pillar1BackgroundConfig.forEach(({ id, width, height, top, left}) => {
-    const wall = createElement('div', `pillar1Background1`, ['wallSolid'], {
-      background: 'rgb(0, 0, 0)',
-      width: `${widthModifier * 500}px`,
-      height: `${heightModifier * 10}px`,
-      top: `${heightModifier * 0}px`,
-      left: `${widthModifier * 0}px`,
+    const pillar2BackgroundConfig = [
+      { id: 'pillar2Background1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 20}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 160}px`,
+      }
+    ];
+
+    pillar2BackgroundConfig.forEach(({ id, width, height, top, left}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: 'grey',
+        width,
+        height,
+        top,
+        left,
+      });
+      pillar2Background.appendChild(pillar);
     });
-    pillar1Background.appendChild(wall);
-  });
+
+    const pillar2Fill = createElement('div', 'pillar2Fill', ['wallSolid']);
+
+    const pillar2FillConfig = [
+      { id: 'pillar2Fill1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 160}px`,
+      },
+      { id: 'pillar2Fill2', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 160}px`,
+      }
+    ];
+
+    pillar2FillConfig.forEach(({ id, width, height, top, left}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: `red`,
+        boxSizing: `border-box`,
+        border: `1px solid pink`,
+        width,
+        height,
+        top,
+        left,
+        opacity: `0%`,
+      });
+      pillar2Fill.appendChild(pillar);
+    });
+
+    const pillar2Border = createElement('div', 'pillar2Border', ['wallSolid']);
+
+    const pillar2BorderConfig = [
+      { id: 'pillar2Border1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 20}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 160}px`,
+      }
+    ];
+
+    pillar2BorderConfig.forEach(({ id, width, height, top, left}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: `rgba(0, 0, 0, 0)`,
+        boxSizing: `border-box`,
+        border: `2px solid black`,
+        width,
+        height,
+        top,
+        left,
+      });
+      pillar2Border.appendChild(pillar);
+    });
+
+  pillar2.appendChild(pillar2Background);
+  pillar2.appendChild(pillar2Fill);
+  pillar2.appendChild(pillar2Border);
+
+  const pillar5 = createElement('div', 'pillar5', ['wallSolid']);
+
+    const pillar5Background = createElement('div', 'pillar5Background', ['wallSolid']);
+
+    const pillar5BackgroundConfig = [
+      { id: 'pillar5Background1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 30}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 430}px`,
+      },
+      { id: 'pillar5Background2', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 20}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 420}px`,
+      }
+    ];
+
+    pillar5BackgroundConfig.forEach(({ id, width, height, top, left}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: 'grey',
+        width,
+        height,
+        top,
+        left,
+      });
+      pillar5Background.appendChild(pillar);
+    });
+
+    const pillar5Fill = createElement('div', 'pillar5Fill', ['wallSolid']);
+
+    const pillar5FillConfig = [
+      { id: 'pillar5Fill1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 430}px`,
+      },
+      { id: 'pillar5Fill2', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 420}px`,
+      },
+      { id: 'pillar5Fill3', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 430}px`,
+      },
+      { id: 'pillar5Fill4', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 70}px`,
+        left: `${widthModifier * 420}px`,
+      },
+      { id: 'pillar5Fill5', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 10}px`,
+        top: `${heightModifier * 70}px`,
+        left: `${widthModifier * 430}px`,
+      },
+    ];
+
+    pillar5FillConfig.forEach(({ id, width, height, top, left}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: `red`,
+        boxSizing: `border-box`,
+        border: `1px solid pink`,
+        width,
+        height,
+        top,
+        left,
+        opacity: `0%`,
+      });
+      pillar5Fill.appendChild(pillar);
+    });
+
+    const pillar5Border = createElement('div', 'pillar5Border', ['wallSolid']);
+
+    const pillar5BorderConfig = [
+      { id: 'pillar5Border1', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 12}px`,
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 430}px`,
+        borderTop: `2px solid black`,
+        borderLeft: `2px solid black`,
+        borderRight: `2px solid black`,
+        borderBottom: `none`,
+      },
+      { id: 'pillar5Border2', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 20}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 430}px`,
+        borderTop: `none`,
+        borderLeft: `none`,
+        borderRight: `2px solid black`,
+        borderBottom: `2px solid black`,
+      },
+      { id: 'pillar5Border3', 
+        width: `${widthModifier * 10}px`,
+        height: `${heightModifier * 20}px`,
+        top: `${heightModifier * 60}px`,
+        left: `${widthModifier * 420}px`,
+        borderTop: `2px solid black`,
+        borderLeft: `2px solid black`,
+        borderRight: `none`,
+        borderBottom: `2px solid black`,
+      }
+    ];
+
+    pillar5BorderConfig.forEach(({ id, width, height, top, left, borderTop, borderLeft, borderRight, borderBottom}) => {
+      const pillar = createElement('div', id, ['wallSolid'], {
+        background: `rgba(0, 0, 0, 0)`,
+        boxSizing: `border-box`,
+        borderTop,
+        borderBottom,
+        borderLeft,
+        borderRight,
+        width,
+        height,
+        top,
+        left,
+      });
+      pillar5Border.appendChild(pillar);
+    });
+
+  pillar5.appendChild(pillar5Background);
+  pillar5.appendChild(pillar5Fill);
+  pillar5.appendChild(pillar5Border);
+
 
   level4.appendChild(wallBlack4);
+  level4.appendChild(pillar2);
+  level4.appendChild(pillar5);
 
   playArea.appendChild(level4);
 

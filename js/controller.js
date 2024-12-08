@@ -165,14 +165,15 @@ function checkGateColor(box, levelNum) {
       localStorage.setItem('f', 1);
       localStorage.setItem('f2', 1);
 
-        let tutorialWASD = document.querySelector('#tutorialWASD');
-        let tutorialF = document.querySelector('#tutorialF');
-        let tutorialF2 = document.querySelector('#tutorialF2');
+      let tutorialWASD = document.querySelector('#tutorialWASD');
+      let tutorialF = document.querySelector('#tutorialF');
+      let tutorialF2 = document.querySelector('#tutorialF2');
+      let tutorialG = document.querySelector('#tutorialG');
 
-        fadeOut(tutorialWASD);
-        fadeIn(tutorialF);
-        fadeIn(tutorialF2);
-        fadeIn(tutorialG);
+      fadeOut(tutorialWASD);
+      fadeIn(tutorialF);
+      fadeIn(tutorialF2);
+      fadeIn(tutorialG);
     }
 
     let boxRect = box.getBoundingClientRect();
@@ -244,6 +245,7 @@ function checkGateColor(box, levelNum) {
 
       removeObject('levelEnd');
   
+      const oldLevelSelector = `#level${currentLevel}`;
       const nextLevelSelector = `#level${currentLevel + 1}`;
   
       const nextLevelDiv = document.querySelector(nextLevelSelector);
@@ -251,6 +253,7 @@ function checkGateColor(box, levelNum) {
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
           let tutorialF = document.querySelector('#tutorialF');
+          let tutorialF2 = document.querySelector('#tutorialF2');
           let tutorialWarn = document.querySelector('#tutorialWarn');
           createLevel2(1,2,100); 
           createLevel2End();
@@ -260,8 +263,13 @@ function checkGateColor(box, levelNum) {
           fadeOut(tutorialF2);
           fadeIn(tutorialWarn);
         } else if (currentLevel + 1 === 3) {
-          createLevel3(2,1,100);
+          createLevel3(2,1,100,0);
           createLevel3End();
+          spawnEnemy();
+          chaseBox();
+        } else if (currentLevel +1 === 4) {
+          createLevel4(1,1,50,-50);
+          createLevel4End();
           spawnEnemy();
           chaseBox();
         }
@@ -269,15 +277,16 @@ function checkGateColor(box, levelNum) {
 
     const myBox = document.querySelector('.myBox');
     const ammo = document.querySelector('#ammo');
+    let oldLevel = document.querySelector(oldLevelSelector);
     let newLevel = document.querySelector(nextLevelSelector);
     let level1Objects = getLevel1Objects();
   
     if (currentLevel + 1 === 2) {
-      let level2Objects = getLevel2Objects();
       levelXTransition(
         level1Objects,
+        oldLevel,
         newLevel,
-        level2Objects,
+        `right`,
         myBox,
         ammo
       );
@@ -294,9 +303,15 @@ function checkGateColor(box, levelNum) {
       createSwitches(1, 2);
       setInterval(monitorSwitches, 100);
     } else if (currentLevel + 1 === 4) {
-      let level2Objects = getLevel2Objects();
       let level3Objects = getLevel3Objects();
-
+      levelXTransition(
+        level3Objects,
+        oldLevel,
+        newLevel,
+        `left`,
+        myBox,
+        ammo
+      );
     }
   
       localStorage.setItem('Current Level', currentLevel + 1);
