@@ -131,3 +131,28 @@ export function fadeIn(object) {
     object.style.opacity = '1';
 }, 1000);
 }
+
+export function dropDown(object, targetY, duration = 1000){
+  if (!object) {
+    return;
+  }
+
+  let start = null;
+  let startY = parseFloat(object.style.top) || -100;
+  let distance = targetY - startY;
+
+  function step(timestamp) {
+    if (!start) start = timestamp;
+    const delta = timestamp - start;
+    const progress = Math.min(delta / duration, 1);
+
+    object.style.top = `${startY + distance * progress}px`;
+
+    if (progress < 1) {
+        requestAnimationFrame(step);
+    }
+  }
+
+  // Start the animation
+  requestAnimationFrame(step);
+}

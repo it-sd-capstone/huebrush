@@ -624,6 +624,26 @@ export function createLevel1(widthModifier,heightModifier) {
       level1.appendChild(tutorialG);
     }
 
+    //Ouput the shoot overlay for tutorial
+    if (localStorage.getItem('space') == '0') {
+      const tutorialSpace = createElement('div', 'tutorialSpace', ['tutorialdrop'], {
+        position: 'absolute',
+        top: `${heightModifier * -100}px`,
+        left: `${widthModifier * 190}px`,
+        opacity: '1',
+      });
+
+      const svgSpaceObject = document.createElement('object');
+      svgSpaceObject.data = './images/Space.svg';
+      svgSpaceObject.type = 'image/svg+xml';
+      svgSpaceObject.alt = 'Shoot Tutorial';
+      svgSpaceObject.classList.add("tutorialdrop");
+      svgSpaceObject.style.height = `${heightModifier * 30}px`;
+      tutorialSpace.appendChild(svgSpaceObject);
+      
+      level1.appendChild(tutorialSpace);
+    }
+
 
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);

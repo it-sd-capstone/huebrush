@@ -5,7 +5,7 @@ import { createLevel4, createLevel4End} from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition, dropDown  } from './animation.js';
 import { createSwitches, monitorSwitches } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
 
@@ -159,16 +159,19 @@ function checkGateColor(box, levelNum) {
       localStorage.setItem('wasd', 0);
       localStorage.setItem('f', 1);
       localStorage.setItem('f2', 1);
+      localStorage.setItem('space', 1)
 
       let tutorialWASD = document.querySelector('#tutorialWASD');
       let tutorialF = document.querySelector('#tutorialF');
       let tutorialF2 = document.querySelector('#tutorialF2');
       let tutorialG = document.querySelector('#tutorialG');
+      let tutorialSpace = document.querySelector('#tutorialSpace');
 
       fadeOut(tutorialWASD);
       fadeIn(tutorialF);
       fadeIn(tutorialF2);
       fadeIn(tutorialG);
+      dropDown(tutorialSpace, 150, 5000);
     }
 
     let boxRect = box.getBoundingClientRect();
@@ -247,6 +250,7 @@ function checkGateColor(box, levelNum) {
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
           let tutorialF = document.querySelector('#tutorialF');
+          let tutorialSpace = document.querySelector('#tutorialSpace');
           let tutorialF2 = document.querySelector('#tutorialF2');
           let tutorialWarn = document.querySelector('#tutorialWarn');
           createLevel2(1,2,100); 
@@ -255,6 +259,7 @@ function checkGateColor(box, levelNum) {
           chaseBox();
           fadeOut(tutorialF);
           fadeOut(tutorialF2);
+          fadeOut(tutorialSpace);
           fadeIn(tutorialWarn);
         } else if (currentLevel + 1 === 3) {
           createLevel3(2,1,100,0);

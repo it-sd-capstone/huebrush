@@ -6,9 +6,11 @@ function randomYSpawnPoint(){
   let minY = 880;
   let maxY = 930;
   if (negOrPos > 5){
-    return Math.floor(Math.random() * (maxY - minY) + minY * -1);
+    let y = -5
+    return y;
   }else{
-    return Math.floor(Math.random() * (maxY - minY) + minY)
+    let y = Math.floor(Math.random() * (maxY - minY) + minY);
+    return y; 
   }
 }
 
@@ -17,9 +19,11 @@ function randomXSpawnPoint(){
   let minX = 1400;
   let maxX = 1450;
   if (negOrPos > 5){
-    return Math.floor(Math.random() * (maxX - minX) + minX * -1);
+    let x = Math.floor(Math.random() * (maxX - minX) + minX * -1);
+    return x;
   }else{
-    return Math.floor(Math.random() * (maxX - minX) + minX);
+    let x = Math.floor(Math.random() * (maxX - minX) + minX);
+    return x; 
   }
 }
 
