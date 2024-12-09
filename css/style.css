@@ -91,10 +91,17 @@ footer .social-links a {
 }
 
 #gate1 {
+    position: absolute;
     transition: transform 500ms ease-in-out;
+
 }
 
 #gate2 {
+    position: absolute;
+    transform-origin: bottom left;
+}
+
+#gate3 {
     position: absolute;
     transform-origin: bottom left;
 }

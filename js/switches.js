@@ -18,7 +18,7 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level3 = document.querySelector('#level3');
 
         const switches = [
-            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0)'),
+            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(128, 128, 128, 0)'),
             createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0)'),
             createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0)'),
             createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0)'),
@@ -67,12 +67,17 @@ export function monitorSwitches(levelNum) {
 
     for (let i = 0; i < switches.length; i++) {
         let id = i+1;
+        
         let string = 'switch';
         let switchId = string+id;
         const switchX = document.querySelector(`#${switchId}`)
+
+        const switch5 = document.querySelector('#switch5');
+        const switch6 = document.querySelector('#switch6');
         if (isOverlapping(box, switchX )) {
             switch (id) {
                 case 1:
+                    switchX.style.background = updateAlpha(switchX.style.background, 1);
                     break;
                 case 2:
                     if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
@@ -84,10 +89,10 @@ export function monitorSwitches(levelNum) {
                     if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 5:
-                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 128, 0, 1)';
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 6:
-                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 case 7:
                     if (level4Password[3]) {
@@ -144,8 +149,12 @@ export function monitorSwitches(levelNum) {
                     break;
                 deafault:
                     break;
+                
+
             }
         }
+    }
+    if (switch5.style.background == 'rgb(0, 128, 0)' && switch6.style.background == 'rgb(0, 0, 255)') {
     }
 
 }
@@ -486,4 +495,12 @@ export function createBlueLakes3(heightModifier, widthModifier) {
 
     localStorage.setItem('Blue Lakes', true);
 
+}
+
+export function openGateThree() {
+    const gate3 = document.querySelector('#gate3');
+    gate3.style.transition = 'transform 500ms ease-in-out';
+    gate3.style.transform = 'rotate(-180deg)';
+
+    console.log("gate 3 should be open");
 }
