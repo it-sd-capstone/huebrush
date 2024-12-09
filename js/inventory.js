@@ -260,12 +260,10 @@ export function getSlotArray() {
 }
 
 export function setSlotArray(inventoryString) {
-  console.log(inventoryString);
   let inventoryArray = inventoryString.split(",")
   let counter = 0
   
   inventoryArray.forEach(element => {
-    console.log(element);
     setSlot(counter,element);
     counter++
   });

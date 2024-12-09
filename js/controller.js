@@ -61,14 +61,12 @@ document.addEventListener('keydown', (e) => {
     let gate2 = document.querySelector('#gate2');
     if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
-          console.log("hello");
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';
           localStorage.setItem('warn', 1);
           let tutorialG = document.querySelector('#tutorialG');
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
-            console.log("opening gate 2");
             openGateTwo();
         } else if (localStorage.getItem('Current Level') == 3  && checkGateProximity(box, 3) && checkGateColor(box, 3)) {
             openGateThree();
@@ -221,8 +219,6 @@ function checkGateColor(box, levelNum) {
         left: newLeft,
         right: newLeft + boxRect.width,
     };
-
-    console.log(simulatedBox);
 
     
 
