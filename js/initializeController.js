@@ -10,7 +10,7 @@ import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
-import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3 } from './switches.js';
+import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3, openGateThree } from './switches.js';
 import { createMainMenu, createHintButton, createInfoButton } from './menu.js';
 
 export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
@@ -135,6 +135,7 @@ export function loadLevel(level) {
       createLevel4(1,1,50);
       openGateOne();
       openGateTwo();
+      openGateThree();
       spawnPlayer(1, 1, '440px', '500px');
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
