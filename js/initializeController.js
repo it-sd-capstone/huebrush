@@ -11,7 +11,7 @@ import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
 import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3 } from './switches.js';
-import { createMainMenu } from './menu.js';
+import { createMainMenu, createHintButton, createInfoButton } from './menu.js';
 
 export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
 export let troubleTribalsAudio = new Audio('music/Trouble with Tribals.mp3');
@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   createMainMenu();
+  createHintButton();
+  createInfoButton();
 });
 
 export function initializeGame() {
