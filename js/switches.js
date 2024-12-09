@@ -117,6 +117,7 @@ export function monitorSwitches(levelNum) {
                         pillar3.forEach(e => {
                             e.style.opacity = 1;
                         });
+                        openGateFour();
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 10:
