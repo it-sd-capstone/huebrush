@@ -218,7 +218,7 @@ export function setBoxColor() {
         case "x-teal":
         case "teal-x":
         case "teal-teal":
-            getBox.style.background = 'rgba(0, 192, 143, 1)';
+            getBox().style.background = 'rgba(0, 128, 128, 1)';
             break;
         case "red-blue":
         case "blue-red":

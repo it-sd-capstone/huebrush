@@ -68,7 +68,8 @@ document.addEventListener('keydown', (e) => {
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
             openGateTwo();
-        } else if (localStorage.getItem('Current Level') == 3  && checkGateProximity(box, 3) && checkGateColor(box, 3)) {
+        } else if (localStorage.getItem('Current Level') == 3  && checkGateColor(box, 3) && checkGateProximity(box, 3) ) {
+            console.log("opening gate 3");
             openGateThree();
         }
     }
@@ -112,21 +113,28 @@ function checkProximityAroundBox(box, radius) {
 }
 
 function checkGateProximity(box, levelNum) {
+    console.log("left"+parseInt(box.style.left));
+    console.log("top"+parseInt(box.style.top));
+
     if (levelNum == 1 && box.style.left == '780px') {
       return true;
     } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
       return true;
-    } else if (levelNum == 3 && parseInt(box.style.left) == 80 && parseInt(box.style.left) >= 450 && parseInt(box.style.top) <= 430)
+    } else if (levelNum == 3 && parseInt(box.style.left) == 80 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430)) {
+      console.log("within range");
       return true;
+    }
     return false;
 }
 
 function checkGateColor(box, levelNum) {
+    console.log("box"+box.style.background);
     if (levelNum == 1 && box.style.background == 'rgb(128, 0, 128)') {
         return true;
     }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
         return true;
-    } else if (levelNum == 3 && box.style.background == 'rgb(0, 192, 143)') {
+    } else if (levelNum == 3 && box.style.background == 'rgb(0, 128, 128)') {
+        console.log('right color');
         return true;
     }
     return false;

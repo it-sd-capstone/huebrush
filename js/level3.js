@@ -306,7 +306,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen, offscreenX)
   });
 
   const gate3 = createElement('div', 'gate3', ['gate3'], {
-    background: 'rgb(0,192,143)',
+    background: 'rgb(0,128,128)',
     width: `${widthModifier * 10}px`,
     height: `${heightModifier * 30}px`,
     top: `${heightModifier * 130}px`,
