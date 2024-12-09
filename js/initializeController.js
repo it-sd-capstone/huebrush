@@ -78,10 +78,6 @@ export function loadLevel(level) {
     magicScoutAudio.play();
   }
 
-  if (localStorage.getItem('tealLake' == '1')) {
-    createTealLake();
-  }
-
 
   switch (level) {
     case 1:
@@ -159,6 +155,10 @@ export function loadLevel(level) {
     default:
       console.error("Unknown level: ", level);
   }
+  if (localStorage.getItem('tealLake') == '1') {
+    createTealLake();
+  }
+  
   createMouseEnterDetection();
 }
 
