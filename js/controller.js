@@ -1,12 +1,12 @@
 import { getLevel1Objects } from './level1.js';
-import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
+import { createLevel2, createLevel2End, getLevel2Objects, openGateTwo } from './level2.js';
 import { createLevel3, createLevel3End, getLevel3Objects } from './level3.js';
 import { createLevel4, createLevel4End} from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut, levelYTransition, dropDown  } from './animation.js';
-import { createSwitches, monitorSwitches } from './switches.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
+import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
 
 //Watch for page activity
@@ -61,16 +61,19 @@ document.addEventListener('keydown', (e) => {
     let gate2 = document.querySelector('#gate2');
     if (e.code === 'KeyG') {
         if(parseInt(localStorage.getItem('Current Level')) == 1 && checkGateProximity(box, 1) && checkGateColor(box, 1)) {
-          console.log("hello");
           gate1.style.transform = 'rotate(-180deg)';
           gate1.style.transformOrigin = 'top right';
           localStorage.setItem('warn', 1);
           let tutorialG = document.querySelector('#tutorialG');
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
-          console.log("hello");
-          gate2.style.transform = 'rotate(-180deg)';
-          gate2.style.transformOrigin = 'bottom left';
+            openGateTwo();
+        } else if (localStorage.getItem('Current Level') == 3  && checkGateColor(box, 3) && checkGateProximity(box, 3) ) {
+            console.log("opening gate 3");
+            openGateThree();
+        } else if (localStorage.getItem('Current Level') == 4 && checkGateColor(box, 4) && checkGateProximity(box, 4)) {
+            console.log("opening 4");
+            openGateFour();
         }
     }
 });
@@ -113,18 +116,32 @@ function checkProximityAroundBox(box, radius) {
 }
 
 function checkGateProximity(box, levelNum) {
+    console.log("left"+parseInt(box.style.left));
+    console.log("top"+parseInt(box.style.top));
+
     if (levelNum == 1 && box.style.left == '780px') {
       return true;
     } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
       return true;
+    } else if (levelNum == 3 && parseInt(box.style.left) == 80 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430)) {
+      return true;
+    } else if (levelNum == 4 && parseInt(box.style.left) == 70 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430) && isSequenceCorrect()) {
+        console.log("within range");
+        return true;
     }
     return false;
 }
 
 function checkGateColor(box, levelNum) {
+    console.log("box"+box.style.background);
     if (levelNum == 1 && box.style.background == 'rgb(128, 0, 128)') {
         return true;
     }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
+        return true;
+    } else if (levelNum == 3 && box.style.background == 'rgb(0, 128, 128)') {
+        return true;
+    } else if (levelNum == 4) {
+        console.log('right color');
         return true;
     }
     return false;

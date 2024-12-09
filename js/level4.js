@@ -86,7 +86,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar1FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar1Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -169,7 +169,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar2FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar2Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -258,7 +258,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar3FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar3Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -359,7 +359,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar4FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar4Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -493,7 +493,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar5FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar5Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -627,7 +627,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     ];
 
     pillar6FillConfig.forEach(({ id, width, height, top, left}) => {
-      const pillar = createElement('div', id, ['wallSolid'], {
+      const pillar = createElement('div', id, ['pillar6Fill'], {
         background: `red`,
         boxSizing: `border-box`,
         border: `1px solid white`,
@@ -668,6 +668,15 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
   pillar6.appendChild(pillar6Fill);
   pillar6.appendChild(pillar6Border);
 
+  const gate4 = createElement('div', 'gate4', ['gate4'], {
+    backgroundImage: 'linear-gradient(to top, red, orange, yellow, green, blue, indigo, violet)',
+    width: `${widthModifier * 10}px`,
+    height: `${heightModifier * 30}px`,
+    top: `${heightModifier * 130}px`,
+    left: `${widthModifier * 60}px`,
+    position: 'absolute'
+  });
+  gate4.classList.add('wallSolid');
 
   level4.appendChild(wallBlack4);
   level4.appendChild(pillar1);
@@ -676,6 +685,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
   level4.appendChild(pillar4);
   level4.appendChild(pillar5);
   level4.appendChild(pillar6);
+  level4.appendChild(gate4);
 
 
   playArea.appendChild(level4);

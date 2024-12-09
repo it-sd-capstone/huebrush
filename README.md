@@ -172,6 +172,51 @@ Don't forget to give the project a star! Thanks again!
   <img src="https://contrib.rocks/image?repo=it-sd-capstone/huebrush" alt="contrib.rocks image" />
 </a>
 
+<!-- License -->
+## Licenses Used
+<p>Use of the following is done only in an educational environment. 
+None of the following assets have been used for commersial good.
+No changes have been made to the original content.</p>
+
+<p>
+*****************************************************************************/
+*    Title: Northern Glade
+*    Author: MacLeod, K
+*    Date: 
+*    Availability: https://incompetech.com/music/royalty-free/music.html
+*    License: 
+"Northern Glade" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+****************************************************************************/
+</p> 
+
+<p>
+*****************************************************************************/
+*    Title: Trouble with Tribals
+*    Author: MacLeod, K
+*    Date: 
+*    Availability: https://incompetech.com/music/royalty-free/music.html
+*    License: 
+"Northern Glade" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+****************************************************************************/
+</p> 
+
+<p>
+*****************************************************************************/
+*    Title: Game Icons
+*    Author: Kenney
+*    Date: 03/11/2014
+*    Availability: https://www.kenney.nl/assets/game-icons
+*    License: Creative Commons CC0
+****************************************************************************/
+</p> 
+
+
+[![LinkedIn][linkedin-shield]][linkedin-url-david]
+
 <!-- CONTACT -->
 ## Contact
 <p>Skyler Godfrey - sgodfrey@cvtc.edu</p> 

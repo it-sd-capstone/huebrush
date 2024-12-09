@@ -306,11 +306,12 @@ export function createLevel3(widthModifier,heightModifier,offscreen, offscreenX)
   });
 
   const gate3 = createElement('div', 'gate3', ['gate3'], {
-    background: 'rgb(0,192,143)',
+    background: 'rgb(0,128,128)',
     width: `${widthModifier * 10}px`,
     height: `${heightModifier * 30}px`,
     top: `${heightModifier * 130}px`,
     left: `${widthModifier * 30}px`,
+    position: 'absolute',
   });
   gate3.classList.add('wallSolid');
 
@@ -321,7 +322,7 @@ export function createLevel3(widthModifier,heightModifier,offscreen, offscreenX)
   level3.appendChild(factoryTop);
   level3.appendChild(beacon);
   level3.appendChild(wires);
-  //level3.appendChild(gate3);
+  level3.appendChild(gate3);
  
 
   playArea.appendChild(level3);

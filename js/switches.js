@@ -1,3 +1,5 @@
+import { createTealLake } from "./level1.js";
+
 function createSwitch(id, heightModifier, widthModifier, topFactor, leftFactor, background) {
     const switchDiv = document.createElement('div');
     switchDiv.classList.add('switch');
@@ -18,7 +20,7 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level3 = document.querySelector('#level3');
 
         const switches = [
-            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0)'),
+            //createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0)'),
             createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0)'),
             createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0)'),
             createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0)'),
@@ -32,19 +34,27 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level4 = document.querySelector('#level4');
 
         const switches = [
-            createSwitch('switch7', heightModifier, widthModifier, 55, 70, 'rgba(255, 0, 0, 1)'),
-            createSwitch('switch8', heightModifier, widthModifier, 85, 70, 'rgba(0, 0, 255, 1)'),
-            createSwitch('switch9', heightModifier, widthModifier, 115, 70, 'rgba(255, 255, 0, 1)'),
-            createSwitch('switch10', heightModifier, widthModifier, 160, 70, 'rgba(128, 0, 128, 1)'),
-            createSwitch('switch11', heightModifier, widthModifier, 190, 70, 'rgba(0, 128, 0, 1)'),
-            createSwitch('switch12', heightModifier, widthModifier, 220, 70, 'rgba(255, 165, 0, 1)')
+            createSwitch('switch7', heightModifier, widthModifier, 55, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch8', heightModifier, widthModifier, 85, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch9', heightModifier, widthModifier, 115, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch10', heightModifier, widthModifier, 160, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch11', heightModifier, widthModifier, 190, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch12', heightModifier, widthModifier, 220, 70, 'rgba(128, 128, 128, 0.2)')
         ];
 
         switches.forEach((sw) => level4.appendChild(sw));
     }
 }
 
+let level4Password = [false, false, false, false, false, false];
+
 export function monitorSwitches(levelNum) {
+    const pillar1 = document.querySelectorAll('.pillar1Fill');
+    const pillar2 = document.querySelectorAll('.pillar2Fill');
+    const pillar3 = document.querySelectorAll('.pillar3Fill');
+    const pillar4 = document.querySelectorAll('.pillar4Fill');
+    const pillar5 = document.querySelectorAll('.pillar5Fill');
+    const pillar6 = document.querySelectorAll('.pillar6Fill');
     const box = document.querySelector('#myBox');
     const switches = document.querySelectorAll('.switch');
     let heightModifier;
@@ -56,63 +66,113 @@ export function monitorSwitches(levelNum) {
         heightModifier = 1;
         widthModifier = 0.5;
     }
-
-    for (let i = 0; i < switches.length; i++) {
+    for (let i = 0; i < switches.length+2; i++) {
         let id = i+1;
+        
         let string = 'switch';
         let switchId = string+id;
         const switchX = document.querySelector(`#${switchId}`)
-        if (isOverlapping(box, switchX ) && (colorMatches(box, switchX) || id == 1)) {
-            switches[i].style.background = updateAlpha(switches[i].style.background, 1);
-            console.log(i);
-            switch (i) {
-                case 0:
-                    break;
+
+        const switch5 = document.querySelector('#switch5');
+        const switch6 = document.querySelector('#switch6');
+        if (isOverlapping(box, switchX )) {
+            switch (id) {
                 case 1:
-                    createRedLakes3(heightModifier, widthModifier);
                     break;
                 case 2:
-                    createYellowLakes3(heightModifier, widthModifier);
+                    if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
                     break;
                 case 3:
-                    createBlueLakes3(heightModifier, widthModifier);
+                    if (colorMatches(box, switchX)) createYellowLakes3(heightModifier, widthModifier);
                     break;
                 case 4:
-                    switches[i].style.background = 'rgba(0, 128, 0, 1)';
+                    if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 5:
-                    switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 6:
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 case 7:
+                    if (level4Password[3]) {
+                        level4Password[4] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                        pillar1.forEach(e => {
+                            e.style.opacity = 1;
+                        });
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 8:
+                    level4Password[0] = true;
+                    switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    pillar2.forEach(e => {
+                        e.style.opacity = 1;
+                    });
                     break;
                 case 9:
+                    if (level4Password[4]) {
+                        level4Password[5] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                        pillar3.forEach(e => {
+                            e.style.opacity = 1;
+                        });
+                        openGateFour();
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
-                case 10: 
+                case 10:
+                    if (level4Password[1]) {
+                        level4Password[2] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                        pillar4.forEach(e => {
+                            e.style.opacity = 1;
+                        });
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 11: 
+                    if (level4Password[0] == true) {
+                        console.log("level4password0:"+level4Password[0])
+                        level4Password[1] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                        pillar5.forEach(e => {
+                            e.style.opacity = 1;
+                        });
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
+                    break;
+                case 12:
+                    if (level4Password[2]) {
+                        level4Password[3] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                        pillar6.forEach(e => {
+                            e.style.opacity = 1;
+                        });
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password); 
                     break;
                 deafault:
                     break;
+                
+
             }
         }
+    }
+    if (switch5.style.background == 'rgb(0, 128, 0)' && switch6.style.background == 'rgb(0, 0, 255)') {
+        createTealLake();
     }
 
 }
 
 function isOverlapping(box, switchX) {
     const boxRect = box.getBoundingClientRect();
-    const switchRect = switchX.getBoundingClientRect();
+    if (switchX){
+        const switchRect = switchX.getBoundingClientRect();
 
-    return !(
-        boxRect.right < switchRect.left ||
-        boxRect.left > switchRect.right ||
-        boxRect.bottom < switchRect.top ||
-        boxRect.top > switchRect.bottom
-    );
+        return !(
+            boxRect.right < switchRect.left ||
+            boxRect.left > switchRect.right ||
+            boxRect.bottom < switchRect.top ||
+            boxRect.top > switchRect.bottom
+        );
+    } else return false;
 }
 
 function updateAlpha(color, newAlpha) {
@@ -152,6 +212,49 @@ function colorMatches(box, switchX) {
 
     if (sR == bR && sG == bG && sB == bB) return true;
     return false;
+}
+
+function resetArrayAndSwitches(switchX, level4Password) {
+    for (let i = 0; i < level4Password.length; i++) {
+        level4Password[i] = false;
+    }
+
+    for (let i = 7; i < 13; i++) {
+        let id = i; 
+        let string = 'switch';
+        let switchId = string+id;
+
+        const switchToClear = document.querySelector(`#${switchId}`);
+        switchToClear.style.background = 'rgba(128, 128, 128, 0.2)';
+    }
+
+    const pillar1 = document.querySelectorAll('.pillar1Fill');
+    const pillar2 = document.querySelectorAll('.pillar2Fill');
+    const pillar3 = document.querySelectorAll('.pillar3Fill');
+    const pillar4 = document.querySelectorAll('.pillar4Fill');
+    const pillar5 = document.querySelectorAll('.pillar5Fill');
+    const pillar6 = document.querySelectorAll('.pillar6Fill');
+
+    pillar1.forEach(e => {
+        e.style.opacity = 0;
+    });
+    pillar2.forEach(e => {
+        e.style.opacity = 0;
+    });
+    pillar3.forEach(e => {
+        e.style.opacity = 0;
+    });
+    pillar4.forEach(e => {
+        e.style.opacity = 0;
+    });
+    pillar5.forEach(e => {
+        e.style.opacity = 0;
+    });
+    pillar6.forEach(e => {
+        e.style.opacity = 0;
+    });
+
+    return level4Password;
 }
 
 export function createRedLakes3(heightModifier, widthModifier) {
@@ -380,4 +483,25 @@ export function createBlueLakes3(heightModifier, widthModifier) {
 
     localStorage.setItem('Blue Lakes', true);
 
+}
+
+export function openGateThree() {
+    const gate3 = document.querySelector('#gate3');
+    gate3.style.transition = 'transform 500ms ease-in-out';
+    gate3.style.transform = 'rotate(-180deg)';
+    console.log("gate 3 should be open");
+}
+
+export function openGateFour() {
+    const gate4 = document.querySelector('#gate4');
+    gate4.style.transition = 'transform 500ms ease-in-out';
+    gate4.style.transform = 'rotate(-180deg)';
+    console.log("gate 4 should be open");
+}
+
+export function isSequenceCorrect() {
+    for (let i = 0; i < level4Password.length; i++) {
+        if (!level4Password[i]) return false;
+    }
+    return true;
 }

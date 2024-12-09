@@ -1,4 +1,4 @@
-import { createLevel1, createLevel1End, openGateOne } from './level1.js';
+import { createLevel1, createLevel1End, createTealLake, openGateOne } from './level1.js';
 import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
 import { createLevel3, createLevel3End } from './level3.js';
 import { createLevel4, createLevel4End } from './level4.js';
@@ -10,8 +10,8 @@ import { createAmmo } from './ammo.js';
 import { createProjectile } from './ammo.js';
 import { chaseBox, enemyLife } from './controller.js';
 import { createMouseEnterDetection } from './inventory.js';
-import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3 } from './switches.js';
-import { createMainMenu } from './menu.js';
+import { createSwitches, monitorSwitches, createRedLakes3, createYellowLakes3, createBlueLakes3, openGateThree } from './switches.js';
+import { createMainMenu, createHintButton, createInfoButton } from './menu.js';
 
 export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
 export let troubleTribalsAudio = new Audio('music/Trouble with Tribals.mp3');
@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   createMainMenu();
+  createHintButton();
+  createInfoButton();
 });
 
 export function initializeGame() {
@@ -137,6 +139,7 @@ export function loadLevel(level) {
       createLevel4(1,1,50);
       openGateOne();
       openGateTwo();
+      openGateThree();
       spawnPlayer(1, 1, '440px', '500px');
       createAmmo('rgba(128,128,128,0.35)', level);
       createProjectile('rgba(0,0,0,0)', level);
@@ -156,6 +159,10 @@ export function loadLevel(level) {
     default:
       console.error("Unknown level: ", level);
   }
+  if (localStorage.getItem('tealLake') == '1') {
+    createTealLake();
+  }
+  
   createMouseEnterDetection();
 }
 

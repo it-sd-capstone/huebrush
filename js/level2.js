@@ -715,6 +715,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
       height: `${heightModifier * 30}px`,
       top: `${heightModifier * 220}px`,
       left: `${widthModifier * 430}px`,
+      position: 'absolute',
     });
     gate2.classList.add('wallSolid');
 
@@ -803,6 +804,7 @@ export function getLevel2Objects() {
 
 export function openGateTwo() {
   let gate2 = document.querySelector('#gate2');
+  gate2.style.transition = 'transform 500ms ease-in-out';
   gate2.style.transform = 'rotate(-180deg)';
-  gate2.style.transformOrigin = 'bottom left'; 
+  console.log("gate 2 should be open");
 }
