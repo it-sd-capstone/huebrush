@@ -66,8 +66,7 @@ export function monitorSwitches(levelNum) {
         heightModifier = 1;
         widthModifier = 0.5;
     }
-
-    for (let i = 0; i < switches.length; i++) {
+    for (let i = 0; i < switches.length+2; i++) {
         let id = i+1;
         
         let string = 'switch';
@@ -156,6 +155,7 @@ export function monitorSwitches(levelNum) {
         }
     }
     if (switch5.style.background == 'rgb(0, 128, 0)' && switch6.style.background == 'rgb(0, 0, 255)') {
+        createTealLake();
     }
 
 }
@@ -171,8 +171,7 @@ function isOverlapping(box, switchX) {
             boxRect.bottom < switchRect.top ||
             boxRect.top > switchRect.bottom
         );
-    }
-    return false;
+    } else return false;
 }
 
 function updateAlpha(color, newAlpha) {
