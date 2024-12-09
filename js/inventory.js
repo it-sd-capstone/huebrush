@@ -194,6 +194,8 @@ export function setBoxColor() {
     let color1 = slot[getCurrentColorQ()];
     let color2 = slot[getCurrentColorE()];
 
+    console.log(color1, '-', color2)
+
     switch (color1 + '-' + color2) {
         case "x-x":
             getBox().style.background = 'rgba(128, 128, 128, 1)';
@@ -216,7 +218,8 @@ export function setBoxColor() {
         case "x-teal":
         case "teal-x":
         case "teal-teal":
-            getBox.style.background = 'rgba(0, 192, 143, 1)'
+            getBox.style.background = 'rgba(0, 192, 143, 1)';
+            break;
         case "red-blue":
         case "blue-red":
             getBox().style.background = 'rgba(128, 0, 128, 1)';
@@ -232,12 +235,14 @@ export function setBoxColor() {
         case "red-teal":
         case "teal-red":
             getBox().style.background = 'rgba(128, 97, 71, 1)';
+            break;
         case "yellow-teal":
         case "teal-yellow":
             getBox().style.background = 'rgba(128, 255, 71, 1)';
         case "blue-teal":
         case "teal-blue":
-            getBox().style.background = 'rgba(0, 97, 199, 1)';    
+            getBox().style.background = 'rgba(0, 97, 199, 1)';
+            break;    
         default:
             break;
         
