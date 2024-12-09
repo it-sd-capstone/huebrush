@@ -6,7 +6,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
-import { createSwitches, monitorSwitches } from './switches.js';
+import { createSwitches, monitorSwitches, openGateThree } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
 
 //Watch for page activity
@@ -70,6 +70,8 @@ document.addEventListener('keydown', (e) => {
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
             console.log("opening gate 2");
             openGateTwo();
+        } else if (localStorage.getItem('Current Level') == 3  && checkGateProximity(box, 3) && checkGateColor(box, 3)) {
+            openGateThree();
         }
     }
 });
@@ -116,7 +118,8 @@ function checkGateProximity(box, levelNum) {
       return true;
     } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
       return true;
-    }
+    } else if (levelNum == 3 && parseInt(box.style.left) == 80 && parseInt(box.style.left) >= 450 && parseInt(box.style.top) <= 430)
+      return true;
     return false;
 }
 
@@ -124,6 +127,8 @@ function checkGateColor(box, levelNum) {
     if (levelNum == 1 && box.style.background == 'rgb(128, 0, 128)') {
         return true;
     }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
+        return true;
+    } else if (levelNum == 3 && box.style.background == 'rgb(0, 192, 143)') {
         return true;
     }
     return false;
@@ -216,6 +221,8 @@ function checkGateColor(box, levelNum) {
         left: newLeft,
         right: newLeft + boxRect.width,
     };
+
+    console.log(simulatedBox);
 
     
 

@@ -69,9 +69,13 @@ export function monitorSwitches(levelNum) {
 
     for (let i = 0; i < switches.length; i++) {
         let id = i+1;
+        
         let string = 'switch';
         let switchId = string+id;
         const switchX = document.querySelector(`#${switchId}`)
+
+        const switch5 = document.querySelector('#switch5');
+        const switch6 = document.querySelector('#switch6');
         if (isOverlapping(box, switchX )) {
             switch (id) {
                 case 1:
@@ -86,11 +90,10 @@ export function monitorSwitches(levelNum) {
                     if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 5:
-                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 128, 0, 1)';
-                    createTealLake();
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 6:
-                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 case 7:
                     if (level4Password[3]) {
@@ -147,22 +150,29 @@ export function monitorSwitches(levelNum) {
                     break;
                 deafault:
                     break;
+                
+
             }
         }
+    }
+    if (switch5.style.background == 'rgb(0, 128, 0)' && switch6.style.background == 'rgb(0, 0, 255)') {
     }
 
 }
 
 function isOverlapping(box, switchX) {
     const boxRect = box.getBoundingClientRect();
-    const switchRect = switchX.getBoundingClientRect();
+    if (switchX){
+        const switchRect = switchX.getBoundingClientRect();
 
-    return !(
-        boxRect.right < switchRect.left ||
-        boxRect.left > switchRect.right ||
-        boxRect.bottom < switchRect.top ||
-        boxRect.top > switchRect.bottom
-    );
+        return !(
+            boxRect.right < switchRect.left ||
+            boxRect.left > switchRect.right ||
+            boxRect.bottom < switchRect.top ||
+            boxRect.top > switchRect.bottom
+        );
+    }
+    return false;
 }
 
 function updateAlpha(color, newAlpha) {
@@ -489,4 +499,11 @@ export function createBlueLakes3(heightModifier, widthModifier) {
 
     localStorage.setItem('Blue Lakes', true);
 
+}
+
+export function openGateThree() {
+    const gate3 = document.querySelector('#gate3');
+    gate3.style.transition = 'transform 500ms ease-in-out';
+    gate3.style.transform = 'rotate(-180deg)';
+    console.log("gate 3 should be open");
 }
