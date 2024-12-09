@@ -18,7 +18,7 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level3 = document.querySelector('#level3');
 
         const switches = [
-            createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(128, 128, 128, 0)'),
+            //createSwitch('switch1', heightModifier, widthModifier, 20, 485, 'rgba(230, 200, 120, 0)'),
             createSwitch('switch2', heightModifier, widthModifier, 250, 430, 'rgba(255, 0, 0, 0)'),
             createSwitch('switch3', heightModifier, widthModifier, 60, 250, 'rgba(255, 255, 0, 0)'),
             createSwitch('switch4', heightModifier, widthModifier, 270, 100, 'rgba(0, 0, 255, 0)'),
