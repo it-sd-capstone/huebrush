@@ -668,6 +668,14 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
   pillar6.appendChild(pillar6Fill);
   pillar6.appendChild(pillar6Border);
 
+  const gate4 = createElement('div', 'gate4', ['gate4'], {
+    backgroundImage: 'linear-gradient(to top, red, orange, yellow, green, blue, indigo, violet)',
+    width: `${widthModifier * 10}px`,
+    height: `${heightModifier * 30}px`,
+    top: `${heightModifier * 130}px`,
+    left: `${widthModifier * 60}px`,
+  });
+  gate4.classList.add('wallSolid');
 
   level4.appendChild(wallBlack4);
   level4.appendChild(pillar1);
@@ -676,6 +684,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
   level4.appendChild(pillar4);
   level4.appendChild(pillar5);
   level4.appendChild(pillar6);
+  level4.appendChild(gate4);
 
 
   playArea.appendChild(level4);
