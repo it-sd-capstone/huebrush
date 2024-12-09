@@ -1,3 +1,5 @@
+import { createTealLake } from "./level1.js";
+
 function createSwitch(id, heightModifier, widthModifier, topFactor, leftFactor, background) {
     const switchDiv = document.createElement('div');
     switchDiv.classList.add('switch');

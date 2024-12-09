@@ -471,7 +471,7 @@ export function createLevel1(widthModifier,heightModifier) {
     ];
 
     cratesConfig.forEach(({ id, top, left }) => {
-      const crate = createElement('div', id, ['wallSolid'], {
+      const crate = createElement('div', id, ['wallSolid', 'crate'], {
         background: 'orange',
         width: `${widthModifier * 10}px`,
         height: `${heightModifier * 10}px`,
@@ -645,7 +645,6 @@ export function createLevel1(widthModifier,heightModifier) {
     levelStack[object].style.zIndex = '2';
     levelStack[object].style.position = 'absolute';
   }
-  
 }
 
 export function createLevel1End(){
@@ -689,6 +688,45 @@ export function openGateOne() {
   let gate1 = document.querySelector('#gate1');
     gate1.style.transform = 'rotate(-180deg)';
     gate1.style.transformOrigin = 'top right'; 
+}
+
+export function createTealLake() {
+  let crates = document.querySelectorAll('.crate');
+
+  crates.forEach((crate) => crate.remove());
+
+  const lakeTeal = createElement('div', 'lakeTeal', ['lake']);
+
+    const lakeTealConfig = [
+      { id: 'lakeTeal1', 
+        width: `70px`, 
+        height: `40px`, 
+        top: `230px`, 
+        left: `160px` 
+      },
+      { id: 'lakeTeal2', 
+        width: `30px`, 
+        height: `10px`, 
+        top: `270px`, 
+        left: `180px` 
+      },
+    ];
+
+    lakeTealConfig.forEach(({ id, width, height, top, left }) => {
+      const lake = createElement('div', id, ['lake'], {
+        background: 'rgb(0, 192, 143)',
+        width,
+        height,
+        top,
+        left,
+        zIndex: '2',
+        position: 'absolute'
+      });
+      lakeTeal.appendChild(lake);
+    });
+
+    let level1 = document.querySelector('#level1');
+    level1.appendChild(lakeTeal);
 }
 
 
