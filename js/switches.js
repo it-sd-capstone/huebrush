@@ -98,7 +98,7 @@ export function monitorSwitches(levelNum) {
                     if (level4Password[3]) {
                         level4Password[4] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
-                        pillar5.forEach(e => {
+                        pillar1.forEach(e => {
                             e.style.opacity = 1;
                         });
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
@@ -106,7 +106,7 @@ export function monitorSwitches(levelNum) {
                 case 8:
                     level4Password[0] = true;
                     switchX.style.background = updateAlpha(switchX.style.background, 1);
-                    pillar1.forEach(e => {
+                    pillar2.forEach(e => {
                         e.style.opacity = 1;
                     });
                     break;
@@ -114,7 +114,7 @@ export function monitorSwitches(levelNum) {
                     if (level4Password[4]) {
                         level4Password[5] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
-                        pillar6.forEach(e => {
+                        pillar3.forEach(e => {
                             e.style.opacity = 1;
                         });
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
@@ -123,7 +123,7 @@ export function monitorSwitches(levelNum) {
                     if (level4Password[1]) {
                         level4Password[2] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
-                        pillar3.forEach(e => {
+                        pillar4.forEach(e => {
                             e.style.opacity = 1;
                         });
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
@@ -133,7 +133,7 @@ export function monitorSwitches(levelNum) {
                         console.log("level4password0:"+level4Password[0])
                         level4Password[1] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
-                        pillar2.forEach(e => {
+                        pillar5.forEach(e => {
                             e.style.opacity = 1;
                         });
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
@@ -142,7 +142,7 @@ export function monitorSwitches(levelNum) {
                     if (level4Password[2]) {
                         level4Password[3] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
-                        pillar4.forEach(e => {
+                        pillar6.forEach(e => {
                             e.style.opacity = 1;
                         });
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password); 
