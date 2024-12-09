@@ -714,7 +714,7 @@ export function createTealLake() {
 
     lakeTealConfig.forEach(({ id, width, height, top, left }) => {
       const lake = createElement('div', id, ['lake'], {
-        background: 'rgb(0, 192, 143)',
+        background: 'teal',
         width,
         height,
         top,
