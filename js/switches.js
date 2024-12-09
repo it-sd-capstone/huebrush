@@ -77,7 +77,6 @@ export function monitorSwitches(levelNum) {
         if (isOverlapping(box, switchX )) {
             switch (id) {
                 case 1:
-                    switchX.style.background = updateAlpha(switchX.style.background, 1);
                     break;
                 case 2:
                     if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
@@ -161,14 +160,17 @@ export function monitorSwitches(levelNum) {
 
 function isOverlapping(box, switchX) {
     const boxRect = box.getBoundingClientRect();
-    const switchRect = switchX.getBoundingClientRect();
+    if (switchX){
+        const switchRect = switchX.getBoundingClientRect();
 
-    return !(
-        boxRect.right < switchRect.left ||
-        boxRect.left > switchRect.right ||
-        boxRect.bottom < switchRect.top ||
-        boxRect.top > switchRect.bottom
-    );
+        return !(
+            boxRect.right < switchRect.left ||
+            boxRect.left > switchRect.right ||
+            boxRect.bottom < switchRect.top ||
+            boxRect.top > switchRect.bottom
+        );
+    }
+    return false;
 }
 
 function updateAlpha(color, newAlpha) {
@@ -501,6 +503,5 @@ export function openGateThree() {
     const gate3 = document.querySelector('#gate3');
     gate3.style.transition = 'transform 500ms ease-in-out';
     gate3.style.transform = 'rotate(-180deg)';
-
     console.log("gate 3 should be open");
 }
