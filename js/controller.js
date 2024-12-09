@@ -6,7 +6,7 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
-import { createSwitches, monitorSwitches, openGateThree } from './switches.js';
+import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
 
 //Watch for page activity
@@ -71,6 +71,9 @@ document.addEventListener('keydown', (e) => {
         } else if (localStorage.getItem('Current Level') == 3  && checkGateColor(box, 3) && checkGateProximity(box, 3) ) {
             console.log("opening gate 3");
             openGateThree();
+        } else if (localStorage.getItem('Current Level') == 4 && checkGateColor(box, 4) && checkGateProximity(box, 4)) {
+            console.log("opening 4");
+            openGateFour();
         }
     }
 });
@@ -121,8 +124,10 @@ function checkGateProximity(box, levelNum) {
     } else if (levelNum == 2 && box.style.left == '920px' && box.style.top >= '440px' && box.style.top <= '480px') {
       return true;
     } else if (levelNum == 3 && parseInt(box.style.left) == 80 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430)) {
-      console.log("within range");
       return true;
+    } else if (levelNum == 4 && parseInt(box.style.left) == 70 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430) && isSequenceCorrect()) {
+        console.log("within range");
+        return true;
     }
     return false;
 }
@@ -134,6 +139,8 @@ function checkGateColor(box, levelNum) {
     }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
         return true;
     } else if (levelNum == 3 && box.style.background == 'rgb(0, 128, 128)') {
+        return true;
+    } else if (levelNum == 4) {
         console.log('right color');
         return true;
     }

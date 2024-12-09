@@ -674,6 +674,7 @@ export function createLevel4(widthModifier,heightModifier,offscreen, leftoffscre
     height: `${heightModifier * 30}px`,
     top: `${heightModifier * 130}px`,
     left: `${widthModifier * 60}px`,
+    position: 'absolute'
   });
   gate4.classList.add('wallSolid');
 

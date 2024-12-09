@@ -218,20 +218,6 @@ function resetArrayAndSwitches(switchX, level4Password) {
         level4Password[i] = false;
     }
 
-    const x = document.createElement('div');
-    x.id = 'X';
-    x.style.color = 'rgba(255, 0, 0, 1)';
-    x.style.top = '-15px';
-    x.style.left = '0px';
-    x.style.width = '15px';
-    x.style.height = '15px';
-    x.innerText = 'X';
-    switchX.appendChild(x);
-    setTimeout(function()
-    {
-        x.remove();       
-    }, 50);
-
     for (let i = 7; i < 13; i++) {
         let id = i; 
         let string = 'switch';
@@ -266,8 +252,6 @@ function resetArrayAndSwitches(switchX, level4Password) {
     pillar6.forEach(e => {
         e.style.opacity = 0;
     });
-
-
 
     return level4Password;
 }
@@ -505,4 +489,18 @@ export function openGateThree() {
     gate3.style.transition = 'transform 500ms ease-in-out';
     gate3.style.transform = 'rotate(-180deg)';
     console.log("gate 3 should be open");
+}
+
+export function openGateFour() {
+    const gate4 = document.querySelector('#gate4');
+    gate4.style.transition = 'transform 500ms ease-in-out';
+    gate4.style.transform = 'rotate(-180deg)';
+    console.log("gate 4 should be open");
+}
+
+export function isSequenceCorrect() {
+    for (let i = 0; i < level4Password.length; i++) {
+        if (!level4Password[i]) return false;
+    }
+    return true;
 }
