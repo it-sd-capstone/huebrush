@@ -1,3 +1,5 @@
+import { createTealLake } from "./level1.js";
+
 function createSwitch(id, heightModifier, widthModifier, topFactor, leftFactor, background) {
     const switchDiv = document.createElement('div');
     switchDiv.classList.add('switch');
@@ -85,6 +87,7 @@ export function monitorSwitches(levelNum) {
                     break;
                 case 5:
                     if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 128, 0, 1)';
+                    createTealLake();
                     break;
                 case 6:
                     if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 0, 255, 1)';
