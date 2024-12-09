@@ -69,6 +69,8 @@ document.addEventListener('keydown', (e) => {
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
           console.log("hello");
+          gate2.style.transform = '';
+          gate2.style.transition = 'transform 500ms ease-in-out'; // Ensure transition is set just before applying rotation
           gate2.style.transform = 'rotate(-180deg)';
           gate2.style.transformOrigin = 'bottom left';
         }

@@ -32,18 +32,19 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
         const level4 = document.querySelector('#level4');
 
         const switches = [
-            createSwitch('switch7', heightModifier, widthModifier, 55, 70, 'rgba(255, 0, 0, 1)'),
-            createSwitch('switch8', heightModifier, widthModifier, 85, 70, 'rgba(0, 0, 255, 1)'),
-            createSwitch('switch9', heightModifier, widthModifier, 115, 70, 'rgba(255, 255, 0, 1)'),
-            createSwitch('switch10', heightModifier, widthModifier, 160, 70, 'rgba(128, 0, 128, 1)'),
-            createSwitch('switch11', heightModifier, widthModifier, 190, 70, 'rgba(0, 128, 0, 1)'),
-            createSwitch('switch12', heightModifier, widthModifier, 220, 70, 'rgba(255, 165, 0, 1)')
+            createSwitch('switch7', heightModifier, widthModifier, 55, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch8', heightModifier, widthModifier, 85, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch9', heightModifier, widthModifier, 115, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch10', heightModifier, widthModifier, 160, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch11', heightModifier, widthModifier, 190, 70, 'rgba(128, 128, 128, 0.2)'),
+            createSwitch('switch12', heightModifier, widthModifier, 220, 70, 'rgba(128, 128, 128, 0.2)')
         ];
 
         switches.forEach((sw) => level4.appendChild(sw));
     }
 }
 
+let level4Password = [false, false, false, false, false, false];
 export function monitorSwitches(levelNum) {
     const box = document.querySelector('#myBox');
     const switches = document.querySelectorAll('.switch');
@@ -62,38 +63,60 @@ export function monitorSwitches(levelNum) {
         let string = 'switch';
         let switchId = string+id;
         const switchX = document.querySelector(`#${switchId}`)
-        if (isOverlapping(box, switchX ) && (colorMatches(box, switchX) || id == 1)) {
-            switches[i].style.background = updateAlpha(switches[i].style.background, 1);
-            console.log(i);
-            switch (i) {
-                case 0:
-                    break;
+        if (isOverlapping(box, switchX )) {
+            switch (id) {
                 case 1:
-                    createRedLakes3(heightModifier, widthModifier);
                     break;
                 case 2:
-                    createYellowLakes3(heightModifier, widthModifier);
+                    if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
                     break;
                 case 3:
-                    createBlueLakes3(heightModifier, widthModifier);
+                    if (colorMatches(box, switchX)) createYellowLakes3(heightModifier, widthModifier);
                     break;
                 case 4:
-                    switches[i].style.background = 'rgba(0, 128, 0, 1)';
+                    if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 5:
-                    switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    switches[i].style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 6:
+                    switches[i].style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 case 7:
+                    if (level4Password[3]) {
+                        level4Password[4] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 8:
+                    level4Password[0] = true;
+                    console.log(level4Password[0]);
+                    switchX.style.background = updateAlpha(switchX.style.background, 1);
                     break;
                 case 9:
+                    if (level4Password[4]) {
+                        level4Password[5] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
-                case 10: 
+                case 10:
+                    if (level4Password[1]) {
+                        level4Password[2] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 11: 
+                    if (level4Password[0] == true) {
+                        console.log("level4password0:"+level4Password[0])
+                        level4Password[1] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password);
+                    break;
+                case 12:
+                    if (level4Password[2]) {
+                        level4Password[3] = true;
+                        switchX.style.background = updateAlpha(switchX.style.background, 1);
+                    } else level4Password = resetArrayAndSwitches(switchX, level4Password); 
                     break;
                 deafault:
                     break;
@@ -152,6 +175,37 @@ function colorMatches(box, switchX) {
 
     if (sR == bR && sG == bG && sB == bB) return true;
     return false;
+}
+
+function resetArrayAndSwitches(switchX, level4Password) {
+    for (let i = 0; i < level4Password.length; i++) {
+        level4Password[i] = false;
+    }
+
+    const x = document.createElement('div');
+    x.id = 'X';
+    x.style.color = 'rgba(255, 0, 0, 1)';
+    x.style.top = '-15px';
+    x.style.left = '0px';
+    x.style.width = '15px';
+    x.style.height = '15px';
+    x.innerText = 'X';
+    switchX.appendChild(x);
+    setTimeout(function()
+    {
+        x.remove();       
+    }, 50);
+
+    for (let i = 7; i < 13; i++) {
+        let id = i; 
+        let string = 'switch';
+        let switchId = string+id;
+
+        const switchToClear = document.querySelector(`#${switchId}`);
+        switchToClear.style.background = 'rgba(128, 128, 128, 0.2)';
+    }
+
+    return level4Password;
 }
 
 export function createRedLakes3(heightModifier, widthModifier) {
