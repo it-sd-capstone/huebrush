@@ -93,10 +93,10 @@ footer .social-links a {
 }
 
 #gate2 {
-    transform: rotate(0deg);  /* Initial state */
-    transition: transform 500ms ease-in-out;
+    position: absolute;
     transform-origin: bottom left;
 }
+
 
 
 #switch1 {

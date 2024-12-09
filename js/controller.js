@@ -1,5 +1,5 @@
 import { getLevel1Objects } from './level1.js';
-import { createLevel2, createLevel2End, getLevel2Objects } from './level2.js';
+import { createLevel2, createLevel2End, getLevel2Objects, openGateTwo } from './level2.js';
 import { createLevel3, createLevel3End, getLevel3Objects } from './level3.js';
 import { createLevel4, createLevel4End} from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
@@ -68,11 +68,8 @@ document.addEventListener('keydown', (e) => {
           let tutorialG = document.querySelector('#tutorialG');
           fadeOut(tutorialG);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
-          console.log("hello");
-          gate2.style.transform = '';
-          gate2.style.transition = 'transform 500ms ease-in-out'; // Ensure transition is set just before applying rotation
-          gate2.style.transform = 'rotate(-180deg)';
-          gate2.style.transformOrigin = 'bottom left';
+            console.log("opening gate 2");
+            openGateTwo();
         }
     }
 });

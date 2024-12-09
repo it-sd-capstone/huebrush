@@ -84,10 +84,10 @@ export function monitorSwitches(levelNum) {
                     if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
                     break;
                 case 5:
-                    switches[i].style.background = 'rgba(0, 128, 0, 1)';
+                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 128, 0, 1)';
                     break;
                 case 6:
-                    switches[i].style.background = 'rgba(0, 0, 255, 1)';
+                    if (colorMatches(box, switchX)) switches[i].style.background = 'rgba(0, 0, 255, 1)';
                     break;
                 case 7:
                     if (level4Password[3]) {
