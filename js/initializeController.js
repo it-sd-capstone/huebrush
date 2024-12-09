@@ -1,4 +1,4 @@
-import { createLevel1, createLevel1End, openGateOne } from './level1.js';
+import { createLevel1, createLevel1End, createTealLake, openGateOne } from './level1.js';
 import { createLevel2, createLevel2End, openGateTwo } from './level2.js';
 import { createLevel3, createLevel3End } from './level3.js';
 import { createLevel4, createLevel4End } from './level4.js';
@@ -76,6 +76,10 @@ export function loadLevel(level) {
     magicScoutAudio.loop = true;
     magicScoutAudio.volume = 1.0;
     magicScoutAudio.play();
+  }
+
+  if (localStorage.getItem('tealLake' == '1')) {
+    createTealLake();
   }
 
 

@@ -691,6 +691,7 @@ export function openGateOne() {
 }
 
 export function createTealLake() {
+  localStorage.setItem('tealLake', 1);
   let crates = document.querySelectorAll('.crate');
 
   crates.forEach((crate) => crate.remove());
