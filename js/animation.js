@@ -50,10 +50,12 @@ export function levelXTransition(objects = [],currentLevel, newLevel, direction,
       // If we just divide myBox's width by 2, myBox ends up on a 5 instead of a 10 resulting in collision errors. So we need to divide by 10 to get to a decimal that can be rounded to the tenths place then times by ten to restore tens. 
       let newBoxLeft = (parseInt(myBox.style.left, 10) / 2);
       //Adding 9 to keep Ammo in the correct spot after transition. 
-      newBoxLeft = Math.round(newBoxLeft / 10) * 10 + 500 + 9;
+      newBoxLeft = Math.round(newBoxLeft / 10) * 10 + 500;
   
       let newAmmoLeft = (parseInt(ammo.style.left, 10) / 2);
-      newAmmoLeft = Math.round(newAmmoLeft / 10) * 10 + 500;
+      newAmmoLeft = Math.round(newAmmoLeft / 10) * 10 + 500 - 9;
+
+      myBox.style.left = `${newBoxLeft}px`;
   
       myBox.style.transition = `left ${speed}s ease, width ${speed}s ease`;
       myBox.style.left = `${newBoxLeft}px`;
