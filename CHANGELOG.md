@@ -1,7 +1,7 @@
 
 # Change Log
 
-## [Unreleased]
+## [v1.0.0]
 
 ### Added
 - Added Player Health that decrements when the enemy gets too close, allowing the player more time to react. [@Yams650](https://github.com/Yams650)
