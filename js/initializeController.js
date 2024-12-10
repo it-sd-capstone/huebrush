@@ -16,7 +16,6 @@ import { createMainMenu, createHintButton, createInfoButton } from './menu.js';
 export let magicScoutAudio = new Audio('music/Magic Scout - Nothern Glade.mp3');
 export let troubleTribalsAudio = new Audio('music/Trouble with Tribals.mp3');
 
-
 document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('Current Level') > 4) {
     localStorage.setItem('Current Level', 4);
@@ -155,6 +154,7 @@ export function loadLevel(level) {
     default:
       console.error("Unknown level: ", level);
   }
+
   if (localStorage.getItem('tealLake') == '1') {
     createTealLake();
   }

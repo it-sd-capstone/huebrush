@@ -6,8 +6,9 @@ import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
 import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
-import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect } from './switches.js';
+import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect, getGateThreeStatus, getGateFourStatus } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
+
 
 //Watch for page activity
 document.addEventListener('visibilitychange', () => {
@@ -69,10 +70,8 @@ document.addEventListener('keydown', (e) => {
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
             openGateTwo();
         } else if (localStorage.getItem('Current Level') == 3  && checkGateColor(box, 3) && checkGateProximity(box, 3) ) {
-            console.log("opening gate 3");
             openGateThree();
         } else if (localStorage.getItem('Current Level') == 4 && checkGateColor(box, 4) && checkGateProximity(box, 4)) {
-            console.log("opening 4");
             openGateFour();
         }
     }
@@ -116,8 +115,6 @@ function checkProximityAroundBox(box, radius) {
 }
 
 function checkGateProximity(box, levelNum) {
-    console.log("left"+parseInt(box.style.left));
-    console.log("top"+parseInt(box.style.top));
 
     if (levelNum == 1 && box.style.left == '780px') {
       return true;
@@ -126,14 +123,12 @@ function checkGateProximity(box, levelNum) {
     } else if (levelNum == 3 && parseInt(box.style.left) == 80 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430)) {
       return true;
     } else if (levelNum == 4 && parseInt(box.style.left) == 70 && (parseInt(box.style.left) <= 450 || parseInt(box.style.top) >= 430) && isSequenceCorrect()) {
-        console.log("within range");
         return true;
     }
     return false;
 }
 
 function checkGateColor(box, levelNum) {
-    console.log("box"+box.style.background);
     if (levelNum == 1 && box.style.background == 'rgb(128, 0, 128)') {
         return true;
     }  else if (levelNum == 2 && box.style.background == 'rgb(0, 128, 0)') {
@@ -141,31 +136,12 @@ function checkGateColor(box, levelNum) {
     } else if (levelNum == 3 && box.style.background == 'rgb(0, 128, 128)') {
         return true;
     } else if (levelNum == 4) {
-        console.log('right color');
         return true;
     }
     return false;
 }
 
-  // ##### TODO rework where color drain occurs ######
-  // function drainColor() {
-  //   let boxColorGrabber = window.getComputedStyle(box);
-  //   let boxColor = boxColorGrabber.backgroundColor;
-
-  //   if (opacity > 0) {
-  //     opacity -= 0.0;
-
-  //     let rgbValues = boxColor.match(/\d+/g); 
-  //     if (rgbValues) {
-  //       box.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${opacity})`;
-  //     }
-
-  //   } else if (opacity <= 0) {
-  //     console.log("Game Over");
-  //   }
-  // }
-
-  document.addEventListener('keydown', (e) => { 
+  document.addEventListener('keydown', (e) => {
     let box = document.querySelector('.myBox');
     let container = document.querySelector('.playArea');
     let wasdFade = localStorage.getItem('wasd');
@@ -234,8 +210,6 @@ function checkGateColor(box, levelNum) {
         left: newLeft,
         right: newLeft + boxRect.width,
     };
-
-    
 
     const walls = getObjectsRelativeToContainer(container, '.wallSolid');
     for (let wall of walls) {
@@ -323,7 +297,7 @@ function checkGateColor(box, levelNum) {
       );
       createSwitches(1, 1, 4);
       setInterval(function() {monitorSwitches(4); }, 500);
-      
+
     } else if (currentLevel >= 4) {
       createEndMenu();
       if (document.querySelector('.enemy')) {
@@ -334,6 +308,7 @@ function checkGateColor(box, levelNum) {
   
       localStorage.setItem('Current Level', currentLevel + 1);
   }
+
   });
 
   function isColliding(rect1, rect2) {
@@ -492,8 +467,6 @@ export function enemyLife() {
           projectile.style.background = 'rgba(0,0,0,0)';
           // Check if enemy is defeated
           if (enemy.enemyHealth <= 0) {
-            console.log("enemy was x: ", enemyX, "and y: " , enemyY)
-            console.log("Projectile was: ", projectileX, "and y: " , projectileY )
             createExplosion(enemy);
             onEnemyDefeat();
             enemy.remove();
@@ -536,7 +509,6 @@ function onEnemyDefeat() {
           magicScoutAudio.volume = Math.min(1.0, magicScoutAudio.volume + 0.1);
       } else {
           troubleTribalsAudio.pause();
-          clearInterval(interval);
       }
   }, 500);
 }

@@ -806,5 +806,4 @@ export function openGateTwo() {
   let gate2 = document.querySelector('#gate2');
   gate2.style.transition = 'transform 500ms ease-in-out';
   gate2.style.transform = 'rotate(-180deg)';
-  console.log("gate 2 should be open");
 }

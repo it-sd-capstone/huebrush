@@ -194,8 +194,6 @@ export function setBoxColor() {
     let color1 = slot[getCurrentColorQ()];
     let color2 = slot[getCurrentColorE()];
 
-    console.log(color1, '-', color2)
-
     switch (color1 + '-' + color2) {
         case "x-x":
             getBox().style.background = 'rgba(128, 128, 128, 1)';

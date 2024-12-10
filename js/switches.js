@@ -49,7 +49,6 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
 let level4Password = [false, false, false, false, false, false];
 
 export function monitorSwitches(levelNum) {
-    console.log("monitorSwitches is running");
     const pillar1 = document.querySelectorAll('.pillar1Fill');
     const pillar2 = document.querySelectorAll('.pillar2Fill');
     const pillar3 = document.querySelectorAll('.pillar3Fill');
@@ -82,15 +81,12 @@ export function monitorSwitches(levelNum) {
                     break;
                 case 2:
                     if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
-                    console.log("making red lakes");
                     break;
                 case 3:
                     if (colorMatches(box, switchX)) createYellowLakes3(heightModifier, widthModifier);
-                    console.log("making yellow lakes");
                     break;
                 case 4:
                     if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
-                    console.log("making blue lakes");
                     break;
                 case 5:
                     if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 128, 0, 1)';
@@ -122,6 +118,7 @@ export function monitorSwitches(levelNum) {
                             e.style.opacity = 1;
                         });
                         openGateFour();
+
                     } else level4Password = resetArrayAndSwitches(switchX, level4Password);
                     break;
                 case 10:
@@ -135,7 +132,6 @@ export function monitorSwitches(levelNum) {
                     break;
                 case 11: 
                     if (level4Password[0] == true) {
-                        console.log("level4password0:"+level4Password[0])
                         level4Password[1] = true;
                         switchX.style.background = updateAlpha(switchX.style.background, 1);
                         pillar5.forEach(e => {
@@ -162,7 +158,6 @@ export function monitorSwitches(levelNum) {
     if (switch5.style.background == 'rgb(0, 128, 0)' && switch6.style.background == 'rgb(0, 0, 255)') {
         createTealLake();
     }
-
 }
 
 let tealPresent = false;
@@ -505,19 +500,22 @@ export function createBlueLakes3(heightModifier, widthModifier) {
 
 }
 
+let gateThreeStatus = false;
 export function openGateThree() {
     const gate3 = document.querySelector('#gate3');
     gate3.style.transition = 'transform 500ms ease-in-out';
     gate3.style.transform = 'rotate(-180deg)';
-    console.log("gate 3 should be open");
+    gateThreeStatus = true;
+    return true;
 }
 
-
+let gateFourStatus = false;
 export function openGateFour() {
     const gate4 = document.querySelector('#gate4');
     gate4.style.transition = 'transform 500ms ease-in-out';
     gate4.style.transform = 'rotate(-180deg)';
-    console.log("gate 4 should be open");
+    gateFourStatus = true;
+    return true;
 }
 
 export function isSequenceCorrect() {
@@ -525,4 +523,12 @@ export function isSequenceCorrect() {
         if (!level4Password[i]) return false;
     }
     return true;
+}
+
+export function getGateThreeStatus() {
+    return gateThreeStatus;
+}
+
+export function getGateFourStatus() {
+    return gateFourStatus;
 }
