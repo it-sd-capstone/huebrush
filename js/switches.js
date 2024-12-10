@@ -49,6 +49,7 @@ export function createSwitches(heightModifier, widthModifier, levelNum) {
 let level4Password = [false, false, false, false, false, false];
 
 export function monitorSwitches(levelNum) {
+    console.log("monitorSwitches is running");
     const pillar1 = document.querySelectorAll('.pillar1Fill');
     const pillar2 = document.querySelectorAll('.pillar2Fill');
     const pillar3 = document.querySelectorAll('.pillar3Fill');
@@ -81,12 +82,15 @@ export function monitorSwitches(levelNum) {
                     break;
                 case 2:
                     if (colorMatches(box, switchX)) createRedLakes3(heightModifier, widthModifier);
+                    console.log("making red lakes");
                     break;
                 case 3:
                     if (colorMatches(box, switchX)) createYellowLakes3(heightModifier, widthModifier);
+                    console.log("making yellow lakes");
                     break;
                 case 4:
                     if (colorMatches(box, switchX)) createBlueLakes3(heightModifier, widthModifier);
+                    console.log("making blue lakes");
                     break;
                 case 5:
                     if (colorMatches(box, switchX)) switchX.style.background = 'rgba(0, 128, 0, 1)';
@@ -412,6 +416,14 @@ export function createYellowLakes3(heightModifier, widthModifier) {
     level3.appendChild(lake4);
     level3.appendChild(lake5);
     level3.appendChild(lake6);
+
+    console.log(lake1);
+    console.log(lake2);
+    console.log(lake3);
+    console.log(lake4);
+    console.log(lake5);
+    console.log(lake6);
+
 
     localStorage.setItem('Yellow Lakes', true);
 }

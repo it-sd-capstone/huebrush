@@ -310,7 +310,7 @@ function checkGateColor(box, levelNum) {
         ammo
       );
       createSwitches(1, 2, 3);
-      setInterval(monitorSwitches, 100);
+      setInterval(function() {monitorSwitches(3); }, 500);
     } else if (currentLevel + 1 === 4) {
       let level3Objects = getLevel3Objects();
       levelXTransition(
@@ -322,7 +322,7 @@ function checkGateColor(box, levelNum) {
         ammo
       );
       createSwitches(1, 1, 4);
-      setInterval(function() {monitorSwitches(4); }, 100);
+      setInterval(function() {monitorSwitches(4); }, 500);
       
     } else if (currentLevel >= 4) {
       createEndMenu();
