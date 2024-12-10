@@ -36,7 +36,8 @@ body {
   height: 90px;
   width: 90px;
   object-fit: contain;
-  justify-content: center;
+  display:inline-block;
+  margin: 0 auto;
 }
 
 h1, h2, h3 {
@@ -49,9 +50,10 @@ a {
 
 header {
   background-color: #333;
-  color: #fff;
-  padding: 0;
+  padding: 10px;
+  position: relative;
   text-align: center;
+  color: #fff;
 }
 
 .about, .contact {
@@ -78,7 +80,7 @@ footer .social-links a {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border: 0.025rem solid black;
-    background: rgba(128,128,128,1);
+    background: rgba(128, 128, 128, 0.5);
 }
 
 #myBox {
@@ -89,8 +91,271 @@ footer .social-links a {
 }
 
 #gate1 {
+    position: absolute;
     transition: transform 500ms ease-in-out;
+
 }
 
+#gate2 {
+    position: absolute;
+    transform-origin: bottom left;
+}
+
+#gate3 {
+    position: absolute;
+    transform-origin: bottom left;
+}
+
+#gate4 {
+    position: absolute;
+    transform-origin: bottom left;
+}
+
+
+
+#switch1 {
+    position: relative;
+    background-color: rgba(200, 230, 120, 0.2);
+    height: 15px;
+    width: 15px;
+}
+
+#switch1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain;
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch2 {
+    position: relative;
+    background-color: rgba(255, 0, 0, 0.2);
+    height: 15px; 
+    width: 15px; 
+}
+
+#switch2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain;
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch3 {
+    position: relative;
+    background-color: rgba(255, 255, 0, 0.2);
+    height: 15px; 
+    width: 15px; 
+}
+
+#switch3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain;
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch4 {
+    position: relative;
+    background-color: rgba(0, 0, 255, 0.2);
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch4::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+#switch5 {
+    position: relative;
+    background-color: rgba(0, 0, 255, 0.2);
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch5::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch6 {
+    position: relative;
+    background-color: rgba(0, 128, 0, 0.2);
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch6::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch7 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch7::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch8 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch8::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch9 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch9::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch10 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch10::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch11 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch11::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
+
+#switch12 {
+    position: relative;
+    height: 15px; 
+    width: 15px;  
+}
+
+#switch12::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/switchTexture.png") no-repeat center center;
+    background-size: contain; 
+    background-repeat: repeat-x;
+    z-index: 1;
+    pointer-events: none; 
+}
 
 

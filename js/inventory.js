@@ -1,19 +1,11 @@
+import { createElement } from "./level1.js";
+import { magicScoutAudio, troubleTribalsAudio } from "./initializeController.js";
+import { spawnPlayer } from "./player.js";
+
+
 let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 if (!localStorage.getItem('inventory')) {
     localStorage.setItem('inventory', "x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x");
-
-}
-
-
-
-
-
-if (!localStorage.getItem('inventory')) {
-  console.log("hello");
-  let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
-} else {
-  console.log("goodbye");
-  let slot = localStorage.getItem('inventory').split(",");
 }
 
 
@@ -38,10 +30,22 @@ let invEmpty = false;
 let invFull = false;
 
 export function createInventory() {
+  const inventoryArea = createElement('div', 'inventoryArea', ['inventoryArea'], {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: `100%`,
+    height: `60px`,
+    padding: '0 20px',
+    boxSizing: 'border-box',
+  });
+
   const Inventory = document.createElement('div');
   Inventory.id = 'Inventory';
   Inventory.classList.add("Inventory");
   Inventory.style.position = 'relative';
+  Inventory.style.left = '10%';
   Inventory.style.zIndex = 1
   let leftCounter = 5
 
@@ -51,7 +55,6 @@ export function createInventory() {
     invslot.id = invNumber;
     invslot.classList.add("Inventory");
     invslot.style.position = 'absolute';
-    console.log(slot);
     if (localStorage.getItem('inventory').split(',')[i-1] == 'x') {
     invslot.style.background = 'grey';
     } else {
@@ -111,6 +114,38 @@ export function createInventory() {
   blackBottomMarker.style.position = 'absolute';
   Inventory.appendChild(blackBottomMarker);
   
+  const heartContainer = document.createElement('div');
+  heartContainer.id = 'player-hearts';
+  heartContainer.style.position = 'absolute';
+  heartContainer.style.top = '10px';
+  heartContainer.style.left = '5px';
+  heartContainer.style.zIndex = '10';
+  document.body.appendChild(heartContainer);
+  
+  
+  for (let i = 0; i < 2; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.width = '30px';
+    heart.style.height = '30px';
+    heart.style.background = 'transparent';
+    heart.style.borderRadius = '50%';
+    heart.style.display = 'inline-block';
+    heart.style.marginRight = '5px';
+    heart.style.zIndex = '10';
+    
+    const heartImage = document.createElement('img');
+    heartImage.src = '/images/lifeHeart.png';
+    heartImage.alt = 'Heart';
+    heartImage.style.width = '100%';
+    heartImage.style.height = '100%';
+    heartImage.style.objectFit = 'cover';
+
+    inventoryArea.appendChild(heartContainer);
+    heartContainer.appendChild(heart);
+    heart.appendChild(heartImage);
+  }
+
   fetch('./images/Inventory.svg')
     .then(response => response.text())
     .then(svgContent => {
@@ -118,13 +153,57 @@ export function createInventory() {
       const svgContainer = document.createElement('div');
       svgContainer.innerHTML = svgContent;
       Inventory.appendChild(svgContainer);
-      // Append the `Inventory` element to the DOM
-      document.querySelector('#game_canvas').appendChild(Inventory);
     })
     .catch(error => console.error('Error loading SVG:', error));
 
-    slot = localStorage.getItem('inventory').split(',');
-    
+  slot = localStorage.getItem('inventory').split(',');
+
+  const muteButton = document.createElement('button');
+  muteButton.id = 'muteButton';
+  muteButton.style.width = '40px';
+  muteButton.style.height = '40px';
+  muteButton.style.border = 'none';
+  muteButton.style.backgroundSize = 'contain';
+  muteButton.style.backgroundColor = '#444';
+  muteButton.style.backgroundPosition = 'center';
+  muteButton.style.backgroundRepeat = 'no-repeat';
+  muteButton.style.cursor = 'pointer';
+  muteButton.style.borderRadius = '5px';
+  muteButton.style.backgroundImage = localStorage.getItem('muted') === '1'
+        ? `url('../images/musicOn.png')`
+        : `url('../images/musicOff.png')`;
+
+  let isMuted = false;
+
+  muteButton.addEventListener('click', () => {
+    isMuted = !isMuted;
+    let newVolume;
+    if (localStorage.getItem('muted') == '1') {
+        newVolume = 0;
+        localStorage.setItem('muted', 0);
+    } else {
+      newVolume = 1;
+      localStorage.setItem('muted', 1);
+      magicScoutAudio.loop = true;
+      magicScoutAudio.volume = 1.0;
+      magicScoutAudio.play();
+    }
+    magicScoutAudio.volume = newVolume;
+    troubleTribalsAudio.volume = newVolume;
+    muteButton.style.backgroundImage = localStorage.getItem('muted') == '0' ? `url('../images/musicOff.png')` : `url('../images/musicOn.png')`;
+  });
+
+  muteButton.addEventListener('mouseenter', () => {
+    muteButton.style.backgroundColor = '#666';
+  });
+  muteButton.addEventListener('mouseleave', () => {
+    muteButton.style.backgroundColor = '#444';
+  });
+
+  inventoryArea.appendChild(Inventory);
+  inventoryArea.appendChild(muteButton);
+
+  document.querySelector('#game_canvas').appendChild(inventoryArea);
 }
 
 function getBlackTop() {
@@ -142,7 +221,6 @@ function getWhiteBottom() {
 function setImgCoordinate(img, top, left) {
     img.style.top = top + 'px';
     img.style.left = left + 'px';
-    console.log("newImgTopLeft:"+top+" "+left);
 }
 
 export function setBoxColor() {
@@ -151,42 +229,61 @@ export function setBoxColor() {
 
     switch (color1 + '-' + color2) {
         case "x-x":
-            getBox().style.background = 'grey';
+            getBox().style.background = 'rgba(128, 128, 128, 1)';
             break;
         case "x-red":
         case "red-x":
         case "red-red":
-            getBox().style.background = 'red';
+            getBox().style.background = 'rgba(255, 0, 0, 1)';
             break;
         case "x-blue":
         case "blue-x":
         case "blue-blue":
-            getBox().style.background = 'blue';
+            getBox().style.background = 'rgba(0, 0, 255, 1)';
             break;
         case "x-yellow":
         case "yellow-x":
         case "yellow-yellow":
-            getBox().style.background = 'yellow';
+            getBox().style.background = 'rgba(255, 255, 0, 1)';
+            break;
+        case "x-teal":
+        case "teal-x":
+        case "teal-teal":
+            getBox().style.background = 'rgba(0, 128, 128, 1)';
             break;
         case "red-blue":
         case "blue-red":
-            getBox().style.background = 'purple';
+            getBox().style.background = 'rgba(128, 0, 128, 1)';
             break;
         case "red-yellow":
         case "yellow-red":
-            getBox().style.background = 'orange';
+            getBox().style.background = 'rgba(255, 165, 0, 1)';
             break;
         case "blue-yellow":
         case "yellow-blue":
-            getBox().style.background = 'green';
+            getBox().style.background = 'rgba(0, 128, 0, 1)';
             break;
+        case "red-teal":
+        case "teal-red":
+            getBox().style.background = 'rgba(128, 97, 71, 1)';
+            break;
+        case "yellow-teal":
+        case "teal-yellow":
+            getBox().style.background = 'rgba(128, 255, 71, 1)';
+        case "blue-teal":
+        case "teal-blue":
+            getBox().style.background = 'rgba(0, 97, 199, 1)';
+            break;    
         default:
             break;
+        
     }
 }
 
 export function setAmmoColor() {
-    getAmmo().style.background = getSlot(lastItem)
+    setLastItem();
+    getAmmo().style.background = getSlot(getLastItem());
+
 }
 
 export function getSlotArray() {
@@ -198,12 +295,10 @@ export function setSlotArray(inventoryString) {
   let counter = 0
   
   inventoryArray.forEach(element => {
-    setSlot[counter,element]
+    setSlot(counter,element);
     counter++
   });
   
-  console.log(inventoryArray)
-  console.log(getSlotArray())
 }
 
 export function getAmmo() {
@@ -258,13 +353,10 @@ function getCursorY() {
 
 export function setLastItem() {
     for (let i = 0; i < getSlotArray().length; i++) {
-        console.log("slot"+i+":"+slot[i]);
         if (slot[i] !== 'x') {
             lastItem = i;
-            console.log("lastItem:"+lastItem);
         }
     }
-    console.log("lastItem:"+lastItem);
 }
 
 function getLastItem() {
@@ -314,13 +406,10 @@ export function addToInventory(lake) {
         for (let i = 0; i < getSlotArray().length; i++) { 
             if (getSlot(i) == 'x') {
                 setSlot(i, lake.background);
-                console.log("lake.background:"+lake.background);
 
                 displayItem(i, lake.background);
                 setBackground(getAmmo(), slot[i]);
-                console.log("calling set last item...");
                 setLastItem();
-                console.log("last item set");
                 setInvFull();
                 setInvEmpty();
                 setBackground(getAmmo(), getSlot(getLastItem()));
@@ -352,7 +441,6 @@ function displayInventory() {
         let id = divIdStr + divIdNum;
         let invSlot = document.getElementById(id);
         if (slot[i] !== 'x') {
-          console.log(invSlot, i, slot[i])
             setBackground(invSlot, slot[i]);
         } else setBackground(invSlot, "grey");
     }
@@ -375,11 +463,9 @@ function swapAmmo(direction) {
         setCurrentColorQ((getCurrentColorQ() - 1));
         setImgCoordinate(getBlackTop(), blackTopTop, (blackTopLeft - 50));
         setImgCoordinate(getBlackBottom(), blackBottomTop, blackBottomLeft - 50);
-        console.log("ccq:"+getCurrentColorQ());
 
     } else if (direction == 'q' && getCurrentColorQ() == 0) {
         setCurrentColorQ(15);
-        console.log("ccq:"+getCurrentColorQ());
 
         let newLeft = 15;
         newLeft *= 50;
@@ -390,7 +476,6 @@ function swapAmmo(direction) {
         setImgCoordinate(getBlackBottom(), blackBottomTop, newLeft);
     } else if (direction == 'e' && getCurrentColorE() != 15) {
         setCurrentColorE((getCurrentColorE() + 1));
-        console.log("cce:"+getCurrentColorE());
         let newLeft = 0;
         newLeft += getCurrentColorE();
         newLeft *= 50;
@@ -399,7 +484,6 @@ function swapAmmo(direction) {
         setImgCoordinate(getWhiteBottom(), whiteBottomTop, newLeft);
     } else if (direction == 'e' && getCurrentColorE() == 15) {
         setCurrentColorE(0);
-        console.log("cce:"+getCurrentColorE());
         setImgCoordinate(getWhiteBottom(), whiteBottomTop, 5);
     }
     setBoxColor();
@@ -408,16 +492,14 @@ function swapAmmo(direction) {
 document.addEventListener('keydown',  (e) => {
     setInvEmpty();
     if (e.code == "Space" && !getInvEmpty() && isCursorInside && animation == false) {
-        console.log("firing");
         fire();
-        console.log("done firing");
         shiftInventory();
         displayInventory();
         setLastItem(); 
     }
 
     if (getInvEmpty()) {
-        getAmmo().style.background = "rgba(128,128,128,0.35)";
+        getAmmo().style.background = "rgba(128, 128, 128, 0.35)";
         setLastItem(-1);
     }
     
@@ -468,7 +550,7 @@ export function fire() {
         // distance should be left at 5 or higher to avoid projectile jumping
         // and not despawning.
         if (distance < 5) {
-            getProjectile().style.background = "rgba(0,0,0,0)";
+            getProjectile().style.background = "rgba(0, 0, 0, 0)";
             getProjectile().style.border = '0px';
             getProjectile().style.top = '-20px';
             setAnimation(false);
@@ -491,8 +573,7 @@ export function fire() {
 }
 
 export function setBackground(ele, color) {
-  console.log(ele)
-    ele.style.background = color;
+  ele.style.background = color;
 }
 
 function shiftInventory() {
@@ -544,15 +625,3 @@ export function createMouseEnterDetection() {
     }
     
 }
-
-
-window.createInventory = createInventory;
-window.fire = fire;
-window.shiftInventory = shiftInventory;
-window.setLastItem = setLastItem;
-window.setBackground = setBackground;
-window.swapAmmo = swapAmmo;
-window.getBox = getBox;
-window.setInvFull = setInvFull;
-//window.getPlayArea = getPlayArea;
-

@@ -471,7 +471,7 @@ export function createLevel1(widthModifier,heightModifier) {
     ];
 
     cratesConfig.forEach(({ id, top, left }) => {
-      const crate = createElement('div', id, ['wallSolid'], {
+      const crate = createElement('div', id, ['wallSolid', 'crate'], {
         background: 'orange',
         width: `${widthModifier * 10}px`,
         height: `${heightModifier * 10}px`,
@@ -544,6 +544,127 @@ export function createLevel1(widthModifier,heightModifier) {
       level1.appendChild(tutorialWASD);
     }
 
+    //Ouput the Bottom F overlay for tutorial
+    if (localStorage.getItem('f') == '0') {
+      const tutorialF = createElement('div', 'tutorialF', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 200}px`,
+        left: `${widthModifier * 65}px`,
+        opacity: '0',
+      });
+
+      const svgFObject = document.createElement('object');
+      svgFObject.data = './images/F.svg';
+      svgFObject.type = 'image/svg+xml';
+      svgFObject.alt = 'F Tutorial';
+      svgFObject.classList.add("tutorialfade");
+      svgFObject.style.height = `${heightModifier * 30}px`;
+      tutorialF.appendChild(svgFObject);
+      
+      level1.appendChild(tutorialF);
+    }
+
+    //Ouput the warning overlay for tutorial
+    if (localStorage.getItem('warn') == '0') {
+      const tutorialWarn = createElement('div', 'tutorialWarn', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 50}px`,
+        left: `${widthModifier * 220}px`,
+        opacity: '0',
+      });
+
+      const svgWarnObject = document.createElement('object');
+      svgWarnObject.data = './images/Warning.svg';
+      svgWarnObject.type = 'image/svg+xml';
+      svgWarnObject.alt = 'Warn Tutorial';
+      svgWarnObject.classList.add("tutorialfade");
+      svgWarnObject.style.height = `${heightModifier * 30}px`;
+      tutorialWarn.appendChild(svgWarnObject);
+      
+      level1.appendChild(tutorialWarn);
+    }
+
+    // Create the second Top F sign for the second lake
+    if (localStorage.getItem('f2') == '0') {
+      const tutorialF2 = createElement('div', 'tutorialF2', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 35}px`,
+        left: `${widthModifier * 65}px`,
+        opacity: '0',
+      });
+
+        const svgFObject2 = document.createElement('object');
+        svgFObject2.data = './images/F.svg';
+        svgFObject2.type = 'image/svg+xml';
+        svgFObject2.alt = 'F Tutorial';
+        svgFObject2.classList.add("tutorialfade");
+        svgFObject2.style.height = `${heightModifier * 30}px`;
+        tutorialF2.appendChild(svgFObject2);
+
+      level1.appendChild(tutorialF2);
+    }
+
+    // Create the G sign for the gate
+    if (localStorage.getItem('g') == '0') {
+      const tutorialG = createElement('div', 'tutorialG', ['tutorialfade'], {
+        position: 'absolute',
+        top: `${heightModifier * 130}px`,
+        left: `${widthModifier * 420}px`,
+        opacity: '0',
+      });
+
+        const svgGObject = document.createElement('object');
+        svgGObject.data = './images/Gate.svg';
+        svgGObject.type = 'image/svg+xml';
+        svgGObject.alt = 'F Tutorial';
+        svgGObject.classList.add("tutorialfade");
+        svgGObject.style.height = `${heightModifier * 30}px`;
+        tutorialG.appendChild(svgGObject);
+
+      level1.appendChild(tutorialG);
+    }
+
+    //Ouput the shoot overlay for tutorial
+    if (localStorage.getItem('space') == '0') {
+      const tutorialSpace = createElement('div', 'tutorialSpace', ['tutorialdrop'], {
+        position: 'absolute',
+        top: `${heightModifier * -100}px`,
+        left: `${widthModifier * 250}px`,
+        opacity: '1',
+      });
+
+      const svgSpaceObject = document.createElement('object');
+      svgSpaceObject.data = './images/Space.svg';
+      svgSpaceObject.type = 'image/svg+xml';
+      svgSpaceObject.alt = 'Shoot Tutorial';
+      svgSpaceObject.classList.add("tutorialdrop");
+      svgSpaceObject.style.height = `${heightModifier * 30}px`;
+      tutorialSpace.style.zIndex = '1000';
+      tutorialSpace.appendChild(svgSpaceObject);
+      
+      level1.appendChild(tutorialSpace);
+    }
+    
+    //Ouput the selection overlay for tutorial
+    if (localStorage.getItem('select') == '0') {
+      const tutorialSelect = createElement('div', 'tutorialSelect', ['tutorialdrop'], {
+        position: 'absolute',
+        top: `${heightModifier * -100}px`,
+        left: `${widthModifier * 290}px`,
+        opacity: '1',
+      });
+
+      const svgSelectObject = document.createElement('object');
+      svgSelectObject.data = './images/Selection.svg';
+      svgSelectObject.type = 'image/svg+xml';
+      svgSelectObject.alt = 'Selection Tutorial';
+      svgSelectObject.classList.add("tutorialdrop");
+      svgSelectObject.style.height = `${heightModifier * 30}px`;
+      tutorialSelect.style.zIndex = '1000';
+      tutorialSelect.appendChild(svgSelectObject);
+      
+      level1.appendChild(tutorialSelect);
+    }
 
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
@@ -565,7 +686,6 @@ export function createLevel1(widthModifier,heightModifier) {
     levelStack[object].style.zIndex = '2';
     levelStack[object].style.position = 'absolute';
   }
-  
 }
 
 export function createLevel1End(){
@@ -585,6 +705,8 @@ export function createLevel1End(){
 }
 
 export function getLevel1Objects() {
+  let level1 = document.querySelector('#level1')
+
   let stack1 = Array.from(level1.children);
   let childStack1 = [];
 
@@ -607,6 +729,49 @@ export function openGateOne() {
   let gate1 = document.querySelector('#gate1');
     gate1.style.transform = 'rotate(-180deg)';
     gate1.style.transformOrigin = 'top right'; 
+}
+let tealPresent = false;
+export function createTealLake() {
+  localStorage.setItem('tealLake', 1);
+  let crates = document.querySelectorAll('.crate');
+
+  crates.forEach((crate) => crate.remove());
+
+  const lakeTeal = createElement('div', 'lakeTeal', ['lake']);
+
+    const lakeTealConfig = [
+      { id: 'lakeTeal1', 
+        width: `70px`, 
+        height: `40px`, 
+        top: `230px`, 
+        left: `160px` 
+      },
+      { id: 'lakeTeal2', 
+        width: `30px`, 
+        height: `10px`, 
+        top: `270px`, 
+        left: `180px` 
+      },
+    ];
+
+    lakeTealConfig.forEach(({ id, width, height, top, left }) => {
+      const lake = createElement('div', id, ['lake'], {
+        background: 'teal',
+        width,
+        height,
+        top,
+        left,
+        zIndex: '2',
+        position: 'absolute'
+      });
+      lakeTeal.appendChild(lake);
+    });
+
+    let level1 = document.querySelector('#level1');
+    if (!tealPresent) {
+        level1.appendChild(lakeTeal);
+        tealPresent = true;
+    }
 }
 
 

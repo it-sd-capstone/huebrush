@@ -1,24 +1,29 @@
 import { enemyLife } from './controller.js';
+import { troubleTribalsAudio } from './initializeController.js';
 
 function randomYSpawnPoint(){
   let negOrPos = Math.floor(Math.random() * 10);
   let minY = 880;
   let maxY = 930;
   if (negOrPos > 5){
-    return Math.floor(Math.random() * (maxY - minY) + minY * -1);
+    let y = 60;
+    return y;
   }else{
-    return Math.floor(Math.random() * (maxY - minY) + minY)
+    let y = Math.floor(Math.random() * (maxY - minY) + minY);
+    return y; 
   }
 }
 
 function randomXSpawnPoint(){
   let negOrPos = Math.floor(Math.random() * 10);
-  let minX = 2400;
-  let maxX = 2450;
+  let minX = 1400;
+  let maxX = 1450;
   if (negOrPos > 5){
-    return Math.floor(Math.random() * (maxX - minX) + minX * -1);
+    let x = Math.floor(Math.random() * (maxX - minX) + minX * -1);
+    return x;
   }else{
-    return Math.floor(Math.random() * (maxX - minX) + minX);
+    let x = Math.floor(Math.random() * (maxX - minX) + minX);
+    return x; 
   }
 }
 
@@ -47,12 +52,10 @@ export function spawnEnemy() {
   enemy.style.borderRadius = '50px';
   enemy.style.left = randomXSpawnPoint()/*canvasWidth*/ + 'px'; 
   enemy.style.top = randomYSpawnPoint()/*canvasHeight*/ + 'px';
-  console.log('True Left: ' + enemy.style.left)
-  console.log('True Top: ' + enemy.style.top)
   enemy.style.zIndex = '3';
   enemy.style.position = 'absolute';
-  enemy.style.left = '300px'; 
-  enemy.style.top = '0px';
+  //enemy.style.left = '300px'; 
+  //enemy.style.top = '0px';
   enemy.enemyHealth = 100;
 
   // HitBox
@@ -95,8 +98,28 @@ export function spawnEnemy() {
 
   playArea.appendChild(enemy)
 
+  troubleTribalsAudio.loop = true;
+  troubleTribalsAudio.volume = 0.0;
+  troubleTribalsAudio.play();
+
   return enemy
 }
 
+/*
+⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡏⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿
+⣿⣿⣿⣿⣿⣿⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿
+⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀⣸⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿
+*/
 
 

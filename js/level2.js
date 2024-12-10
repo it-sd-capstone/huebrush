@@ -715,6 +715,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
       height: `${heightModifier * 30}px`,
       top: `${heightModifier * 220}px`,
       left: `${widthModifier * 430}px`,
+      position: 'absolute',
     });
     gate2.classList.add('wallSolid');
 
@@ -768,7 +769,7 @@ export function createLevel2(widthModifier,heightModifier,offscreen) {
 export function createLevel2End(){
   let level2 = document.querySelector('#level2')
 
-  const level2End = createElement('div', 'level1End', ['levelEnd'], {
+  const level2End = createElement('div', 'level2End', ['levelEnd'], {
     position: 'absolute',
     background: 'rgb(60, 199, 184)',
     width: '15px',
@@ -803,6 +804,6 @@ export function getLevel2Objects() {
 
 export function openGateTwo() {
   let gate2 = document.querySelector('#gate2');
+  gate2.style.transition = 'transform 500ms ease-in-out';
   gate2.style.transform = 'rotate(-180deg)';
-  gate2.style.transformOrigin = 'bottom left'; 
 }

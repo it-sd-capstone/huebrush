@@ -4,12 +4,16 @@
 ## [Unreleased]
 
 ### Added
+- Added Player Health that decrements when the enemy gets too close, allowing the player more time to react. [@Yams650](https://github.com/Yams650)
+- Added Tutorial for clarity on how to play the game. [@Yams650](https://github.com/Yams650)
+- Added floor switches for level 3 that create new color lakes in level 3. [@ph4zers](https://github.com/ph4zers)
+- Added floor switches for level 4 that must be activated in the correct order to open level 4's gate. [@ph4zers](https://github.com/ph4zers)
 
 ### Changed
 
  
 ### Fixed
-
+- Enemy would not despawn if the warning tutorial was missing, fixed order of operations. [@Yams650](https://github.com/Yams650)
 
 ## [v0.3.0]
 
@@ -31,6 +35,7 @@
 ### Fixed
 - Updated the enemy moving when a new tabe was over the current one. Now the enemy will only move if the window is current. ([Issue #20](https://github.com/it-sd-capstone/huebrush/issues/20)[@Yams650](https://github.com/Yams650))
 - Fixed walls within level 2 for users using Firefox. Thanks Kevin. [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+
  
 ## [v0.2.0]
 
