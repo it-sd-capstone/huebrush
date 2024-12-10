@@ -463,7 +463,7 @@ function checkGateColor(box, levelNum) {
 export function enemyLife() {
   // Set up a loop to check for collisions
   let tutorialWarn = document.querySelector('#tutorialWarn');
-  setInterval(() => {
+  let lifeInterval = setInterval(() => {
     const projectiles = document.querySelectorAll('#projectile'); // All projectiles
     const enemies = document.querySelectorAll('.enemy'); // All active enemies
 
@@ -526,6 +526,7 @@ export function enemyLife() {
 
     // Remove explosion after animation
     setTimeout(() => explosion.remove(), 500);
+    clearInterval(lifeInterval);
   }
 }
 
