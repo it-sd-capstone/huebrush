@@ -25,35 +25,35 @@ export function spawnPlayer(widthModifier,heightModifier,top,left) {
     zIndex: '3',
   });
 
-  const heartContainer = document.createElement('div');
-  heartContainer.id = 'player-hearts';
-  heartContainer.style.position = 'absolute';
-  heartContainer.style.top = '105px';
-  heartContainer.style.left = '10px';
-  heartContainer.style.zIndex = '10';
-  document.body.appendChild(heartContainer);
+  // const heartContainer = document.createElement('div');
+  // heartContainer.id = 'player-hearts';
+  // heartContainer.style.position = 'absolute';
+  // heartContainer.style.top = '105px';
+  // heartContainer.style.left = '10px';
+  // heartContainer.style.zIndex = '10';
+  // document.body.appendChild(heartContainer);
   
   
-  for (let i = 0; i < 2; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.width = '30px';
-    heart.style.height = '30px';
-    heart.style.background = 'transparent';
-    heart.style.borderRadius = '50%';
-    heart.style.display = 'inline-block';
-    heart.style.marginRight = '5px';
-    heart.style.zIndex = '10';
+  // for (let i = 0; i < 2; i++) {
+  //   const heart = document.createElement('div');
+  //   heart.classList.add('heart');
+  //   heart.style.width = '30px';
+  //   heart.style.height = '30px';
+  //   heart.style.background = 'transparent';
+  //   heart.style.borderRadius = '50%';
+  //   heart.style.display = 'inline-block';
+  //   heart.style.marginRight = '5px';
+  //   heart.style.zIndex = '10';
     
-    const heartImage = document.createElement('img');
-    heartImage.src = '/images/lifeHeart.png';
-    heartImage.alt = 'Heart';
-    heartImage.style.width = '100%';
-    heartImage.style.height = '100%';
-    heartImage.style.objectFit = 'cover';
+  //   const heartImage = document.createElement('img');
+  //   heartImage.src = '/images/lifeHeart.png';
+  //   heartImage.alt = 'Heart';
+  //   heartImage.style.width = '100%';
+  //   heartImage.style.height = '100%';
+  //   heartImage.style.objectFit = 'cover';
     
-    heartContainer.appendChild(heart);
-    heart.appendChild(heartImage);
-  }
+  //   heartContainer.appendChild(heart);
+  //   heart.appendChild(heartImage);
+  // }
   playArea.appendChild(myBox);
 }

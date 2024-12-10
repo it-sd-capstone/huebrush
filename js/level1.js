@@ -624,6 +624,47 @@ export function createLevel1(widthModifier,heightModifier) {
       level1.appendChild(tutorialG);
     }
 
+    //Ouput the shoot overlay for tutorial
+    if (localStorage.getItem('space') == '0') {
+      const tutorialSpace = createElement('div', 'tutorialSpace', ['tutorialdrop'], {
+        position: 'absolute',
+        top: `${heightModifier * -100}px`,
+        left: `${widthModifier * 250}px`,
+        opacity: '1',
+      });
+
+      const svgSpaceObject = document.createElement('object');
+      svgSpaceObject.data = './images/Space.svg';
+      svgSpaceObject.type = 'image/svg+xml';
+      svgSpaceObject.alt = 'Shoot Tutorial';
+      svgSpaceObject.classList.add("tutorialdrop");
+      svgSpaceObject.style.height = `${heightModifier * 30}px`;
+      tutorialSpace.style.zIndex = '1000';
+      tutorialSpace.appendChild(svgSpaceObject);
+      
+      level1.appendChild(tutorialSpace);
+    }
+    
+    //Ouput the selection overlay for tutorial
+    if (localStorage.getItem('select') == '0') {
+      const tutorialSelect = createElement('div', 'tutorialSelect', ['tutorialdrop'], {
+        position: 'absolute',
+        top: `${heightModifier * -100}px`,
+        left: `${widthModifier * 290}px`,
+        opacity: '1',
+      });
+
+      const svgSelectObject = document.createElement('object');
+      svgSelectObject.data = './images/Selection.svg';
+      svgSelectObject.type = 'image/svg+xml';
+      svgSelectObject.alt = 'Selection Tutorial';
+      svgSelectObject.classList.add("tutorialdrop");
+      svgSelectObject.style.height = `${heightModifier * 30}px`;
+      tutorialSelect.style.zIndex = '1000';
+      tutorialSelect.appendChild(svgSelectObject);
+      
+      level1.appendChild(tutorialSelect);
+    }
 
   level1.appendChild(lakeBlue);
   level1.appendChild(lakeRed);
