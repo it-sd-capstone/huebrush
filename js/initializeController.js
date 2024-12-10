@@ -63,6 +63,10 @@ export function initializeGame() {
     localStorage.setItem('space', 0);
   }
 
+  if (!localStorage.getItem('select')) {
+    localStorage.setItem('select', 0);
+  }
+
   setInvFull();
 
   if (!localStorage.getItem('inventory')) {

@@ -6,7 +6,7 @@ function randomYSpawnPoint(){
   let minY = 880;
   let maxY = 930;
   if (negOrPos > 5){
-    let y = -5
+    let y = 60;
     return y;
   }else{
     let y = Math.floor(Math.random() * (maxY - minY) + minY);

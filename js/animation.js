@@ -121,11 +121,11 @@ export function levelYTransition(objects = [], newLevel, myBox, ammo) {
 
 }
 
-export function fadeOut(object) {
+export function fadeOut(object, timeout) {
   setTimeout(() => {
     object.style.transition = 'opacity 1s ease';
     object.style.opacity = '0';
-  }, 1000);
+  }, timeout);
 }
 
 export function fadeIn(object) {
