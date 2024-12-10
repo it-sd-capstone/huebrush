@@ -5,8 +5,8 @@ import { createLevel4, createLevel4End} from './level4.js';
 import { spawnEnemy, updateHealth } from './enemy.js';
 import { magicScoutAudio, troubleTribalsAudio } from './initializeController.js';
 import { addToInventory, getSlotArray } from './inventory.js';
-import { levelXTransition, fadeIn, fadeOut, levelYTransition  } from './animation.js';
-import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect, getGateThreeStatus, getGateFourStatus } from './switches.js';
+import { levelXTransition, fadeIn, fadeOut, levelYTransition, dropDown  } from './animation.js';
+import { createSwitches, monitorSwitches, openGateThree, openGateFour, isSequenceCorrect } from './switches.js';
 import { createEndMenu, createGameOverMenu } from './menu.js';
 
 
@@ -66,7 +66,7 @@ document.addEventListener('keydown', (e) => {
           gate1.style.transformOrigin = 'top right';
           localStorage.setItem('warn', 1);
           let tutorialG = document.querySelector('#tutorialG');
-          fadeOut(tutorialG);
+          fadeOut(tutorialG, 1000);
         } else if (parseInt(localStorage.getItem('Current Level')) == 2  && checkGateProximity(box, 2) && checkGateColor(box, 2)) {
             openGateTwo();
         } else if (localStorage.getItem('Current Level') == 3  && checkGateColor(box, 3) && checkGateProximity(box, 3) ) {
@@ -152,16 +152,26 @@ function checkGateColor(box, levelNum) {
       localStorage.setItem('wasd', 0);
       localStorage.setItem('f', 1);
       localStorage.setItem('f2', 1);
+      localStorage.setItem('space', 1);
+      localStorage.setItem('select', 1);
 
       let tutorialWASD = document.querySelector('#tutorialWASD');
       let tutorialF = document.querySelector('#tutorialF');
       let tutorialF2 = document.querySelector('#tutorialF2');
       let tutorialG = document.querySelector('#tutorialG');
+      let tutorialSpace = document.querySelector('#tutorialSpace');
+      let tutorialSelect = document.querySelector('#tutorialSelect');
 
-      fadeOut(tutorialWASD);
+      fadeOut(tutorialWASD, 1000);
       fadeIn(tutorialF);
       fadeIn(tutorialF2);
       fadeIn(tutorialG);
+      setTimeout(() => {
+        dropDown(tutorialSelect, 450, 2000)
+      }, 5000);
+      setTimeout(() => {
+        dropDown(tutorialSpace, 350, 2000)
+      }, 10000);
     }
 
     let boxRect = box.getBoundingClientRect();
@@ -238,14 +248,18 @@ function checkGateColor(box, levelNum) {
       if (!nextLevelDiv) {
         if (currentLevel + 1 === 2) {
           let tutorialF = document.querySelector('#tutorialF');
+          let tutorialSpace = document.querySelector('#tutorialSpace');
+          let tutorialSelect = document.querySelector('#tutorialSelect');
           let tutorialF2 = document.querySelector('#tutorialF2');
           let tutorialWarn = document.querySelector('#tutorialWarn');
           createLevel2(1,2,100); 
           createLevel2End();
           spawnEnemy();
           chaseBox();
-          fadeOut(tutorialF);
-          fadeOut(tutorialF2);
+          fadeOut(tutorialF, 1000);
+          fadeOut(tutorialF2, 1000);
+          tutorialSpace.remove();
+          tutorialSelect.remove();
           fadeIn(tutorialWarn);
         } else if (currentLevel + 1 === 3) {
           createLevel3(2,1,100,0);
@@ -438,7 +452,7 @@ function checkGateColor(box, levelNum) {
 export function enemyLife() {
   // Set up a loop to check for collisions
   let tutorialWarn = document.querySelector('#tutorialWarn');
-  setInterval(() => {
+  let lifeInterval = setInterval(() => {
     const projectiles = document.querySelectorAll('#projectile'); // All projectiles
     const enemies = document.querySelectorAll('.enemy'); // All active enemies
 
@@ -499,6 +513,7 @@ export function enemyLife() {
 
     // Remove explosion after animation
     setTimeout(() => explosion.remove(), 500);
+    clearInterval(lifeInterval);
   }
 }
 

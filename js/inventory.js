@@ -1,5 +1,6 @@
 import { createElement } from "./level1.js";
 import { magicScoutAudio, troubleTribalsAudio } from "./initializeController.js";
+import { spawnPlayer } from "./player.js";
 
 
 let slot = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
@@ -113,6 +114,38 @@ export function createInventory() {
   blackBottomMarker.style.position = 'absolute';
   Inventory.appendChild(blackBottomMarker);
   
+  const heartContainer = document.createElement('div');
+  heartContainer.id = 'player-hearts';
+  heartContainer.style.position = 'absolute';
+  heartContainer.style.top = '10px';
+  heartContainer.style.left = '5px';
+  heartContainer.style.zIndex = '10';
+  document.body.appendChild(heartContainer);
+  
+  
+  for (let i = 0; i < 2; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.width = '30px';
+    heart.style.height = '30px';
+    heart.style.background = 'transparent';
+    heart.style.borderRadius = '50%';
+    heart.style.display = 'inline-block';
+    heart.style.marginRight = '5px';
+    heart.style.zIndex = '10';
+    
+    const heartImage = document.createElement('img');
+    heartImage.src = '/images/lifeHeart.png';
+    heartImage.alt = 'Heart';
+    heartImage.style.width = '100%';
+    heartImage.style.height = '100%';
+    heartImage.style.objectFit = 'cover';
+
+    inventoryArea.appendChild(heartContainer);
+    heartContainer.appendChild(heart);
+    heart.appendChild(heartImage);
+  }
+
   fetch('./images/Inventory.svg')
     .then(response => response.text())
     .then(svgContent => {
