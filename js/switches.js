@@ -165,6 +165,8 @@ export function monitorSwitches(levelNum) {
 
 }
 
+let tealPresent = false;
+
 function isOverlapping(box, switchX) {
     const boxRect = box.getBoundingClientRect();
     if (switchX){
@@ -261,6 +263,7 @@ function resetArrayAndSwitches(switchX, level4Password) {
     return level4Password;
 }
 
+let redPresent = false;
 export function createRedLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
     const lake1 = document.createElement('div');
@@ -330,17 +333,21 @@ export function createRedLakes3(heightModifier, widthModifier) {
     lake6.style.height = (heightModifier * 20)+'px';
     lake6.style.width = (widthModifier * 20)+'px';
     
-    level3.appendChild(lake1);
-    level3.appendChild(lake2);
-    level3.appendChild(lake3);
-    level3.appendChild(lake4);
-    level3.appendChild(lake5);
-    level3.appendChild(lake6);
+    if (!redPresent) {
+        level3.appendChild(lake1);
+        level3.appendChild(lake2);
+        level3.appendChild(lake3);
+        level3.appendChild(lake4);
+        level3.appendChild(lake5);
+        level3.appendChild(lake6);
+        redPresent = true;
+    }
 
     localStorage.setItem('Red Lakes', true);
 
 }
 
+let yellowPresent = false;
 export function createYellowLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
     const lake1 = document.createElement('div');
@@ -410,23 +417,21 @@ export function createYellowLakes3(heightModifier, widthModifier) {
     lake6.style.height = (heightModifier * 30)+'px';
     lake6.style.width = (widthModifier * 20)+'px';
 
-    level3.appendChild(lake1);
-    level3.appendChild(lake2);
-    level3.appendChild(lake3);
-    level3.appendChild(lake4);
-    level3.appendChild(lake5);
-    level3.appendChild(lake6);
-
-    console.log(lake1);
-    console.log(lake2);
-    console.log(lake3);
-    console.log(lake4);
-    console.log(lake5);
-    console.log(lake6);
+    if (!yellowPresent) {
+        level3.appendChild(lake1);
+        level3.appendChild(lake2);
+        level3.appendChild(lake3);
+        level3.appendChild(lake4);
+        level3.appendChild(lake5);
+        level3.appendChild(lake6);
+        yellowPresent = true;
+    }
 
 
     localStorage.setItem('Yellow Lakes', true);
 }
+
+let bluePresent = false;
 
 export function createBlueLakes3(heightModifier, widthModifier) {
     const level3 = document.querySelector('#level3');
@@ -487,11 +492,14 @@ export function createBlueLakes3(heightModifier, widthModifier) {
     lake5.style.height = (heightModifier * 30)+'px';
     lake5.style.width = (widthModifier * 20)+'px';
 
-    level3.appendChild(lake1);
-    level3.appendChild(lake2);
-    level3.appendChild(lake3);
-    level3.appendChild(lake4);
-    level3.appendChild(lake5);
+    if (!bluePresent) {
+        level3.appendChild(lake1);
+        level3.appendChild(lake2);
+        level3.appendChild(lake3);
+        level3.appendChild(lake4);
+        level3.appendChild(lake5);
+        bluePresent = true;
+    }
 
     localStorage.setItem('Blue Lakes', true);
 
@@ -503,6 +511,7 @@ export function openGateThree() {
     gate3.style.transform = 'rotate(-180deg)';
     console.log("gate 3 should be open");
 }
+
 
 export function openGateFour() {
     const gate4 = document.querySelector('#gate4');

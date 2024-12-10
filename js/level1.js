@@ -689,7 +689,7 @@ export function openGateOne() {
     gate1.style.transform = 'rotate(-180deg)';
     gate1.style.transformOrigin = 'top right'; 
 }
-
+let tealPresent = false;
 export function createTealLake() {
   localStorage.setItem('tealLake', 1);
   let crates = document.querySelectorAll('.crate');
@@ -727,7 +727,10 @@ export function createTealLake() {
     });
 
     let level1 = document.querySelector('#level1');
-    level1.appendChild(lakeTeal);
+    if (!tealPresent) {
+        level1.appendChild(lakeTeal);
+        tealPresent = true;
+    }
 }
 
 
