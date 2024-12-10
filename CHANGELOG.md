@@ -8,6 +8,10 @@
 - Added Tutorial for clarity on how to play the game. [@Yams650](https://github.com/Yams650)
 - Added floor switches for level 3 that create new color lakes in level 3. [@ph4zers](https://github.com/ph4zers)
 - Added floor switches for level 4 that must be activated in the correct order to open level 4's gate. [@ph4zers](https://github.com/ph4zers)
+- Added level 4 and transition for level 4 [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added Dynamic music and mute button [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added Hint and information menus [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
+- Added Game Start and Game Over menu [@SkylerGodfrey](https://github.com/sGodfreyCVTC)
 
 ### Changed
 
