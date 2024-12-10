@@ -568,7 +568,7 @@ export function createLevel1(widthModifier,heightModifier) {
     if (localStorage.getItem('warn') == '0') {
       const tutorialWarn = createElement('div', 'tutorialWarn', ['tutorialfade'], {
         position: 'absolute',
-        top: `${heightModifier * 100}px`,
+        top: `${heightModifier * 50}px`,
         left: `${widthModifier * 220}px`,
         opacity: '0',
       });
