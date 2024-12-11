@@ -52,7 +52,7 @@
 </div>
 
 ### Video Review
-[![HueBrush in Review]](https://cvtc.instructuremedia.com/embed/bcdc482a-799a-4af4-afa8-fc2000cb9a90)
+[![HueBrush in Review](./Huebrush.png)](https://cvtc.instructuremedia.com/embed/bcdc482a-799a-4af4-afa8-fc2000cb9a90)
 
 <!-- TABLE OF CONTENTS -->
 <details>
