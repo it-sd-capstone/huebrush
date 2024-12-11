@@ -52,7 +52,7 @@
 </div>
 
 ### Video Review
-<iframe width="560px" height="320px" allowfullscreen="true" allow="autoplay *" title="Huebrush_Final_Video" src="https://cvtc.instructuremedia.com/embed/bcdc482a-799a-4af4-afa8-fc2000cb9a90" frameborder="0"></iframe>
+[![HueBrush in Review]](https://cvtc.instructuremedia.com/embed/bcdc482a-799a-4af4-afa8-fc2000cb9a90)
 
 <!-- TABLE OF CONTENTS -->
 <details>
